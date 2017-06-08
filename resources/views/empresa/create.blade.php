@@ -56,7 +56,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="organizacion_numexterior" class="col-sm-2 control-label"><p class="text-left">Número. Ext</p></label>
+                                    <label for="organizacion_numexterior" class="col-sm-2 control-label"><p class="text-left">Número. Ext(*)</p></label>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" id="organizacion_numexterior" name="organizacion_numexterior" placeholder="Número Ext.">
                                     </div>
@@ -74,33 +74,33 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="organizacion_estado" class="col-sm-2 control-label"><p class="text-left">Estado</p></label>
+                                    <label for="organizacion_estado" class="col-sm-2 control-label"><p class="text-left">Estado(*)</p></label>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" id="organizacion_estado" name="organizacion_estado">
                                     </div>
-                                    <label for="organizacion_delegmunic" class="col-sm-2 control-label">Delegación/Municipio</label>
+                                    <label for="organizacion_delegmunic" class="col-sm-2 control-label">Delegación/Municipio(*)</label>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" id="organizacion_delegmunic" name="organizacion_delegmunic">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="organizacion_localidad" class="col-sm-2 control-label"><p class="text-left">Localidad</p></label>
+                                    <label for="organizacion_localidad" class="col-sm-2 control-label"><p class="text-left">Localidad(*)</p></label>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" id="organizacion_localidad" name="organizacion_localidad">
                                     </div>
-                                    <label for="organizacion_colonia" class="col-sm-2 control-label">Colonia</label>
+                                    <label for="organizacion_colonia" class="col-sm-2 control-label">Colonia(*)</label>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" id="organizacion_colonia" name="organizacion_colonia">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="organizacion_codpost" class="col-sm-2 control-label"><p class="text-left">Código Postal</p></label>
+                                    <label for="organizacion_codpost" class="col-sm-2 control-label"><p class="text-left">Código Postal(*)</p></label>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" id="organizacion_codpost" name="organizacion_codpost">
                                     </div>
-                                    <label for="organizacion_pais" class="col-sm-2 control-label">País</label>
+                                    <label for="organizacion_pais" class="col-sm-2 control-label">País(*)</label>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" id="organizacion_pais" name="organizacion_pais">
                                     </div>
