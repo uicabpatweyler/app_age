@@ -125,3 +125,13 @@
     </div>
     <!-- /.content-wrapper -->
 @endsection
+
+@section('scripts')
+<!-- InputMask https://github.com/RobinHerbots/Inputmask -->
+<script src="adminlte/plugins/input-mask/dist/jquery.inputmask.bundle.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#organizacion_rfc").inputmask("A{3,4}-9{6}-A|9{3}");
+    });
+</script>
+@endsection
