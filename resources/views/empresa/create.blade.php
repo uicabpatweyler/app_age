@@ -21,7 +21,7 @@
                     <!-- Horizontal Form -->
                     <div class="box box-success">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><i class="fa fa-university" aria-hidden="true"></i> Ingrese los siguientes datos</h3><small>&nbsp;&nbsp;(Los campos marcados con (*) son obligatorios)</small>
+                            <h3 class="box-title"> Ingrese los siguientes datos</h3><small>&nbsp;&nbsp;(Los campos marcados con (*) son obligatorios)</small>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
