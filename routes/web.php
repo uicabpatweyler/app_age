@@ -26,3 +26,8 @@ Route::get('/empresa', 'EmpresaController@index')->name('nuevaempresa');
  */
 Route::get('/niveles', 'NivelController@index')->name('niveles');
 Route::get('nuevonivel','NivelController@create')->name('nuevonivel');
+
+/*
+ * Configuración | Escuelas
+ */
+Route::get('nuevaescuela','EscuelaController@create')->name('nuevaescuela');
