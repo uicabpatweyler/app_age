@@ -16,6 +16,13 @@ Route::get('/', function () {
     return view('mainHome');
 });
 
-Route::get('/empresa',function() {
-	return view('empresa/create');
-});
+/*
+ * Configuración | Empresa
+ */
+Route::get('/empresa', 'EmpresaController@index')->name('nuevaempresa');
+
+/*
+ * Configuración | Niveles
+ */
+Route::get('/niveles', 'NivelController@index')->name('niveles');
+Route::get('nuevonivel','NivelController@create')->name('nuevonivel');
