@@ -19,15 +19,25 @@ Route::get('/', function () {
 /*
  * Configuración | Empresa
  */
-Route::get('/empresa', 'EmpresaController@index')->name('nuevaempresa');
+Route::get('empresa', 'EmpresaController@index')->name('nuevaempresa');
 
 /*
  * Configuración | Niveles
  */
-Route::get('/niveles', 'NivelController@index')->name('niveles');
+Route::get('niveles', 'NivelController@index')->name('niveles');
 Route::get('nuevonivel','NivelController@create')->name('nuevonivel');
 
 /*
  * Configuración | Escuelas
  */
 Route::get('nuevaescuela','EscuelaController@create')->name('nuevaescuela');
+
+/*
+ * Configuracion | Clasificacion
+ */
+Route::get('nuevaclasificacion', 'ClasificacionController@create')->name('nuevaclasificacion');
+
+/*
+ * Configuración | Ciclo Escolar
+ */
+Route::get('nuevociclo','CicloEscolarController@create')->name('nuevociclo');
