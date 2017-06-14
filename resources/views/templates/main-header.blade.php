@@ -4,7 +4,7 @@
             <nav class="navbar navbar-static-top">
                 <div class="container">
                     <div class="navbar-header">
-                        <a href="#" class="navbar-brand"><b>A.G.E</b></a>
+                        <a href="/" class="navbar-brand"><b>A.G.E</b></a>
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
                             <i class="fa fa-bars"></i>
                         </button>
@@ -17,10 +17,15 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog" aria-hidden="true"></i> Configuración <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="{{route('nuevaempresa')}}"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Empresa</a></li>
+                                    <li class="divider"></li>
                                     <li><a href="{{route('niveles')}}"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Niveles</a></li>
+                                    <li class="divider"></li>
                                     <li><a href="#"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Escuelas</a></li>
-                                    <li><a href="#"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Clasificación</a></li>
+                                    <li class="divider"></li>
                                     <li><a href="#"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Ciclos</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Clasificación</a></li>
+                                    <li class="divider"></li>
                                     <li><a href="#"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Grupos</a></li>
                                     <li class="divider"></li>
                                 </ul>
