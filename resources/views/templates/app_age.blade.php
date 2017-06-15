@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
     <!-- Font Awesome 4.7.0 by @davegandy - http://fontawesome.io -->
     <link rel="stylesheet" href="{{asset('font-awesome/css/font-awesome.min.css')}}">
-    @yield('js')
+    <!-- Sweet Alert CSS/JS -->
+    <script src="{{asset('sweetalert/sweetalert2.min.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('sweetalert/sweetalert2.css')}}">
     @yield('css')
     <!-- Theme style AdminLTE v2.3.8 -->
     <link rel="stylesheet" href="{{asset('adminlte/dist/css/AdminLTE.min.css')}}">
