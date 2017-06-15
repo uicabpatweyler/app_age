@@ -2,16 +2,6 @@
 
 @section('title', 'Nuevo ciclo escolar')
 
-@section('css')
-<!-- Sweet Alert CSS -->
-    <link rel="stylesheet" href="{{asset('sweetalert/sweetalert2.css')}}">
-@endsection
-
-@section('js')
-<!-- Sweet Alert JS -->
-    <script src="{{asset('sweetalert/sweetalert2.min.js')}}"></script>
-@endsection
-
 @section('content')
     <!-- Full Width Column -->
     <div class="content-wrapper">
@@ -35,7 +25,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" method="post" action="">
+                        <form class="form-horizontal" method="post" action="" id="form_nuevociclo" name="form_nuevociclo">
                             {{csrf_field()}}
                             <div class="box-body">
                                 <div class="form-group ciclo_escolar">
@@ -80,6 +70,7 @@
             //http://jquery-manual.blogspot.mx/2013/06/enviar-formulario-con-ajax-jquery.html
             //http://www.anerbarrena.com/jquery-addclass-removeclass-4705/
             //https://limonte.github.io/sweetalert2/
+            //https://laracasts.com/discuss/channels/general-discussion/showing-request-validation-errors-when-submitting-form-by-ajax
 
             $('#boton_guardar').click(function(){
 
@@ -91,11 +82,67 @@
                     //2 Verificar los años del ciclo escolar
                     if(anio_inicial>=anio_final){
                         $(".ciclo_escolar").addClass("has-error");
-                        swal({title:"", text: "El ciclo escolar es incorrecto", type: "error", allowOutsideClick: false });
+                        swal({
+                            title:"Error:",
+                            text: "El ciclo escolar es incorrecto",
+                            type: "error",
+                            allowOutsideClick: false,
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: "Corregir"
+                        });
+                    }
+                    else{
+                        $.ajax({
+                            type:"POST",
+                            url:"guardarciclo",
+                            data: $("#form_nuevociclo").serialize(),
+                            dataType : 'json',
+                            success: function(data){
+                                swal({
+                                    title:"",
+                                    text: data.message,
+                                    type: "success",
+                                    allowOutsideClick: false,
+                                    confirmButtonText: 'Continuar'
+                                }).then(function(){
+                                    window.location = "{{ URL::route('nuevaescuela')}}";
+                                });
+                            },
+                            error: function(xhr,status, response ){
+                                    $(".ciclo_escolar").addClass("has-error");
+                                    //Obtener el valor de los errores devueltos por el controlador
+                                    var error = jQuery.parseJSON(xhr.responseText);
+                                    //Obtener los mensajes de error
+                                    var info = error.message;
+                                    //Crear la lista de errores
+                                    var errorsHtml = '<ul>';
+                                    $.each(info, function (key,value) {
+                                        errorsHtml += '<li>' + value[0] + '</li>';
+                                    });
+                                    errorsHtml += '</ul>';
+                                    //Mostrar el y/o los errores devuelto(s) por el controlador
+                                    swal({
+                                        title:"Error:",
+                                        html: errorsHtml,
+                                        type: "error",
+                                        allowOutsideClick: false,
+                                        confirmButtonColor: '#d33',
+                                        confirmButtonText: "Corregir"
+                                    });
+
+                            }
+                        });
                     }
                 }else{
                     $(".ciclo_escolar").addClass("has-error");
-                    swal({title:"", text: "El ciclo escolar es incorrecto", type: "error", allowOutsideClick: false });
+                    swal({
+                        title:"Error:",
+                        text: "El ciclo escolar es incorrecto",
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
                 }
 
                 return false;
