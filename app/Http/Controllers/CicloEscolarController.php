@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ciclo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CicloEscolarController extends Controller
 {
@@ -34,7 +36,33 @@ class CicloEscolarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation =Validator::make($request->all(),[
+            'ciclo_anioinicial' => 'required|unique:ciclos|max:4',
+            'ciclo_aniofinal'   => 'required|unique:ciclos|max:4',
+        ]);
+
+        if($validation->passes()){
+
+            $ciclo_escolar = new Ciclo();
+            $ciclo_escolar->ciclo_anioinicial = $request->get('ciclo_anioinicial');
+            $ciclo_escolar->ciclo_aniofinal = $request->get('ciclo_aniofinal');
+            $ciclo_escolar->ciclo_actual = false;
+            $ciclo_escolar->ciclo_activo = false;
+            $ciclo_escolar->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'El ciclo escolar se ha creado correctamente.'
+            ], 200);
+        }
+        $errors = $validation->errors();
+        $errors =  json_decode($errors);
+
+        return response()->json([
+            'success' => false,
+            'message' => $errors
+        ], 422);
+
     }
 
     /**
