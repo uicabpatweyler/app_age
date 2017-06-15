@@ -41,3 +41,4 @@ Route::get('nuevaclasificacion', 'ClasificacionController@create')->name('nuevac
  * Configuración | Ciclo Escolar
  */
 Route::get('nuevociclo','CicloEscolarController@create')->name('nuevociclo');
+Route::post('guardarciclo', 'CicloEscolarController@store')->name('guardarciclo');
