@@ -42,5 +42,9 @@ Route::get('nuevaclasificacion', 'ClasificacionController@create')->name('nuevac
  */
 Route::get('ciclos','CicloEscolarController@index')->name('ciclos');
 Route::get('nuevociclo','CicloEscolarController@create')->name('nuevociclo');
-Route::post('guardarciclo', 'CicloEscolarController@store')->name('guardarciclo');
 Route::get('editarciclo/{id}','CicloEscolarController@edit')->name('editarciclo');
+Route::get('selectCiclos','CicloEscolarController@listaCiclosAjax')->name('selectCiclos');
+
+Route::post('guardarciclo', 'CicloEscolarController@store')->name('guardarciclo');
+Route::post('cambiarciclo', 'CicloEscolarController@cambiarCicloPredeterminado')->name('cambiarciclo');
+Route::post('updateciclo/{id}', 'CicloEscolarController@update')->name('updateciclo');
