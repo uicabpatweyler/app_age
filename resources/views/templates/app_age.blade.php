@@ -13,7 +13,10 @@
     <!-- Sweet Alert CSS/JS -->
     <script src="{{asset('sweetalert/sweetalert2.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('sweetalert/sweetalert2.css')}}">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="{{asset('adminlte/plugins/iCheck/all.css')}}">
     @yield('css')
+
     <!-- Theme style AdminLTE v2.3.8 -->
     <link rel="stylesheet" href="{{asset('adminlte/dist/css/AdminLTE.min.css')}}">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter

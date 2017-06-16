@@ -22,7 +22,7 @@
                                     <li class="divider"></li>
                                     <li><a href="#"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Escuelas</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Ciclos</a></li>
+                                    <li><a href="{{route('ciclos')}}"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Ciclos</a></li>
                                     <li class="divider"></li>
                                     <li><a href="#"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Clasificación</a></li>
                                     <li class="divider"></li>

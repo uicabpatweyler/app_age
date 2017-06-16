@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ciclo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,7 +16,10 @@ class CicloEscolarController extends Controller
      */
     public function index()
     {
-        //
+        $ciclos = Ciclo::where('ciclo_activo',0)
+                         ->orderBy('ciclo_anioinicial','desc')
+                         ->get();
+        return view('cicloescolar.index', compact('ciclos'));
     }
 
     /**
@@ -25,6 +29,7 @@ class CicloEscolarController extends Controller
      */
     public function create()
     {
+
         return view('cicloescolar/create');
     }
 
@@ -43,11 +48,15 @@ class CicloEscolarController extends Controller
 
         if($validation->passes()){
 
+            $now = Carbon::now('America/Mexico_City Time Zone');
             $ciclo_escolar = new Ciclo();
             $ciclo_escolar->ciclo_anioinicial = $request->get('ciclo_anioinicial');
             $ciclo_escolar->ciclo_aniofinal = $request->get('ciclo_aniofinal');
             $ciclo_escolar->ciclo_actual = false;
             $ciclo_escolar->ciclo_activo = false;
+            $ciclo_escolar->created_at = $now;
+            $ciclo_escolar->updated_at = $now;
+
             $ciclo_escolar->save();
 
             return response()->json([
@@ -73,7 +82,7 @@ class CicloEscolarController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -84,7 +93,9 @@ class CicloEscolarController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ciclo = Ciclo::findOrFail($id);
+        return view('cicloescolar.details', compact('ciclo'));
+
     }
 
     /**

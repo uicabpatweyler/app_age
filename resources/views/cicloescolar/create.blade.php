@@ -41,8 +41,13 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-danger"><i class="fa fa-ban fa-lg" aria-hidden="true"></i> Cancelar</button>
-                                <button type="submit" class="btn btn-primary pull-right" id="boton_guardar"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Guardar Datos</button>
+
+                                <a class="btn btn-danger" href="{{route('ciclos')}}">
+                                    <i class="fa fa-ban fa-lg" aria-hidden="true"></i>&nbsp;  Cancelar</a>
+
+                                <button type="submit" class="btn btn-primary pull-right" id="boton_guardar">
+                                    <i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Guardar Datos</button>
+
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -105,7 +110,7 @@
                                     allowOutsideClick: false,
                                     confirmButtonText: 'Continuar'
                                 }).then(function(){
-                                    window.location = "{{ URL::route('nuevaescuela')}}";
+                                    window.location = "{{ URL::route('ciclos')}}";
                                 });
                             },
                             error: function(xhr,status, response ){
