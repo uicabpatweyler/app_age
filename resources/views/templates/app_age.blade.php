@@ -13,6 +13,8 @@
     <!-- Sweet Alert CSS/JS -->
     <script src="{{asset('sweetalert/sweetalert2.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('sweetalert/sweetalert2.css')}}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{asset('adminlte/plugins/select2/select2.min.css')}}">
     <!-- iCheck for checkboxes and radio inputs -->
     <link rel="stylesheet" href="{{asset('adminlte/plugins/iCheck/all.css')}}">
     @yield('css')
@@ -73,6 +75,8 @@ desired effect
 <script src="{{asset('adminlte/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
 <!-- FastClick -->
 <script src="{{asset('adminlte/plugins/fastclick/fastclick.js')}}"></script>
+<!-- Select2 -->
+<script src="{{asset('adminlte//plugins/select2/select2.full.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('adminlte/dist/js/app.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
