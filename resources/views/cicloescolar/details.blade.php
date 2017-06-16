@@ -25,7 +25,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" method="post" action="" id="form_editarciclo" name="form_editarciclo">
+                        <form class="form-horizontal" method="post" action="{{route('updateciclo', $ciclo->id)}}" id="form_editarciclo" name="form_editarciclo">
                             {{csrf_field()}}
                             <div class="box-body">
                                 <div class="form-group ciclo_escolar">
@@ -71,6 +71,42 @@
     $(document).ready(function(){
         $("#ciclo_anioinicial").inputmask("9{4}");
         $("#ciclo_aniofinal").inputmask("9{4}");
+
+
+
+        $('#boton_guardar').click(function(){
+
+            var anio_inicial = $("#ciclo_anioinicial").val();
+            var anio_final = $("#ciclo_aniofinal").val();
+
+            if ($("#ciclo_anioinicial").inputmask("isComplete") && $("#ciclo_aniofinal").inputmask("isComplete")){
+                if(anio_inicial>=anio_final){
+                    $(".ciclo_escolar").addClass("has-error");
+                    swal({
+                        title:"Error:",
+                        text: "El ciclo escolar es incorrecto",
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+                }else{ return true; }
+            }else{
+                $(".ciclo_escolar").addClass("has-error");
+                swal({
+                    title:"Error:",
+                    text: "El ciclo escolar es incorrecto",
+                    type: "error",
+                    allowOutsideClick: false,
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: "Corregir"
+                });
+            }
+
+            return false
+        });
+
+
     });
 </script>
 @endsection
