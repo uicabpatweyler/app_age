@@ -25,84 +25,95 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" method="post" action="">
+                        <form class="form-horizontal" method="post" action="{{route('guardarempresa')}}" id="form_empresa">
                             {{csrf_field()}}
                             <div class="box-body">
-                                <div class="form-group">
-                                    <label for="organizacion_rfc" class="col-sm-2 control-label"><p class="text-left">RFC: (*)</p></label>
+                                <div class="form-group empresa_rfc">
+                                    <label for="empresa_rfc" class="col-sm-2 control-label"><p class="text-left">RFC: (*)</p></label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="organizacion_rfc" name="organizacion_rfc" placeholder="RFC">
+                                        <input type="text" class="form-control" id="empresa_rfc" name="empresa_rfc" placeholder="RFC" value="{{old('empresa_rfc')}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="organizacion_razonsocial" class="col-sm-2 control-label"><p class="text-left">Razón Social (*)</p></label>
+                                    <label for="empresa_razonsocial" class="col-sm-2 control-label"><p class="text-left">Razón Social (*)</p></label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="organizacion_razonsocial" name="organizacion_razonsocial" placeholder="Razón Social">
+                                        <input type="text" class="form-control" id="empresa_razonsocial" name="empresa_razonsocial" placeholder="Razón Social" value="{{old('empresa_razonsocial')}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="organizacion_regimenfiscal" class="col-sm-2 control-label"><p class="text-left">Regimen Fiscal (*)</p></label>
+                                    <label for="empresa_regimenfiscal" class="col-sm-2 control-label"><p class="text-left">Regimen Fiscal (*)</p></label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="organizacion_regimenfiscal" name="organizacion_regimenfiscal" placeholder="Regimen Fiscal">
+                                        <input type="text" class="form-control" id="empresa_regimenfiscal" name="empresa_regimenfiscal" placeholder="Regimen Fiscal" value="{{old('empresa_regimenfiscal')}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="organizacion_direccion" class="col-sm-2 control-label"><p class="text-left">Dirección Fiscal (*)</p></label>
+                                    <label for="empresa_direccion" class="col-sm-2 control-label"><p class="text-left">Dirección Fiscal (*)</p></label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="organizacion_direccion" name="organizacion_direccion" placeholder="Calle">
+                                        <input type="text" class="form-control" id="empresa_direccion" name="empresa_direccion" placeholder="Calle" value="{{old('empresa_direccion')}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="organizacion_numexterior" class="col-sm-2 control-label"><p class="text-left">Número. Ext(*)</p></label>
+                                    <label for="empresa_numexterior" class="col-sm-2 control-label"><p class="text-left">Número. Ext(*)</p></label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="organizacion_numexterior" name="organizacion_numexterior" placeholder="Número Ext.">
+                                        <input type="text" class="form-control" id="empresa_numexterior" name="empresa_numexterior" placeholder="Número Ext." value="{{old('empresa_numexterior')}}">
                                     </div>
-                                    <label for="organizacion_numinterior" class="col-sm-2 control-label">Número Int.</label>
+                                    <label for="empresa_numinterior" class="col-sm-2 control-label">Número Int.</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="organizacion_numinterior" name="organizacion_numinterior" placeholder="Número Int.">
+                                        <input type="text" class="form-control" id="empresa_numinterior" name="empresa_numinterior" placeholder="Número Int." value="{{old('empresa_numinterior')}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="organizacion_referencia" class="col-sm-2 control-label"><p class="text-left">Referencia</p></label>
+                                    <label for="empresa_referencia" class="col-sm-2 control-label"><p class="text-left">Referencia (*)</p></label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="organizacion_referencia" name="organizacion_referencia" placeholder="Cruzamientos/Esquina/Entre Calles">
+                                        <input type="text" class="form-control" id="empresa_referencia" name="empresa_referencia" placeholder="Cruzamientos/Esquina/Entre Calles" value="{{old('empresa_referencia')}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="organizacion_estado" class="col-sm-2 control-label"><p class="text-left">Estado(*)</p></label>
+                                    <label for="empresa_telefono" class="col-sm-2 control-label"><p class="text-left">Teléfono</p></label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="organizacion_estado" name="organizacion_estado">
+                                        <input type="text" class="form-control" id="empresa_telefono" name="empresa_telefono" placeholder="(983)-000-0000" value="{{old('empresa_telefono')}}">
                                     </div>
-                                    <label for="organizacion_delegmunic" class="col-sm-2 control-label">Delegación/Municipio(*)</label>
+                                    <label for="empresa_email" class="col-sm-2 control-label">E-mail</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="organizacion_delegmunic" name="organizacion_delegmunic">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="organizacion_localidad" class="col-sm-2 control-label"><p class="text-left">Localidad(*)</p></label>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="organizacion_localidad" name="organizacion_localidad">
-                                    </div>
-                                    <label for="organizacion_colonia" class="col-sm-2 control-label">Colonia(*)</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="organizacion_colonia" name="organizacion_colonia">
+                                        <input type="text" class="form-control" id="empresa_email" name="empresa_email" placeholder="usuario@dominio.com" value="{{old('empresa_email')}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="organizacion_codpost" class="col-sm-2 control-label"><p class="text-left">Código Postal(*)</p></label>
+                                    <label for="empresa_estado" class="col-sm-2 control-label"><p class="text-left">Estado(*)</p></label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="organizacion_codpost" name="organizacion_codpost">
+                                        <input type="text" class="form-control" id="empresa_estado" name="empresa_estado" value="{{old('empresa_estado')}}">
                                     </div>
-                                    <label for="organizacion_pais" class="col-sm-2 control-label">País(*)</label>
+                                    <label for="empresa_delegacion" class="col-sm-2 control-label">Delegación/Municipio(*)</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="organizacion_pais" name="organizacion_pais">
+                                        <input type="text" class="form-control" id="empresa_delegacion" name="empresa_delegacion" value="{{old('empresa_delegacion')}}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="empresa_localidad" class="col-sm-2 control-label"><p class="text-left">Localidad(*)</p></label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="empresa_localidad" name="empresa_localidad" value="{{old('empresa_localidad')}}">
+                                    </div>
+                                    <label for="empresa_colonia" class="col-sm-2 control-label">Colonia(*)</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="empresa_colonia" name="empresa_colonia" value="{{old('empresa_colonia')}}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="empresa_codigopostal" class="col-sm-2 control-label"><p class="text-left">Código Postal(*)</p></label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="empresa_codigopostal" name="empresa_codigopostal" value="{{old('empresa_codigopostal')}}">
+                                    </div>
+                                    <label for="empresa_pais" class="col-sm-2 control-label">País(*)</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="empresa_pais" name="empresa_pais" value="{{old('empesa_pais')}}">
                                     </div>
                                 </div>
 
@@ -127,11 +138,42 @@
 @endsection
 
 @section('scripts')
-<!-- InputMask https://github.com/RobinHerbots/Inputmask -->
-<script src="adminlte/plugins/input-mask/dist/jquery.inputmask.bundle.js"></script>
 <script>
     $(document).ready(function(){
-        $("#organizacion_rfc").inputmask("A{3,4}-9{6}-A|9{3}");
-    });
+        $("#empresa_rfc").inputmask("A{3,4}-9{6}-A|9{3}");
+        $("#empresa_telefono").inputmask("(999)-999-9999");
+
+        //Validacion del formulario
+        jQuery.validator.setDefaults({
+            debug: true,
+            success: "valid"
+        });
+
+            $("#form_empresa").validate({
+                focusCleanup: true,
+                rules: {
+                    empresa_rfc: { required: true },
+                    empresa_razonsocial:{ required: true }
+                },
+                invalidHandler: function(event, validator){
+                    var errors = validator.numberOfInvalids();
+                    if (errors){
+                        var message = errors == 1
+                            ? 'You missed 1 field. It has been highlighted'
+                            : 'You missed ' + errors + ' fields. They have been highlighted';
+                        swal({
+                            title:"Error:",
+                            text: message,
+                            type: "error",
+                            allowOutsideClick: false,
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: "Corregir"
+                        });
+                        //console.log(message);
+                    }
+                }
+            });
+
+        });
 </script>
 @endsection

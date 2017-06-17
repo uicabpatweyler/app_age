@@ -19,7 +19,8 @@ Route::get('/', function () {
 /*
  * Configuración | Empresa
  */
-Route::get('empresa', 'EmpresaController@index')->name('nuevaempresa');
+Route::get('empresa', 'EmpresaController@create')->name('nuevaempresa');
+Route::post('guardarempresa', 'EmpresaController@store')->name('guardarempresa');
 
 /*
  * Configuración | Niveles

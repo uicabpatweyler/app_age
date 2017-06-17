@@ -13,10 +13,7 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        /*
-         * views\empresa\create.blade.php
-        */
-        return view('empresa/create');
+
     }
 
     /**
@@ -26,7 +23,10 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        //
+        /*
+        * views\empresa\create.blade.php
+       */
+        return view('empresa.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return dd($request->all());
     }
 
     /**

@@ -64,8 +64,6 @@
 @endsection
 
 @section('scripts')
-<!-- InputMask https://github.com/RobinHerbots/Inputmask -->
-<script src="{{asset('adminlte/plugins/input-mask/dist/jquery.inputmask.bundle.js')}}"></script>
 
     <script>
         $(document).ready(function(){

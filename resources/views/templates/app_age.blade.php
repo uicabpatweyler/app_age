@@ -17,8 +17,6 @@
     <link rel="stylesheet" href="{{asset('adminlte/plugins/select2/select2.min.css')}}">
     <!-- iCheck for checkboxes and radio inputs -->
     <link rel="stylesheet" href="{{asset('adminlte/plugins/iCheck/all.css')}}">
-    @yield('css')
-
     <!-- Theme style AdminLTE v2.3.8 -->
     <link rel="stylesheet" href="{{asset('adminlte/dist/css/AdminLTE.min.css')}}">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -26,6 +24,8 @@
         apply the skin class to the body tag so the changes take effect.
     -->
     <link rel="stylesheet" href="{{asset('adminlte/dist/css/skins/skin-blue.min.css')}}">
+
+    @yield('css')
 
 </head>
 <!--
@@ -77,10 +77,15 @@ desired effect
 <script src="{{asset('adminlte/plugins/fastclick/fastclick.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('adminlte//plugins/select2/select2.full.min.js')}}"></script>
+<!-- InputMask https://github.com/RobinHerbots/Inputmask -->
+<script src="{{asset('adminlte/plugins/input-mask/dist/jquery.inputmask.bundle.js')}}"></script>
+<!-- jQuery Validation https://jqueryvalidation.org/ -->
+<script src="{{asset('jquery-validation/dist/jquery.validate.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('adminlte/dist/js/app.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('adminlte/dist/js/demo.js')}}"></script>
+
 @yield('scripts')
 </body>
 </html>
