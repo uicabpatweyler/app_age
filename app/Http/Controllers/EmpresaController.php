@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class EmpresaController extends Controller
 {
@@ -37,7 +40,39 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        return dd($request->all());
+        $validation = Validator::make($request->all(),[
+            'empresa_rfc'           => 'required|unique:empresas|max:14',
+            'empresa_razonsocial'   => 'required',
+            'empresa_regimenfiscal' => 'required',
+            'empresa_direccion'     => 'required',
+            'empresa_numexterior'   => 'required',
+            'empresa_referencia'    => 'required',
+            'empresa_colonia'       => 'required',
+            'empresa_codigopostal'  => 'required|max:5',
+            'empresa_delegacion'    => 'required',
+            'empresa_localidad'     => 'required',
+            'empresa_estado'        => 'required',
+            'empresa_pais'          => 'required'
+        ]);
+
+        if($validation->passes()){
+            $now = Carbon::now('America/Mexico_City Time Zone');
+            $empresa = new Empresa();
+            $empresa->create($request->all());
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Los datos de la empresa se han guardado correctamente.'
+            ], 200);
+        }
+
+        $errors = $validation->errors();
+        $errors =  json_decode($errors);
+
+        return response()->json([
+            'success' => false,
+            'message' => $errors
+        ], 422);
     }
 
     /**
