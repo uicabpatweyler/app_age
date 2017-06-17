@@ -2,6 +2,16 @@
 
 @section('title', 'Datos de la empresa')
 
+@section('css')
+    <style>
+        label.error, label.error {
+            /* remove the next line when you have trouble in IE6 with labels in list */
+            color: red;
+            font-style: italic
+        }
+    </style>
+@endsection
+
 @section('content')
     <!-- Full Width Column -->
     <div class="content-wrapper">
@@ -25,7 +35,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" method="post" action="{{route('guardarempresa')}}" id="form_empresa">
+                        <form class="form-horizontal" method="post" action="" id="form_empresa">
                             {{csrf_field()}}
                             <div class="box-body">
                                 <div class="form-group empresa_rfc">
@@ -138,7 +148,9 @@
 @endsection
 
 @section('scripts')
+
 <script>
+    //https://es.stackoverflow.com/questions/5991/validaciones-con-jquery-validate
     $(document).ready(function(){
         $("#empresa_rfc").inputmask("A{3,4}-9{6}-A|9{3}");
         $("#empresa_telefono").inputmask("(999)-999-9999");
@@ -152,15 +164,38 @@
             $("#form_empresa").validate({
                 focusCleanup: true,
                 rules: {
-                    empresa_rfc: { required: true },
-                    empresa_razonsocial:{ required: true }
+                    empresa_rfc           : { required: true },
+                    empresa_razonsocial   : { required: true },
+                    empresa_regimenfiscal : { required: true },
+                    empresa_direccion     : { required: true },
+                    empresa_numexterior   : { required: true },
+                    empresa_referencia    : { required: true },
+                    empresa_estado        : { required: true },
+                    empresa_delegacion    : { required: true },
+                    empresa_localidad     : { required: true },
+                    empresa_colonia       : { required: true },
+                    empresa_codigopostal  : { required: true },
+                    empresa_pais          : { required: true}
                 },
-                invalidHandler: function(event, validator){
+                messages:{
+                    empresa_rfc           : 'Es necesario el RFC de la empresa',
+                    empresa_razonsocial   : 'Es necesario la razon social de la empresa',
+                    empresa_regimenfiscal : 'El regimen fiscal es obligatorio',
+                    empresa_direccion     : 'Falta la dirección',
+                    empresa_numexterior   : 'Falta el num. ext.',
+                    empresa_referencia    : 'Este campo es obligatorio',
+                    empresa_estado        : 'Este campo es obligatorio',
+                    empresa_delegacion    : 'Este campo es obligatorio',
+                    empresa_localidad     : 'Este campo es obligatorio',
+                    empresa_colonia       : 'Este campo es obligatorio',
+                    empresa_codigopostal  : 'Este campo es obligatorio',
+                    empresa_pais          : 'Este campo es obligatorio'
+                },
+                invalidHandler: function(event, validator) {
+                    // 'this' refers to the form
                     var errors = validator.numberOfInvalids();
-                    if (errors){
-                        var message = errors == 1
-                            ? 'You missed 1 field. It has been highlighted'
-                            : 'You missed ' + errors + ' fields. They have been highlighted';
+                    if (errors) {
+                        var message = 'El formulario es incorrecto.';
                         swal({
                             title:"Error:",
                             text: message,
@@ -169,10 +204,68 @@
                             confirmButtonColor: '#d33',
                             confirmButtonText: "Corregir"
                         });
-                        //console.log(message);
+
                     }
+                },
+                submitHandler: function(form) {
+                    ajaxSubmit();
                 }
             });
+
+            function ajaxSubmit(){
+
+                if( $("#empresa_rfc").inputmask("isComplete")){
+                    //alert("Enviar formulario con ajax");
+                    $.ajax({
+                        type:"POST",
+                        url:"guardarempresa",
+                        data: $("#form_empresa").serialize(),
+                        dataType : 'json',
+                        success: function(data){
+                            swal({
+                                title:"",
+                                text: data.message,
+                                type: "success",
+                                allowOutsideClick: false,
+                                confirmButtonText: 'Continuar'
+                            }).then(function(){
+                                window.location = "/";
+                            });
+                        },
+                        error: function(xhr,status, response ){
+                            //Obtener el valor de los errores devueltos por el controlador
+                            var error = jQuery.parseJSON(xhr.responseText);
+                            //Obtener los mensajes de error
+                            var info = error.message;
+                            //Crear la lista de errores
+                            var errorsHtml = '<ul>';
+                            $.each(info, function (key,value) {
+                                errorsHtml += '<li>' + value[0] + '</li>';
+                            });
+                            errorsHtml += '</ul>';
+                            //Mostrar el y/o los errores devuelto(s) por el controlador
+                            swal({
+                                title:"Error:",
+                                html: errorsHtml,
+                                type: "error",
+                                allowOutsideClick: false,
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: "Corregir"
+                            });
+                        }
+                    });
+                }
+                else{
+                    swal({
+                        title:"Error:",
+                        text: "El RFC introducido es incorrecto",
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+                }
+            };
 
         });
 </script>
