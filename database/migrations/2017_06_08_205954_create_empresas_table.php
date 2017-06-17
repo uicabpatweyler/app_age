@@ -24,13 +24,13 @@ class CreateEmpresasTable extends Migration
             $table->string('empresa_referencia');
             $table->string('empresa_colonia');
             $table->string('empresa_codigopostal',5);
-            $table->string('empresa_telefono',5)->nullable();
+            $table->string('empresa_telefono',20)->nullable();
             $table->string('empresa_email',60)->nullable();
             $table->string('empresa_delegacion');
             $table->string('empresa_localidad');
             $table->string('empresa_estado');
             $table->string('empresa_pais');
-            $table->boolean('empresa_status');
+            $table->boolean('empresa_status')->default(false);
             $table->timestamps();
         });
     }
