@@ -16,6 +16,14 @@ class EmpresaController extends Controller
      */
     public function index()
     {
+        $empresa = Empresa::all()->count();
+        if($empresa===0){ return redirect()->route('nuevaempresa');}
+        else{
+            $empresa= Empresa::all();
+            return view('empresa.index', compact('empresa'));
+            //return $empresa;
+        }
+
 
     }
 
@@ -94,7 +102,7 @@ class EmpresaController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view ('empresa.edit');
     }
 
     /**
