@@ -20,7 +20,7 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Crear Nueva Empresa
+                    Editar Empresa
                     <small></small>
                 </h1>
             </section>
@@ -229,7 +229,7 @@
                                 allowOutsideClick: false,
                                 confirmButtonText: 'Continuar'
                             }).then(function(){
-                                window.location = "{{ route('empresa') }}";
+                                window.location = "/";
                             });
                         },
                         error: function(xhr,status, response ){
