@@ -16,7 +16,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog" aria-hidden="true"></i> Configuración <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{route('nuevaempresa')}}"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Empresa</a></li>
+                                    <li><a href="{{route('empresa')}}"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Empresa</a></li>
                                     <li class="divider"></li>
                                     <li><a href="{{route('niveles')}}"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Niveles</a></li>
                                     <li class="divider"></li>
