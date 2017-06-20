@@ -22,6 +22,7 @@ Route::get('/', function () {
 Route::get('empresa', 'EmpresaController@index')->name('empresa');
 Route::get('nuevaempresa', 'EmpresaController@create')->name('nuevaempresa');
 Route::post('guardarempresa', 'EmpresaController@store')->name('guardarempresa');
+Route::post('updateempresa/{id}', 'EmpresaController@update')->name('updateempresa');
 Route::get('editarempresa/{id}', 'EmpresaController@edit')->name('editarempresa');
 
 /*
@@ -51,3 +52,4 @@ Route::get('selectCiclos','CicloEscolarController@listaCiclosAjax')->name('selec
 Route::post('guardarciclo', 'CicloEscolarController@store')->name('guardarciclo');
 Route::post('cambiarciclo', 'CicloEscolarController@cambiarCicloPredeterminado')->name('cambiarciclo');
 Route::post('updateciclo/{id}', 'CicloEscolarController@update')->name('updateciclo');
+
