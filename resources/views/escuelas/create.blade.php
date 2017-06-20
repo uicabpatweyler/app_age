@@ -2,11 +2,6 @@
 
 @section('title','Agregar nueva escuela')
 
-@section('css')
-<!-- Select2 -->
-    <link rel="stylesheet" href="{{asset('adminlte/plugins/select2/select2.min.css')}}">
-@endsection
-
 @section('content')
     <!-- Full Width Column -->
     <div class="content-wrapper">
@@ -34,14 +29,25 @@
                             {{csrf_field()}}
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="escuela_nivel" class="col-sm-2 control-label"><p class="text-left">Nivel:</p></label>
+                                    <label for="escuela_tiposervicio" class="col-sm-2 control-label"><p class="text-left">Tipo de Servicio:</p></label>
+                                    <div class="col-sm-3">
+                                        <select id="escuela_tiposervicio" name="escuela_tiposervicio" class="form-control escuela_tiposervicio" style="width: 100%;">
+                                            <option value="-1" selected>[Elija una opción]</option>
+                                            @foreach($tiposdeservicio as $tipodeservicio)
+                                                <option value="{{$tipodeservicio->id}}">{{$tipodeservicio->tiposervicio_nombre}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                                     <div class="col-sm-3">
                                         <select id="escuela_nivel" name="escuela_nivel" class="form-control escuela_nivel" style="width: 100%;">
-                                            <option value="-1" selected>No Aplica</option>
-                                            <option>Pre-escolar</option>
-                                            <option>Primaria</option>
-                                            <option>Secundaria</option>
-                                            <option>Preparatoria</option>
+                                            <option value="-1" selected>[Seleccione un nivel]</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <select id="escuela_servicio" name="escuela_servicio" class="form-control escuela_servicio" style="width: 100%;">
+                                            <option value="-1" selected>[Tipo de Servicio]</option>
                                         </select>
                                     </div>
                                 </div>
@@ -133,10 +139,74 @@
 @endsection
 
 @section('scripts')
-<!-- Select2 -->
-<script src="{{asset('adminlte//plugins/select2/select2.full.min.js')}}"></script>
 <script>
-    //Initialize Select2 Elements
-    $(".escuela_nivel").select2();
+    //http://www.snie.sep.gob.mx/SNIESC/default.aspx
+    $(document).ready(function () {
+        $('.escuela_tiposervicio').select2({
+            allowClear: true,
+            placeholder: {
+                id: "-1",
+                text: '[Elija una opción]'
+            }
+        });
+
+        $('.escuela_nivel').select2({
+            allowClear: true,
+            placeholder: {
+                id: "-1",
+                text: '[Seleccione un nivel]'
+            }
+        });
+
+        $('.escuela_servicio').select2({
+            allowClear: true,
+            placeholder: {
+                id: "-1",
+                text: '[Tipo de Servicio]'
+            }
+        });
+
+        $(".escuela_nivel").attr('disabled','-1');
+        $(".escuela_servicio").attr('disabled','-1');
+
+        $.fn.populateSelect = function (values) {
+            var options = '';
+            $.each(values, function (key, row) {
+                options += '<option value="' + row.value + '">' + row.text + '</option>';
+            });
+            $(this).html(options);
+        }
+
+        $('.escuela_tiposervicio').change(function () {
+
+            $(".escuela_nivel").removeAttr('disabled');
+
+            $('.escuela_nivel').empty().change();
+            $('.escuela_servicio').empty().change();
+
+            var tiposervicio_id = $(this).val();
+
+            $.getJSON('/listaAjaxNiveles/'+tiposervicio_id, null, function (values) {
+                $('.escuela_nivel').populateSelect(values);
+            });
+        });
+
+        $('.escuela_nivel').change(function () {
+            var nivel_id = $(this).val();
+            if(nivel_id===null){
+                console.log('No hacer nada');
+            }
+            else{
+                $(".escuela_servicio").removeAttr('disabled');
+                $(".escuela_servicio").empty().change();
+                $.getJSON('/listaAjaxServicios/'+nivel_id, null, function (values) {
+                    $('.escuela_servicio').populateSelect(values);
+                });
+            }
+        });
+    });
+
+
+
 </script>
 @endsection

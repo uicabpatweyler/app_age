@@ -2,11 +2,6 @@
 
 @section('title', 'Agregar nuevo nivel')
 
-@section('css')
-<!-- Select2 -->
-    <link rel="stylesheet" href="{{asset('adminlte/plugins/select2/select2.min.css')}}">
-@endsection
-
 @section('content')
     <!-- Full Width Column -->
     <div class="content-wrapper">
@@ -57,7 +52,8 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-danger"><i class="fa fa-ban fa-lg" aria-hidden="true"></i> Cancelar</button>
+                                <a class="btn btn-danger" href="{{route('niveles')}}">
+                                    <i class="fa fa-ban fa-lg" aria-hidden="true"></i>&nbsp;  Cancelar</a>
                                 <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Guardar Datos</button>
                             </div>
                             <!-- /.box-footer -->
@@ -75,8 +71,6 @@
 @endsection
 
 @section('scripts')
-<!-- Select2 -->
-<script src="{{asset('adminlte//plugins/select2/select2.full.min.js')}}"></script>
 <script>
     //Initialize Select2 Elements
     $(".nivel_categoria").select2();

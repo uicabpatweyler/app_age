@@ -34,7 +34,10 @@ Route::get('nuevonivel','NivelController@create')->name('nuevonivel');
 /*
  * Configuración | Escuelas
  */
+Route::get('escuelas','EscuelaController@index')->name('escuelas');
 Route::get('nuevaescuela','EscuelaController@create')->name('nuevaescuela');
+Route::get('listaAjaxNiveles/{id}','EscuelaController@listaAjaxNiveles')->name('listaAjaxNiveles');
+Route::get('listaAjaxServicios/{id}','EscuelaController@listaAjaxServicios')->name('listaAjaxServicios');
 
 /*
  * Configuracion | Clasificacion
