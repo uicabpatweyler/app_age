@@ -41,96 +41,97 @@
                                 <div class="form-group empresa_rfc">
                                     <label for="empresa_rfc" class="col-sm-2 control-label"><p class="text-left">RFC: (*)</p></label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="empresa_rfc" name="empresa_rfc" placeholder="RFC" value="{{old('empresa_rfc')}}">
+                                        <input type="text" class="form-control" id="empresa_rfc" name="empresa_rfc" placeholder="RFC" value="{{$empresa->empresa_rfc}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="empresa_razonsocial" class="col-sm-2 control-label"><p class="text-left">Razón Social (*)</p></label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="empresa_razonsocial" name="empresa_razonsocial" placeholder="Razón Social" value="{{old('empresa_razonsocial')}}">
+                                        <input type="text" class="form-control" id="empresa_razonsocial" name="empresa_razonsocial" placeholder="Razón Social" value="{{$empresa->empresa_razonsocial}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="empresa_regimenfiscal" class="col-sm-2 control-label"><p class="text-left">Regimen Fiscal (*)</p></label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="empresa_regimenfiscal" name="empresa_regimenfiscal" placeholder="Regimen Fiscal" value="{{old('empresa_regimenfiscal')}}">
+                                        <input type="text" class="form-control" id="empresa_regimenfiscal" name="empresa_regimenfiscal" placeholder="Regimen Fiscal" value="{{$empresa->empresa_regimenfiscal}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="empresa_direccion" class="col-sm-2 control-label"><p class="text-left">Dirección Fiscal (*)</p></label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="empresa_direccion" name="empresa_direccion" placeholder="Calle" value="{{old('empresa_direccion')}}">
+                                        <input type="text" class="form-control" id="empresa_direccion" name="empresa_direccion" placeholder="Calle" value="{{$empresa->empresa_direccion}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="empresa_numexterior" class="col-sm-2 control-label"><p class="text-left">Número. Ext(*)</p></label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="empresa_numexterior" name="empresa_numexterior" placeholder="Número Ext." value="{{old('empresa_numexterior')}}">
+                                        <input type="text" class="form-control" id="empresa_numexterior" name="empresa_numexterior" placeholder="Número Ext." value="{{$empresa->empresa_numexterior}}">
                                     </div>
                                     <label for="empresa_numinterior" class="col-sm-2 control-label">Número Int.</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="empresa_numinterior" name="empresa_numinterior" placeholder="Número Int." value="{{old('empresa_numinterior')}}">
+                                        <input type="text" class="form-control" id="empresa_numinterior" name="empresa_numinterior" placeholder="Número Int." value="{{$empresa->empresa_numinterior}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="empresa_referencia" class="col-sm-2 control-label"><p class="text-left">Referencia (*)</p></label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="empresa_referencia" name="empresa_referencia" placeholder="Cruzamientos/Esquina/Entre Calles" value="{{old('empresa_referencia')}}">
+                                        <input type="text" class="form-control" id="empresa_referencia" name="empresa_referencia" placeholder="Cruzamientos/Esquina/Entre Calles" value="{{$empresa->empresa_referencia}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="empresa_telefono" class="col-sm-2 control-label"><p class="text-left">Teléfono</p></label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="empresa_telefono" name="empresa_telefono" placeholder="(983)-000-0000" value="{{old('empresa_telefono')}}">
+                                        <input type="text" class="form-control" id="empresa_telefono" name="empresa_telefono" placeholder="(983)-000-0000" value="{{$empresa->empresa_telefono}}">
                                     </div>
                                     <label for="empresa_email" class="col-sm-2 control-label">E-mail</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="empresa_email" name="empresa_email" placeholder="usuario@dominio.com" value="{{old('empresa_email')}}">
+                                        <input type="text" class="form-control" id="empresa_email" name="empresa_email" placeholder="usuario@dominio.com" value="{{$empresa->empresa_email}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="empresa_estado" class="col-sm-2 control-label"><p class="text-left">Estado(*)</p></label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="empresa_estado" name="empresa_estado" value="{{old('empresa_estado')}}">
+                                        <input type="text" class="form-control" id="empresa_estado" name="empresa_estado" value="{{$empresa->empresa_estado}}">
                                     </div>
                                     <label for="empresa_delegacion" class="col-sm-2 control-label">Delegación/Municipio(*)</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="empresa_delegacion" name="empresa_delegacion" value="{{old('empresa_delegacion')}}">
+                                        <input type="text" class="form-control" id="empresa_delegacion" name="empresa_delegacion" value="{{$empresa->empresa_delegacion}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="empresa_localidad" class="col-sm-2 control-label"><p class="text-left">Localidad(*)</p></label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="empresa_localidad" name="empresa_localidad" value="{{old('empresa_localidad')}}">
+                                        <input type="text" class="form-control" id="empresa_localidad" name="empresa_localidad" value="{{$empresa->empresa_localidad}}">
                                     </div>
                                     <label for="empresa_colonia" class="col-sm-2 control-label">Colonia(*)</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="empresa_colonia" name="empresa_colonia" value="{{old('empresa_colonia')}}">
+                                        <input type="text" class="form-control" id="empresa_colonia" name="empresa_colonia" value="{{$empresa->empresa_colonia}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="empresa_codigopostal" class="col-sm-2 control-label"><p class="text-left">Código Postal(*)</p></label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="empresa_codigopostal" name="empresa_codigopostal" value="{{old('empresa_codigopostal')}}">
+                                        <input type="text" class="form-control" id="empresa_codigopostal" name="empresa_codigopostal" value="{{$empresa->empresa_codigopostal}}">
                                     </div>
                                     <label for="empresa_pais" class="col-sm-2 control-label">País(*)</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="empresa_pais" name="empresa_pais" value="{{old('empesa_pais')}}">
+                                        <input type="text" class="form-control" id="empresa_pais" name="empresa_pais" value="{{$empresa->empresa_pais}}">
                                     </div>
                                 </div>
 
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-danger"><i class="fa fa-ban fa-lg" aria-hidden="true"></i> Cancelar</button>
+                                <a class="btn btn-danger" href="{{route('empresa')}}">
+                                    <i class="fa fa-ban fa-lg" aria-hidden="true"></i>&nbsp;  Cancelar</a>
                                 <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Guardar Datos</button>
                             </div>
                             <!-- /.box-footer -->
@@ -218,7 +219,7 @@
                     //alert("Enviar formulario con ajax");
                     $.ajax({
                         type:"POST",
-                        url:"guardarempresa",
+                        url:"{{route('updateempresa', $empresa->id)}}",
                         data: $("#form_empresa").serialize(),
                         dataType : 'json',
                         success: function(data){
@@ -229,7 +230,7 @@
                                 allowOutsideClick: false,
                                 confirmButtonText: 'Continuar'
                             }).then(function(){
-                                window.location = "/";
+                                window.location = "{{route('empresa')}}";
                             });
                         },
                         error: function(xhr,status, response ){
