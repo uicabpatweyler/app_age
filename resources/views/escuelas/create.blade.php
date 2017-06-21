@@ -73,6 +73,17 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="icheck_datosempresa" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-4">
+                                        <label>
+                                            <input type="checkbox" class="flat-red">
+                                            &nbsp;&nbsp;
+                                            Replicar datos de la empresa
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="escuela_direccion" class="col-sm-2 control-label"><p class="text-left">Dirección(*)</p></label>
                                     <div class="col-sm-5">
                                         <input type="text" class="form-control" id="escuela_direccion" name="escuela_direccion" placeholder="Direccion">
@@ -123,9 +134,18 @@
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" id="escuela_pais" name="escuela_pais">
                                     </div>
-
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="escuela_telefono" class="col-sm-2 control-label"><p class="text-left">Teléfono</p></label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="escuela_telefono" name="escuela_telefono" placeholder="(983)-000-0000">
+                                    </div>
+                                    <label for="escuela_email" class="col-sm-2 control-label">E-mail</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="escuela_email" name="escuela_email" placeholder="usuario@dominio.com">
+                                    </div>
+                                </div>
 
 
                             </div>
@@ -151,6 +171,48 @@
 <script>
     //http://www.snie.sep.gob.mx/SNIESC/default.aspx
     $(document).ready(function () {
+
+        $("#escuela_clavect").inputmask("9{2}A{3}9{4}A{1}");
+        $("#escuela_numincorporacion").inputmask("A{4}9{5}A{2}");
+        $("#escuela_telefono").inputmask("(999)-999-9999");
+
+
+        //Flat red color scheme for iCheck
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat-green'
+        });
+
+        $('input').on('ifChecked', function(event){
+            $("#escuela_direccion").val('{{$empresa_direccion}}');
+            $("#escuela_numexterior").val('{{$empresa_numexterior}}');
+            $("#escuela_numinterior").val('{{$empresa_numinterior}}');
+            $("#escuela_referencias").val('{{$empresa_referencia}}');
+            $("#escuela_estado").val('{{$empresa_estado}}');
+            $("#escuela_delegacionmunicipio").val('{{$empresa_delegacion}}');
+            $("#escuela_localidad").val('{{$empresa_localidad}}');
+            $("#escuela_colonia").val('{{$empresa_colonia}}');
+            $("#escuela_codpost").val('{{$empresa_codigopostal}}');
+            $("#escuela_pais").val('{{$empresa_pais}}');
+        });
+
+        $('input').on('ifUnchecked', function(event){
+            $("#escuela_direccion").val('');
+            $("#escuela_direccion").val('');
+            $("#escuela_numexterior").val('');
+            $("#escuela_numinterior").val('');
+            $("#escuela_referencias").val('');
+            $("#escuela_estado").val('');
+            $("#escuela_delegacionmunicipio").val('');
+            $("#escuela_localidad").val('');
+            $("#escuela_colonia").val('');
+            $("#escuela_codpost").val('');
+            $("#escuela_pais").val('');
+        });
+
+
+
+
         $('.escuela_tiposervicio').select2({
             allowClear: true,
             placeholder: {
