@@ -54,13 +54,22 @@
 
                                 <div class="form-group">
                                     <label for="escuela_nombre" class="col-sm-2 control-label"><p class="text-left">Nombre:(*)</p></label>
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control" id="escuela_nombre" name="escuela_nombre" placeholder="Nombre de la escuela">
                                     </div>
-                                    <label for="escuela_clavect" class="col-sm-1 control-label">Clave</label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="escuela_clavect" class="col-sm-2 control-label"><p class="text-left">Clave:(*)</p></label>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" id="escuela_clavect" name="escuela_clavect" placeholder="Clave CT">
                                     </div>
+
+                                    <label for="escuela_numincorporacion" class="col-sm-2 control-label">Incorporación:</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="escuela_numincorporacion" name="escuela_numincorporacion" placeholder="Num. Acuerdo Incorporación">
+                                    </div>
+
                                 </div>
 
                                 <div class="form-group">
