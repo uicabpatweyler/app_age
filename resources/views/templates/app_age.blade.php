@@ -73,6 +73,8 @@ desired effect
 <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
 <!-- SlimScroll -->
 <script src="{{asset('adminlte/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
+<!-- iCheck 1.0.1 -->
+<script src="{{asset('adminlte/plugins/iCheck/icheck.min.js')}}"></script>
 <!-- FastClick -->
 <script src="{{asset('adminlte/plugins/fastclick/fastclick.js')}}"></script>
 <!-- Select2 -->
