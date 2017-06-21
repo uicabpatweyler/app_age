@@ -16,7 +16,10 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        View::composer('templates.main-footer','App\Http\ViewComposers\DatosEmpresaComposer');
+        View::composer([
+            'templates.main-footer',
+            'escuelas.create'
+        ],'App\Http\ViewComposers\DatosEmpresaComposer');
     }
 
     /**
