@@ -2,6 +2,16 @@
 
 @section('title','Agregar nueva escuela')
 
+@section('css')
+    <style>
+        label.error, label.error {
+            /* remove the next line when you have trouble in IE6 with labels in list */
+            color: red;
+            font-style: italic
+        }
+    </style>
+@endsection
+
 @section('content')
     <!-- Full Width Column -->
     <div class="content-wrapper">
@@ -25,7 +35,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form action="" class="form-horizontal">
+                        <form action="" class="form-horizontal" method="post" id="form_escuela">
                             {{csrf_field()}}
                             <div class="box-body">
                                 <div class="form-group">
@@ -73,17 +83,6 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="icheck_datosempresa" class="col-sm-2 control-label"></label>
-                                    <div class="col-sm-4">
-                                        <label>
-                                            <input type="checkbox" class="flat-red">
-                                            &nbsp;&nbsp;
-                                            Replicar datos de la empresa
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
                                     <label for="escuela_direccion" class="col-sm-2 control-label"><p class="text-left">Dirección(*)</p></label>
                                     <div class="col-sm-5">
                                         <input type="text" class="form-control" id="escuela_direccion" name="escuela_direccion" placeholder="Direccion">
@@ -97,9 +96,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="escuela_referencias" class="col-sm-2 control-label"><p class="text-left">Referencias</p></label>
+                                    <label for="escuela_referencia" class="col-sm-2 control-label"><p class="text-left">Referencias</p></label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="escuela_referencias" name="escuela_referencias" placeholder="Cruzamientos/Esquina/Entre Calles">
+                                        <input type="text" class="form-control" id="escuela_referencia" name="escuela_referencia" placeholder="Cruzamientos/Esquina/Entre Calles">
                                     </div>
                                 </div>
 
@@ -108,9 +107,9 @@
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" id="escuela_estado" name="escuela_estado">
                                     </div>
-                                    <label for="escuela_delegacionmunicipio" class="col-sm-2 control-label">Delegación/Municipio(*)</label>
+                                    <label for="escuela_delegacion" class="col-sm-2 control-label">Delegación/Municipio(*)</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="escuela_delegacionmunicipio" name="escuela_delegacionmunicipio">
+                                        <input type="text" class="form-control" id="escuela_delegacion" name="escuela_delegacion">
                                     </div>
                                 </div>
 
@@ -177,42 +176,6 @@
         $("#escuela_telefono").inputmask("(999)-999-9999");
 
 
-        //Flat red color scheme for iCheck
-        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-            checkboxClass: 'icheckbox_flat-green',
-            radioClass: 'iradio_flat-green'
-        });
-
-        $('input').on('ifChecked', function(event){
-            $("#escuela_direccion").val('{{$empresa_direccion}}');
-            $("#escuela_numexterior").val('{{$empresa_numexterior}}');
-            $("#escuela_numinterior").val('{{$empresa_numinterior}}');
-            $("#escuela_referencias").val('{{$empresa_referencia}}');
-            $("#escuela_estado").val('{{$empresa_estado}}');
-            $("#escuela_delegacionmunicipio").val('{{$empresa_delegacion}}');
-            $("#escuela_localidad").val('{{$empresa_localidad}}');
-            $("#escuela_colonia").val('{{$empresa_colonia}}');
-            $("#escuela_codpost").val('{{$empresa_codigopostal}}');
-            $("#escuela_pais").val('{{$empresa_pais}}');
-        });
-
-        $('input').on('ifUnchecked', function(event){
-            $("#escuela_direccion").val('');
-            $("#escuela_direccion").val('');
-            $("#escuela_numexterior").val('');
-            $("#escuela_numinterior").val('');
-            $("#escuela_referencias").val('');
-            $("#escuela_estado").val('');
-            $("#escuela_delegacionmunicipio").val('');
-            $("#escuela_localidad").val('');
-            $("#escuela_colonia").val('');
-            $("#escuela_codpost").val('');
-            $("#escuela_pais").val('');
-        });
-
-
-
-
         $('.escuela_tiposervicio').select2({
             allowClear: true,
             placeholder: {
@@ -265,7 +228,7 @@
         $('.escuela_nivel').change(function () {
             var nivel_id = $(this).val();
             if(nivel_id===null){
-                console.log('No hacer nada');
+
             }
             else{
                 $(".escuela_servicio").removeAttr('disabled');
@@ -275,6 +238,78 @@
                 });
             }
         });
+
+        //Validacion del formulario
+        jQuery.validator.setDefaults({
+            debug: true,
+            success: "valid"
+        });
+
+        $("#form_escuela").validate({
+            focusCleanup: true,
+            focusInvalid: false,
+            rules:{
+                escuela_nombre      : { required: true },
+                escuela_clavect     : { required: true },
+                escuela_direccion   : { required: true },
+                escuela_numexterior : { required: true },
+                escuela_referencia  : { required: true },
+                escuela_colonia     : { required: true },
+                escuela_codpost     : { required: true },
+                escuela_delegacion  : { required: true },
+                escuela_localidad   : { required: true },
+                escuela_estado      : { required: true },
+                escuela_pais        : { required: true }
+
+            },
+            messages:{
+                escuela_nombre      : 'El nombre de la escuela es obligatorio',
+                escuela_clavect     : 'Campo obligatorio',
+                escuela_direccion   : 'Falta la dirección',
+                escuela_numexterior : 'Falta el num. ext.',
+                escuela_referencia  : 'Este campo es obligatorio',
+                escuela_colonia     : 'Este campo es obligatorio',
+                escuela_codpost     : 'Este campo es obligatorio',
+                escuela_delegacion  : 'Este campo es obligatorio',
+                escuela_localidad   : 'Este campo es obligatorio',
+                escuela_estado      : 'Este campo es obligatorio',
+                escuela_pais        : 'Este campo es obligatorio'
+
+            },
+            invalidHandler: function(event, validator) {
+                // 'this' refers to the form
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                    var message = 'El formulario es incorrecto.';
+                    swal({
+                        title:"Error:",
+                        text: message,
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+
+                }
+            },
+            submitHandler: function(form) {
+                ajaxSubmit();
+            }
+        });
+
+        function ajaxSubmit(){
+            var tiposervicio_id = $('.escuela_tiposervicio').val();
+            if(tiposervicio_id==="-1"){
+                swal({
+                    title:"Error:",
+                    text: "Falta el tipo de servicio de la escuela",
+                    type: "error",
+                    allowOutsideClick: false,
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: "Corregir"
+                });
+            }
+        }
     });
 
 
