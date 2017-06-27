@@ -96,7 +96,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="escuela_referencia" class="col-sm-2 control-label"><p class="text-left">Referencias</p></label>
+                                    <label for="escuela_referencia" class="col-sm-2 control-label"><p class="text-left">Referencias(*)</p></label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="escuela_referencia" name="escuela_referencia" placeholder="Cruzamientos/Esquina/Entre Calles">
                                     </div>
@@ -151,7 +151,8 @@
                             <!-- /.box-body -->
                             <div class="box-footer">
 
-                                <button type="submit" class="btn btn-primary pull-right" id="boton_enviar" name="boton_enviar"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Guardar Datos</button>
+                                <button type="submit" class="btn btn-primary pull-right" id="boton_enviar" name="boton_enviar">
+                                    <i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Guardar Datos</button>
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -238,10 +239,6 @@
                 });
             }
         });
-
-        var form = $( "#form_escuela" );
-
-        //form.validate();
 
         $("#boton_enviar").click(function(){
             //1) El usuario debe elegir un valor del select Tipo de Servicio
@@ -336,17 +333,67 @@
                         }
                     },
                     submitHandler: function(form) {
-                        return true;
+                        ajaxSubmit();
+                        //form.submit();
                     }
                 });
-
-
             }
-
-
-
-
         });
+
+        function ajaxSubmit(){
+            //Validar las entradas de los inputmask
+            if( $("#escuela_clavect").inputmask("isComplete")){
+                //alert('Enviar formulario por ajax.');
+                $.ajax({
+                    type:"POST",
+                    url:"guardarescuela",
+                    data: $("#form_escuela").serialize(),
+                    dataType : 'json',
+                    success: function(data){
+                        swal({
+                            title:"",
+                            text: data.message,
+                            type: "success",
+                            allowOutsideClick: false,
+                            confirmButtonText: 'Continuar'
+                        }).then(function(){
+                            window.location = "{{ route('escuelas') }}";
+                        });;
+                    },
+                    error: function(xhr,status, response ){
+                        //Obtener el valor de los errores devueltos por el controlador
+                        var error = jQuery.parseJSON(xhr.responseText);
+                        //Obtener los mensajes de error
+                        var info = error.message;
+                        //Crear la lista de errores
+                        var errorsHtml = '<ul>';
+                        $.each(info, function (key,value) {
+                            errorsHtml += '<li>' + value[0] + '</li>';
+                        });
+                        errorsHtml += '</ul>';
+                        //Mostrar el y/o los errores devuelto(s) por el controlador
+                        swal({
+                            title:"Error:",
+                            html: errorsHtml,
+                            type: "error",
+                            allowOutsideClick: false,
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: "Corregir"
+                        });
+                    }
+                });
+            }
+            else{
+                swal({
+                    title:"Error:",
+                    text: "La clave del centro de trabajo es incorrecta.",
+                    type: "error",
+                    allowOutsideClick: false,
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: "Corregir"
+                });
+            }
+        }
 
 
     });
