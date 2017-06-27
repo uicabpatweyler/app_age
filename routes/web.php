@@ -36,6 +36,7 @@ Route::get('nuevonivel','NivelController@create')->name('nuevonivel');
  */
 Route::get('escuelas','EscuelaController@index')->name('escuelas');
 Route::get('nuevaescuela','EscuelaController@create')->name('nuevaescuela');
+Route::post('guardarescuela', 'EscuelaController@store')->name('guardarescuela');
 Route::get('listaAjaxNiveles/{id}','EscuelaController@listaAjaxNiveles')->name('listaAjaxNiveles');
 Route::get('listaAjaxServicios/{id}','EscuelaController@listaAjaxServicios')->name('listaAjaxServicios');
 
