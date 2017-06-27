@@ -131,7 +131,18 @@ return [
         'empresa_delegacion' => 'Delegación',
         'empresa_localidad' => 'Localidad',
         'empresa_estado' => 'Estado',
-        'empresa_pais' => 'País'
+        'empresa_pais' => 'País',
+
+        'escuela_nombre' => 'Nombre',
+        'escuela_direccion' => 'Dirección',
+        'escuela_numexterior' => 'Número Exterior',
+        'escuela_referencia' => 'Referencias',
+        'escuela_colonia' => 'Colonia',
+        'escuela_codpost' => 'Código Postal',
+        'escuela_delegacion' => 'Delegación',
+        'escuela_localidad' => 'Localidad',
+        'escuela_estado' => 'Estado',
+        'escuela_pais' => 'País'
     ],
 
 ];
