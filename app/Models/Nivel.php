@@ -23,4 +23,10 @@ class Nivel extends Model
         'nivel_nombre',
         'nivel_estado'
     ];
+
+    //Relacion 1:M. Lado 1
+    //Un NIVEL se usa en 1 o MUCHAS escuelas
+    public function Escuelas(){
+        return $this->hasMany(Escuela::class);
+    }
 }

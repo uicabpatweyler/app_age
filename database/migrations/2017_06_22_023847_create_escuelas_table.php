@@ -15,10 +15,10 @@ class CreateEscuelasTable extends Migration
     {
         Schema::create('escuelas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('escuela_tiposervicio')->unsigned();
-            $table->integer('escuela_nivel')->unsigned();
-            $table->integer('escuela_servicio')->unsigned();
-            $table->integer('escuela_ciclo')->unsigned()->default(0);
+            $table->integer('tiposervicio_id')->unsigned();
+            $table->integer('nivel_id')->unsigned();
+            $table->integer('servicio_id')->unsigned();
+            $table->integer('ciclo_id')->unsigned()->default(0);
             $table->string('escuela_nombre');
             $table->string('escuela_clavect',20);
             $table->string('escuela_numincorporacion',20)->nullable();
@@ -37,9 +37,9 @@ class CreateEscuelasTable extends Migration
             $table->boolean('escuela_status')->default(true);
             $table->timestamps();
 
-            $table->foreign('escuela_tiposervicio')->references('id')->on('tiposdeservicio');
-            $table->foreign('escuela_nivel')->references('id')->on('niveles');
-            $table->foreign('escuela_servicio')->references('id')->on('servicios');
+            $table->foreign('tiposervicio_id')->references('id')->on('tiposdeservicio');
+            $table->foreign('nivel_id')->references('id')->on('niveles');
+            $table->foreign('servicio_id')->references('id')->on('servicios');
         });
     }
 

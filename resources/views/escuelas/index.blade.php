@@ -34,7 +34,7 @@
                             @foreach($escuelas as $escuela)
                             <tr>
                                 <td>{{$i++}}</td>
-                                <td>{{$escuela->escuela_nivel}}</td>
+                                <td>{{$escuela->Nivel->nivel_nombre}}</td>
                                 <td>{{$escuela->escuela_nombre}}</td>
                                 <td>
                                     <a class="btn btn-xs btn-danger" href="#" title="Eliminar">

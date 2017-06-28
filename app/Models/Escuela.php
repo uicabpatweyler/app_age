@@ -19,10 +19,10 @@ class Escuela extends Model
      * @var array
      */
     protected $fillable = [
-        'escuela_tiposervicio',
-        'escuela_nivel',
-        'escuela_servicio',
-        'escuela_ciclo',
+        'tiposervicio_id',
+        'nivel_id',
+        'servicio_id',
+        'ciclo_id',
         'escuela_nombre',
         'escuela_clavect',
         'escuela_numincorporacion',
@@ -40,6 +40,12 @@ class Escuela extends Model
         'escuela_pais',
         'escuela_status',
     ];
+
+    //Relación 1:M. Lado muchos
+    //Una escuela pertenece a UN solo nivel
+    public function Nivel(){
+        return $this->belongsTo(Nivel::class);
+    }
 
 
 
