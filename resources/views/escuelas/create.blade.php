@@ -151,6 +151,9 @@
                             <!-- /.box-body -->
                             <div class="box-footer">
 
+                                <a class="btn btn-danger" href="{{route('escuelas')}}">
+                                    <i class="fa fa-ban fa-lg" aria-hidden="true"></i>&nbsp;  Cancelar</a>
+
                                 <button type="submit" class="btn btn-primary pull-right" id="boton_enviar" name="boton_enviar">
                                     <i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Guardar Datos</button>
                             </div>

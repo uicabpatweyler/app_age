@@ -19,10 +19,10 @@ class Escuela extends Model
      * @var array
      */
     protected $fillable = [
-        'tiposervicio_id',
-        'nivel_id',
-        'servicio_id',
-        'ciclo_id',
+        'escuela_tiposervicio',
+        'escuela_nivel',
+        'escuela_servicio',
+        'escuela_ciclo',
         'escuela_nombre',
         'escuela_clavect',
         'escuela_numincorporacion',
@@ -43,8 +43,10 @@ class Escuela extends Model
 
     //Relación 1:M. Lado muchos
     //Una escuela pertenece a UN solo nivel
-    public function Nivel(){
-        return $this->belongsTo(Nivel::class);
+    //https://laravel.com/docs/5.4/eloquent-relationships#one-to-many
+    //El campo 'escuela_nivel' es la FK que hace referencia al campo 'id' de la tabla NIVELES
+    public function NivelEscuela(){
+        return $this->belongsTo(Nivel::class,'escuela_nivel', 'id');
     }
 
 

@@ -20,7 +20,9 @@ class EscuelaController extends Controller
      */
     public function index()
     {
-        $escuela = Escuela::all()->count();
+        $escuela = Escuela::all()
+                   ->where('escuela_status', true)
+                   ->count();
         if($escuela===0){
             $tiposdeservicio = TipoDeServicio::select('id', 'tiposervicio_nombre')
                 ->where('tiposervicio_estado', 1)
@@ -30,7 +32,9 @@ class EscuelaController extends Controller
             return view('escuelas.create',compact('tiposdeservicio'));
         }
         else{
-            $escuelas = Escuela::all();
+            $escuelas = Escuela::where('escuela_status', true)
+                        ->OrderBy('id', 'ASC')
+                        ->get();
             return view('escuelas.index', compact('escuelas'));
         }
 
@@ -46,7 +50,12 @@ class EscuelaController extends Controller
         /*
          * views\escuelas\create.blade.php
         */
-        return view('escuelas/create');
+        $tiposdeservicio = TipoDeServicio::select('id', 'tiposervicio_nombre')
+            ->where('tiposervicio_estado', 1)
+            ->OrderBy('id','ASC')
+            ->get();
+
+        return view('escuelas.create',compact('tiposdeservicio'));
     }
 
     /**
@@ -140,7 +149,26 @@ class EscuelaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $escuela = Escuela::findOrFail($id);
+        
+        $tiposdeservicio = TipoDeServicio::select('id', 'tiposervicio_nombre')
+            ->where('tiposervicio_estado', true)
+            ->OrderBy('id','ASC')
+            ->get();
+
+        $niveles = Nivel::select('id', 'nivel_nombre')
+                   ->where('nivel_estado', true)
+                   ->where('tiposervicio_id', $escuela->escuela_tiposervicio)
+                   ->OrderBy('id', 'ASC')
+                   ->get();
+
+        $servicios = Servicio::select('id', 'servicio_nombre')
+                     ->where('servicio_estado', true)
+                     ->where('nivel_id', $escuela->escuela_nivel)
+                     ->OrderBy('id', 'ASC')
+                     ->get();
+
+        return view('escuelas.edit', compact('escuela','tiposdeservicio', 'niveles', 'servicios'));
     }
 
     /**
@@ -152,7 +180,7 @@ class EscuelaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**

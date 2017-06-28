@@ -23,7 +23,12 @@
 
                     <div class="box-body">
 
-                        <table class="table table-bordered">
+                        <a class="btn btn-success" href="{{route('nuevaescuela')}}">
+                            <i class="fa fa-plus-square fa-lg" aria-hidden="true"></i>&nbsp;  Agregar Escuela</a>
+
+                        <br /><br />
+
+                        <table class="table table-striped">
                             <tr>
                                 <th style="width: 50px">#</th>
                                 <th>Nivel</th>
@@ -34,13 +39,13 @@
                             @foreach($escuelas as $escuela)
                             <tr>
                                 <td>{{$i++}}</td>
-                                <td>{{$escuela->Nivel->nivel_nombre}}</td>
+                                <td>{{$escuela->NivelEscuela->nivel_nombre}}</td>
                                 <td>{{$escuela->escuela_nombre}}</td>
                                 <td>
                                     <a class="btn btn-xs btn-danger" href="#" title="Eliminar">
                                         <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Eliminar</a>
                                     |
-                                    <a class="btn btn-xs btn-info" href="" title="Editar">
+                                    <a class="btn btn-xs btn-info" href="{{route('editarescuela',$escuela->id)}}" title="Editar">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
                                 </td>
                             </tr>
