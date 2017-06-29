@@ -34,11 +34,13 @@ Route::get('nuevonivel','NivelController@create')->name('nuevonivel');
 /*
  * Configuración | Escuelas
  */
-Route::get('escuelas','EscuelaController@index')->name('escuelas');
-Route::get('nuevaescuela','EscuelaController@create')->name('nuevaescuela');
-Route::post('guardarescuela', 'EscuelaController@store')->name('guardarescuela');
-Route::get('editarescuela/{id}','EscuelaController@edit')->name('editarescuela');
-Route::get('listaAjaxNiveles/{id}','EscuelaController@listaAjaxNiveles')->name('listaAjaxNiveles');
+Route::get('escuelas',               'EscuelaController@index')->name('escuelas');
+Route::get('nuevaescuela',           'EscuelaController@create')->name('nuevaescuela');
+Route::get('editarescuela/{id}',     'EscuelaController@edit')->name('editarescuela');
+Route::post('guardarescuela',        'EscuelaController@store')->name('guardarescuela');
+Route::post('updateescuela/{id}',    'EscuelaController@update')->name('updateescuela');
+Route::get('eliminarescuela/{id}',  'EscuelaController@destroy')->name('eliminarescuela');
+Route::get('listaAjaxNiveles/{id}',  'EscuelaController@listaAjaxNiveles')->name('listaAjaxNiveles');
 Route::get('listaAjaxServicios/{id}','EscuelaController@listaAjaxServicios')->name('listaAjaxServicios');
 
 /*

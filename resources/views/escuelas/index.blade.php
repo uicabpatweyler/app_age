@@ -70,3 +70,43 @@
 </div>
 <!-- /.content-wrapper -->
 @endsection
+
+@section('scripts')
+<script>
+    //https://stackoverflow.com/questions/39321621/uncaught-in-promise-cancel-using-sweetalert2
+    $(document).ready(function () {
+        $(".btn-danger").click(function () {
+            swal({
+                title: '¿Esta seguro de querer eliminar la siguiente escuela?',
+                text: "{{$escuela->escuela_nombre}}",
+                type: 'warning',
+                allowOutsideClick: false,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, deseo eliminarla!',
+                showLoaderOnConfirm: true,
+                cancelButtonText: 'No, me equivoque',
+                focusCancel: true
+            }).then(function () {
+               $.ajax({
+                   type:"GET",
+                   url:"{{route('eliminarescuela', $escuela->id)}}",
+                   dataType : 'json',
+                   success: function(data){
+                       swal({
+                           title:"",
+                           text: data.message,
+                           type: "success",
+                           allowOutsideClick: false,
+                           confirmButtonText: 'Continuar'
+                       }).then(function(){
+                           window.location = "{{ route('escuelas') }}";
+                       });
+                   }
+               });
+            }).catch(swal.noop);
+        });
+    });
+</script>
+@endsection

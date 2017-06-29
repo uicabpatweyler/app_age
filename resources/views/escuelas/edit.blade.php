@@ -2,6 +2,17 @@
 
 @section('title', 'Editar Escuela')
 
+@section('css')
+    <style>
+        label.error, label.error {
+            /* remove the next line when you have trouble in IE6 with labels in list */
+            color: red;
+            font-style: italic
+        }
+    </style>
+@endsection
+
+
 @section('content')
         <!-- Full Width Column -->
 <div class="content-wrapper">
@@ -22,6 +33,7 @@
                     </div>
 
                     <form action="" class="form-horizontal" method="post" id="form_escuela">
+                        {{csrf_field()}}
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="escuela_tiposervicio" class="col-sm-2 control-label"><p class="text-left">Tipo de Servicio:(*)</p></label>
@@ -244,6 +256,161 @@
                     });
                 }
             });
+
+            $("#boton_enviar").click(function(){
+                //1) El usuario debe elegir un valor del select Tipo de Servicio
+                var tiposervicio_id = $('.escuela_tiposervicio').val();
+                if(tiposervicio_id==="-1"){
+                    swal({
+                        title:"Error:",
+                        text: "Falta el tipo de servicio de la escuela",
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+                    return false;
+                }
+                //2) El usuario debe elegir un valor del select Nivel
+                else if($(".escuela_nivel").prop('disabled')===false && $('.escuela_nivel').val()==="-1"){
+                    swal({
+                        title:"Error:",
+                        text: "Falta el nivel de la escuela",
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+                    return false;
+                }
+                //3) EL usuario debe elegir un valor del select Servicio
+                else if($(".escuela_servicio").prop('disabled')===false && $('.escuela_servicio').val()==="-1"){
+                    swal({
+                        title:"Error:",
+                        text: "Falta el servicio que ofrecera la escuela",
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+                    return false
+                }
+                //Se procede a validar el resto de los campos del formulario
+                else{
+                    jQuery.validator.setDefaults({
+                        debug: true,
+                        success: "valid"
+                    });
+
+                    $("#form_escuela").validate({
+                        focusCleanup: true,
+                        focusInvalid: false,
+                        rules:{
+                            escuela_nombre      : { required: true },
+                            escuela_clavect     : { required: true },
+                            escuela_direccion   : { required: true },
+                            escuela_numexterior : { required: true },
+                            escuela_referencia  : { required: true },
+                            escuela_colonia     : { required: true },
+                            escuela_codpost     : { required: true },
+                            escuela_delegacion  : { required: true },
+                            escuela_localidad   : { required: true },
+                            escuela_estado      : { required: true },
+                            escuela_pais        : { required: true }
+
+                        },
+                        messages:{
+                            escuela_nombre      : 'El nombre de la escuela es obligatorio',
+                            escuela_clavect     : 'Campo obligatorio',
+                            escuela_direccion   : 'Falta la dirección',
+                            escuela_numexterior : 'Falta el num. ext.',
+                            escuela_referencia  : 'Este campo es obligatorio',
+                            escuela_colonia     : 'Este campo es obligatorio',
+                            escuela_codpost     : 'Este campo es obligatorio',
+                            escuela_delegacion  : 'Este campo es obligatorio',
+                            escuela_localidad   : 'Este campo es obligatorio',
+                            escuela_estado      : 'Este campo es obligatorio',
+                            escuela_pais        : 'Este campo es obligatorio'
+
+                        },
+                        invalidHandler: function(event, validator) {
+                            // 'this' refers to the form
+                            var errors = validator.numberOfInvalids();
+                            if (errors) {
+                                var message = 'El formulario es incorrecto.';
+                                swal({
+                                    title:"Error:",
+                                    text: message,
+                                    type: "error",
+                                    allowOutsideClick: false,
+                                    confirmButtonColor: '#d33',
+                                    confirmButtonText: "Corregir"
+                                });
+
+                            }
+                        },
+                        submitHandler: function(form) {
+                            ajaxSubmit();
+                        }
+                    });
+                }
+            });
+
+            function ajaxSubmit(){
+                //Validar las entradas de los inputmask
+                if( $("#escuela_clavect").inputmask("isComplete")){
+                    //alert('Enviar formulario por ajax.');
+                    $.ajax({
+                        type:"POST",
+                        url:"{{route('updateescuela', $escuela->id)}}",
+                        data: $("#form_escuela").serialize(),
+                        dataType : 'json',
+                        success: function(data){
+                            swal({
+                                title:"",
+                                text: data.message,
+                                type: "success",
+                                allowOutsideClick: false,
+                                confirmButtonText: 'Continuar'
+                            }).then(function(){
+                                window.location = "{{ route('escuelas') }}";
+                            });;
+                        },
+                        error: function(xhr,status, response ){
+                            //Obtener el valor de los errores devueltos por el controlador
+                            var error = jQuery.parseJSON(xhr.responseText);
+                            //Obtener los mensajes de error
+                            var info = error.message;
+                            //Crear la lista de errores
+                            var errorsHtml = '<ul>';
+                            $.each(info, function (key,value) {
+                                errorsHtml += '<li>' + value[0] + '</li>';
+                            });
+                            errorsHtml += '</ul>';
+                            //Mostrar el y/o los errores devuelto(s) por el controlador
+                            swal({
+                                title:"Error:",
+                                html: errorsHtml,
+                                type: "error",
+                                allowOutsideClick: false,
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: "Corregir"
+                            });
+                        }
+                    });
+                }
+                else{
+                    swal({
+                        title:"Error:",
+                        text: "La clave del centro de trabajo es incorrecta.",
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+                }
+            }
+
         });
     </script>
 @endsection

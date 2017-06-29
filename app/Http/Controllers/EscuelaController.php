@@ -180,7 +180,67 @@ class EscuelaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validation = Validator::make($request->all(),[
+            'escuela_tiposervicio'     => 'required',
+            'escuela_nivel'            => 'required',
+            'escuela_servicio'         => 'required',
+            'escuela_nombre'           => 'required',
+            'escuela_clavect'          => 'required|max:20',
+            'escuela_direccion'        => 'required',
+            'escuela_numexterior'      => 'required|max:60',
+            'escuela_referencia'       => 'required',
+            'escuela_colonia'          => 'required',
+            'escuela_codpost'          => 'required|max:5',
+            'escuela_delegacion'       => 'required',
+            'escuela_localidad'        => 'required',
+            'escuela_estado'           => 'required',
+            'escuela_pais'             => 'required'
+        ]);
 
+        if($validation->passes()){
+
+            $updated_at = Carbon::now('America/Mexico_City Time Zone');
+
+            $escuela = Escuela::findOrFail($id);
+
+            $escuela->escuela_tiposervicio     = $request->get('escuela_tiposervicio');
+            $escuela->escuela_nivel            = $request->get('escuela_nivel');
+            $escuela->escuela_servicio         = $request->get('escuela_servicio');
+            $escuela->escuela_ciclo            = 0;
+            $escuela->escuela_nombre           = $request->get('escuela_nombre');
+            $escuela->escuela_clavect          = $request->get('escuela_clavect');
+            $escuela->escuela_numincorporacion = $request->get('escuela_numincorporacion');
+            $escuela->escuela_direccion        = $request->get('escuela_direccion');
+            $escuela->escuela_numexterior      = $request->get('escuela_numexterior');
+            $escuela->escuela_numinterior      = $request->get('escuela_numinterior');
+            $escuela->escuela_referencia       = $request->get('escuela_referencia');
+            $escuela->escuela_colonia          = $request->get('escuela_colonia');
+            $escuela->escuela_codpost          = $request->get('escuela_codpost');
+            $escuela->escuela_telefono         = $request->get('escuela_telefono');
+            $escuela->escuela_email            = $request->get('escuela_email');
+            $escuela->escuela_delegacion       = $request->get('escuela_delegacion');
+            $escuela->escuela_localidad        = $request->get('escuela_localidad');
+            $escuela->escuela_estado           = $request->get('escuela_estado');
+            $escuela->escuela_pais             = $request->get('escuela_pais');
+            $escuela->escuela_status           = true;
+            $escuela->updated_at               = $updated_at ;
+
+            $escuela->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Los datos de la escuela se han actualizado correctamente.'
+            ], 200);
+
+        }
+
+        $errors = $validation->errors();
+        $errors =  json_decode($errors);
+
+        return response()->json([
+            'success' => false,
+            'message' => $errors
+        ], 422);
     }
 
     /**
@@ -191,7 +251,20 @@ class EscuelaController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $escuela = Escuela::findOrFail($id);
+
+        //Cambiamos el Status a false, poniendola como inactiva. No se elimina fisicamente por las relaciones
+        //que pueda tener con otras tablas
+        $escuela->escuela_status = false;
+
+        //Guardamos los datos
+        $escuela->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'La eliminación de la escuela se ha realizado correctamente'
+        ], 200);
     }
 
     public function listaAjaxNiveles($id){
