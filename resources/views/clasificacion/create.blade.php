@@ -27,12 +27,28 @@
                         <!-- form start -->
                         <form class="form-horizontal" method="post" action="">
                             {{csrf_field()}}
+                            <input type="hidden" name="ciclo_id" id="ciclo_id" value="{{$ciclo->id}}">
+
                             <div class="box-body">
 
                                 <div class="form-group">
                                     <label for="clasificacion_cicloescolar" class="col-sm-2 control-label"><p class="text-left">Ciclo Escolar:(*)</p></label>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="clasificacion_cicloescolar" name="clasificacion_cicloescolar" placeholder="">
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="clasificacion_cicloescolar" name="clasificacion_cicloescolar" value="{{$ciclo->ciclo_anioinicial}}-{{$ciclo->ciclo_aniofinal}}" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="escuela_id" class="col-sm-2 control-label"><p class="text-left">Escuela:</p></label>
+                                    <div class="col-sm-5">
+                                        <select name="escuela_id" id="escuela_id" class="form-control select_escuela_id" style="width: 100%;">
+                                            <option value="-1" selected>[Elija una escuela]</option>
+                                            @foreach($escuelas as $escuela)
+                                                <option value="{{$escuela->id}}">
+                                                    {{$escuela->NivelEscuela->nivel_nombre}}  -  {{$escuela->escuela_nombre}}</option>
+                                            @endforeach    
+                                        </select>
+
                                     </div>
                                 </div>
 
@@ -70,3 +86,16 @@
     <!-- /.content-wrapper -->
 @endsection
 
+@section('scripts')
+<script>
+    $(document).ready(function () {
+        $('.select_escuela_id').select2({
+            allowClear: true,
+            placeholder: {
+                id: "-1",
+                text: '[Elija una escuela]'
+            }
+        });
+    });
+</script>
+@endsection
