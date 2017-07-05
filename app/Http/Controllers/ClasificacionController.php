@@ -2,10 +2,26 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Ciclo;
+use App\Models\Clasificacion;
+use App\Models\Escuela;
 use Illuminate\Http\Request;
 
-class ClasificacionController extends Controller
-{
+
+class ClasificacionController extends Controller{
+
+
+    public function cicloEscolarPredeterminado()
+    {
+        //Obtener el ID del ciclo actual de trabajo
+        $ciclo = Ciclo::where('ciclo_activo', false)
+            ->where('ciclo_actual', true)
+            ->first();
+
+        return $ciclo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +29,24 @@ class ClasificacionController extends Controller
      */
     public function index()
     {
-        //
+
+        $ciclo = $this->cicloEscolarPredeterminado();
+
+        //Verificar las clasificaciones existentes para el ciclo actual de trabajo
+        $clasificaciones = Clasificacion::all()
+            ->where('ciclo_id', $ciclo->id)
+            ->where('clasificacion_status', true)
+            ->count();
+
+        if($clasificaciones===0){
+            //Nueva clasifiación
+            return redirect()->route('nuevaclasificacion');
+        }
+        else if($clasificaciones>=1){
+            //Mostrar la lista de clasificaciones
+            return view ('clasificacion.index');
+        }
+
     }
 
     /**
@@ -23,7 +56,12 @@ class ClasificacionController extends Controller
      */
     public function create()
     {
-        return view('clasificacion/create');
+        $escuelas = Escuela::where('escuela_status', true)
+                    ->get();
+
+        $ciclo = $this->cicloEscolarPredeterminado();
+
+        return view('clasificacion.create', compact('ciclo', 'escuelas'));
     }
 
     /**
