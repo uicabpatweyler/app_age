@@ -46,6 +46,7 @@ Route::get('listaAjaxServicios/{id}','EscuelaController@listaAjaxServicios')->na
 /*
  * Configuracion | Clasificacion
  */
+Route::get('clasificaciones', 'ClasificacionController@index')->name('clasificaciones');
 Route::get('nuevaclasificacion', 'ClasificacionController@create')->name('nuevaclasificacion');
 
 /*
