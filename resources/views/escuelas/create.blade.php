@@ -361,7 +361,7 @@
                             confirmButtonText: 'Continuar'
                         }).then(function(){
                             window.location = "{{ route('escuelas') }}";
-                        });;
+                        });
                     },
                     error: function(xhr,status, response ){
                         //Obtener el valor de los errores devueltos por el controlador
