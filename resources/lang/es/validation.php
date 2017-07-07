@@ -142,7 +142,9 @@ return [
         'escuela_delegacion' => 'Delegación',
         'escuela_localidad' => 'Localidad',
         'escuela_estado' => 'Estado',
-        'escuela_pais' => 'País'
+        'escuela_pais' => 'País',
+
+        'clasificacion_nombre' => 'Clasificación'
     ],
 
 ];
