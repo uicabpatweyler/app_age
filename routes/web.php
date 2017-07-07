@@ -39,7 +39,7 @@ Route::get('nuevaescuela',           'EscuelaController@create')->name('nuevaesc
 Route::get('editarescuela/{id}',     'EscuelaController@edit')->name('editarescuela');
 Route::post('guardarescuela',        'EscuelaController@store')->name('guardarescuela');
 Route::post('updateescuela/{id}',    'EscuelaController@update')->name('updateescuela');
-Route::get('eliminarescuela/{id}',  'EscuelaController@destroy')->name('eliminarescuela');
+Route::get('eliminarescuela/{id}',   'EscuelaController@destroy')->name('eliminarescuela');
 Route::get('listaAjaxNiveles/{id}',  'EscuelaController@listaAjaxNiveles')->name('listaAjaxNiveles');
 Route::get('listaAjaxServicios/{id}','EscuelaController@listaAjaxServicios')->name('listaAjaxServicios');
 
@@ -48,6 +48,10 @@ Route::get('listaAjaxServicios/{id}','EscuelaController@listaAjaxServicios')->na
  */
 Route::get('clasificaciones', 'ClasificacionController@index')->name('clasificaciones');
 Route::get('nuevaclasificacion', 'ClasificacionController@create')->name('nuevaclasificacion');
+Route::post('guardarclasificacion', 'ClasificacionController@store')->name('guardarclasificacion');
+Route::get('clasificacionesPorEscuela/{id}','ClasificacionController@filtrarClasificaciones')->name('clasificacionesPorEscuela');
+Route::get('editarclasificacion/{id}', 'ClasificacionController@edit')->name('editarclasificacion');
+Route::get('eliminarciclo/{id}', 'ClasificacionController@eliminar')->name('eliminarclasificacion');
 
 /*
  * Configuración | Ciclo Escolar
