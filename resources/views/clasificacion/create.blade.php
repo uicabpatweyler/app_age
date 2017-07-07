@@ -2,6 +2,18 @@
 
 @section('title', 'Agregar nueva clasificacion')
 
+@section('css')
+
+<style>
+    label.error, label.error {
+        /* remove the next line when you have trouble in IE6 with labels in list */
+            color: red;
+            font-style: italic
+    }
+</style>
+@endsection
+
+
 @section('content')
     <!-- Full Width Column -->
     <div class="content-wrapper">
@@ -25,7 +37,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" method="post" action="">
+                        <form class="form-horizontal" method="post" action="" name="form_clasificacion" id="form_clasificacion">
                             {{csrf_field()}}
                             <input type="hidden" name="ciclo_id" id="ciclo_id" value="{{$ciclo->id}}">
 
@@ -59,18 +71,14 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="clasificacion_abreviacion" class="col-sm-2 control-label"><p class="text-left">Abreviación:</p></label>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="clasificacion_abreviacion" name="clasificacion_abreviacion" placeholder="Abreviación">
-                                    </div>
-                                </div>
-
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-danger"><i class="fa fa-ban fa-lg" aria-hidden="true"></i> Cancelar</button>
-                                <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Guardar Datos</button>
+                                <a class="btn btn-danger" href="{{route('clasificaciones')}}">
+                                    <i class="fa fa-ban fa-lg" aria-hidden="true"></i>&nbsp;  Cancelar</a>
+
+                                <button type="submit" class="btn btn-primary pull-right" name="boton_enviar" id="boton_enviar">
+                                    <i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Guardar Datos</button>
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -96,6 +104,116 @@
                 text: '[Elija una escuela]'
             }
         });
+
+        $("#boton_enviar").click(function(){
+
+            var escuela_id = $('.select_escuela_id').val();
+            var ciclo_escolar = $('#clasificacion_cicloescolar').val().length;
+
+            //Verificar que el campo ciclo escolar no este vacio
+            if(ciclo_escolar===0){
+                swal({
+                    title:"Error:",
+                    text: "Es necesario el ciclo escolar.",
+                    type: "error",
+                    allowOutsideClick: false,
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: "Corregir"
+                });
+                return false;
+            }
+            //Verificar que se haya seleccionado una escuela
+            else if(escuela_id==="-1"){
+                swal({
+                    title:"Error:",
+                    text: "Es necesario elegir una escuela",
+                    type: "error",
+                    allowOutsideClick: false,
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: "Corregir"
+                });
+                return false;
+            }
+            //Se procede a validar el resto de los campos del formulario
+            else{
+                jQuery.validator.setDefaults({
+                    debug: true,
+                    success: "valid"
+                });
+                $("#form_clasificacion").validate({
+                    focusCleanup: true,
+                    focusInvalid: false,
+                    rules:{
+                        clasificacion_nombre : { required: true }
+                    },
+                    messages:{
+                        clasificacion_nombre : 'El campo clasificacion es obligatorio'
+                    },
+                    invalidHandler: function(event, validator) {
+                        // 'this' refers to the form
+                        var errors = validator.numberOfInvalids();
+                        if (errors) {
+                            var message = 'El formulario es incorrecto.';
+                            swal({
+                                title:"Error:",
+                                text: message,
+                                type: "error",
+                                allowOutsideClick: false,
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: "Corregir"
+                            });
+
+                        }
+                    },
+                    submitHandler: function(form) {
+                        ajaxSubmit();
+                    }
+                });
+            }
+
+            function ajaxSubmit(){
+                $.ajax({
+                    type:"POST",
+                    url:"guardarclasificacion",
+                    data: $("#form_clasificacion").serialize(),
+                    dataType : 'json',
+                    success: function(data){
+                        swal({
+                            title:"",
+                            text: data.message,
+                            type: "success",
+                            allowOutsideClick: false,
+                            confirmButtonText: 'Continuar'
+                        }).then(function(){
+                            window.location = "{{ route('clasificaciones') }}";
+                        });
+                    },
+                    error: function(xhr,status, response ){
+                        //Obtener el valor de los errores devueltos por el controlador
+                        var error = jQuery.parseJSON(xhr.responseText);
+                        //Obtener los mensajes de error
+                        var info = error.message;
+                        //Crear la lista de errores
+                        var errorsHtml = '<ul>';
+                        $.each(info, function (key,value) {
+                            errorsHtml += '<li>' + value[0] + '</li>';
+                        });
+                        errorsHtml += '</ul>';
+                        //Mostrar el y/o los errores devuelto(s) por el controlador
+                        swal({
+                            title:"Error:",
+                            html: errorsHtml,
+                            type: "error",
+                            allowOutsideClick: false,
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: "Corregir"
+                        });
+                    }
+                });
+            }
+
+        });
+
     });
 </script>
 @endsection
