@@ -6,11 +6,24 @@ namespace App\Http\Controllers;
 use App\Models\Ciclo;
 use App\Models\Clasificacion;
 use App\Models\Escuela;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 
 class ClasificacionController extends Controller{
 
+    public function filtrarClasificaciones($id)
+    {
+        $filtro = Clasificacion::where('escuela_id',$id)
+                  ->where('clasificacion_status', true)
+                  ->get()
+                  ->toArray();
+
+        return response()->json([
+            'data' => $filtro
+        ]);
+    }
 
     public function cicloEscolarPredeterminado()
     {
@@ -44,7 +57,9 @@ class ClasificacionController extends Controller{
         }
         else if($clasificaciones>=1){
             //Mostrar la lista de clasificaciones
-            return view ('clasificacion.index');
+            $escuelas = Escuela::where('escuela_status', true)
+                        ->get();
+            return view ('clasificacion.index', compact('escuelas', 'ciclo'));
         }
 
     }
@@ -72,7 +87,39 @@ class ClasificacionController extends Controller{
      */
     public function store(Request $request)
     {
-        //
+        $validation =Validator::make($request->all(),[
+            'ciclo_id'             => 'required',
+            'escuela_id'           => 'required',
+            'clasificacion_nombre' => 'required'
+        ]);
+
+        if($validation->passes()){
+
+            $now = Carbon::now('America/Mexico_City Time Zone');
+
+            $clasificacion = new Clasificacion();
+            $clasificacion->ciclo_id = $request->get('ciclo_id');
+            $clasificacion->escuela_id = $request->get('escuela_id');
+            $clasificacion->clasificacion_nombre = $request->get('clasificacion_nombre');
+            $clasificacion->clasificacion_status = true;
+            $clasificacion->created_at = $now;
+            $clasificacion->updated_at = $now;
+
+            $clasificacion->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Los datos se han guardado correctamente.'
+            ], 200);
+        }
+
+        $errors = $validation->errors();
+        $errors =  json_decode($errors);
+
+        return response()->json([
+            'success' => false,
+            'message' => $errors
+        ], 422);
     }
 
     /**
@@ -95,6 +142,11 @@ class ClasificacionController extends Controller{
     public function edit($id)
     {
         //
+    }
+
+    public function eliminar($id)
+    {
+
     }
 
     /**
