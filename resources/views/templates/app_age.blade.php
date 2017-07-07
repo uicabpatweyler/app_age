@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{asset('adminlte/plugins/select2/select2.min.css')}}">
     <!-- iCheck for checkboxes and radio inputs -->
     <link rel="stylesheet" href="{{asset('adminlte/plugins/iCheck/all.css')}}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{asset('adminlte/plugins/datatables/dataTables.bootstrap.css')}}">
     <!-- Theme style AdminLTE v2.3.8 -->
     <link rel="stylesheet" href="{{asset('adminlte/dist/css/AdminLTE.min.css')}}">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -71,6 +73,9 @@ desired effect
 <script src="{{asset('adminlte/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
+<!-- DataTables -->
+<script src="{{asset('adminlte/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('adminlte/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 <!-- SlimScroll -->
 <script src="{{asset('adminlte/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
 <!-- iCheck 1.0.1 -->
