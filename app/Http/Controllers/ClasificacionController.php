@@ -42,26 +42,52 @@ class ClasificacionController extends Controller{
      */
     public function index()
     {
-
-        $ciclo = $this->cicloEscolarPredeterminado();
-
-        //Verificar las clasificaciones existentes para el ciclo actual de trabajo
-        $clasificaciones = Clasificacion::all()
-            ->where('ciclo_id', $ciclo->id)
-            ->where('clasificacion_status', true)
+        /*
+        * 1) Verificar que al menos exista una escuela activa
+        */
+        $numeroDeEscuelas = Escuela::all()
+            ->where('escuela_status', true)
             ->count();
 
-        if($clasificaciones===0){
-            //Nueva clasifiación
-            return redirect()->route('nuevaclasificacion');
+        if($numeroDeEscuelas===0)
+        {
+            //Nueva Escuela
+            return redirect()->route('nuevaescuela');
         }
-        else if($clasificaciones>=1){
-            //Mostrar la lista de clasificaciones
-            $escuelas = Escuela::where('escuela_status', true)
-                        ->get();
-            return view ('clasificacion.index', compact('escuelas', 'ciclo'));
+        /*
+         * 2) Verificar que al menos exista un ciclo escolar creado y que este activo
+         * 3) Si existe al menos un ciclo escolar, debe existir el ciclo de trabajo predeterminado
+         */
+        else if($this->cicloEscolarPredeterminado()===null)
+        {
+            //1) No existe al menos un ciclo escolar creado
+            //2) Existe al menos un ciclo escolar, pero no se ha marcado como predeterminado
+            //3) Existe mas de un ciclo escolar, pero ninguno se ha marcado como predeterminado
+            //En cualquiera de los tres casos es necesario redirigir hacia la seccion de los CICLOS ESCOLARES
+            return redirect()->route('ciclos');
         }
+        else
+        {
+            //Obtener el ciclo escolar predeterminado de trabajo
+            $ciclo = $this->cicloEscolarPredeterminado();
 
+            //Verificar las clasificaciones existentes para el ciclo actual de trabajo
+            $clasificaciones = Clasificacion::all()
+                ->where('ciclo_id', $ciclo->id)
+                ->where('clasificacion_status', true)
+                ->count();
+
+            if($clasificaciones===0){
+                //Nueva clasifiación
+                return redirect()->route('nuevaclasificacion');
+            }
+            else
+            {
+                $escuelas = Escuela::where('escuela_status', true)
+                            ->get();
+                return view ('clasificacion.index', compact('escuelas', 'ciclo'));
+            }
+        }
     }
 
     /**
