@@ -15,7 +15,9 @@ class ClasificacionController extends Controller{
 
     public function filtrarClasificaciones($id)
     {
-        $filtro = Clasificacion::where('escuela_id',$id)
+        $ciclo  =   $this->cicloEscolarPredeterminado();
+        $filtro = Clasificacion::where('ciclo_id',$ciclo->id)
+                  ->where('escuela_id', $id)
                   ->where('clasificacion_status', true)
                   ->get()
                   ->toArray();
