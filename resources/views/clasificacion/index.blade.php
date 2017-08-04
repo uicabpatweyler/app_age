@@ -106,7 +106,7 @@
             if(escuela_id==="-1"){
                 swal({
                     title:"Error:",
-                    text: "Debe elegir una lista de la escuela",
+                    text: "Debe elegir una escuela de la lista.",
                     type: "error",
                     allowOutsideClick: false,
                     confirmButtonColor: '#d33',
@@ -127,16 +127,15 @@
                     columns: [
                         { data: null,
                             render: function(){
-                                //'<p class="text-center">'+i+=1+'</p>'
                                 i+=1;
                                 return '<b><p class="text-center">'+i+'</p></b>';
                             }
                         },
-                        { data: "clasificacion_nombre" },
+                        { data: "clasificacion_nombre" }, //campo de la tabla
                         { data: null,
                             "render": function ( data, type, full, meta ) {
                                 var buttons='';
-                                buttons += '<a class="'+"btn btn-xs btn-info"+'" href="/editarclasificacion/'+data.id+'">';
+                                buttons += '<a class="'+"btn btn-xs btn-info"+'" href="/editarclasificacion/'+data.id+'/'+data.escuela_id+'">';
                                 buttons += '<i class="'+"fa fa-pencil-square-o"+'" aria-hidden="'+"true"+'"></i>';
                                 buttons += 'Editar';
                                 buttons += '</a>';

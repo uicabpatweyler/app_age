@@ -167,9 +167,19 @@ class ClasificacionController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id_clasificacion,$id_escuela)
     {
-        //
+        //Obtener el ciclo escolar predeterminado de trabajo
+        $ciclo    = $this->cicloEscolarPredeterminado();
+
+        $escuelas = Escuela::where('escuela_status', true)
+                    ->get();
+
+        $clasificacion = Clasificacion::where('clasificacion_status', true)
+            ->where('id', $id_clasificacion)
+            ->first();
+
+        return view('clasificacion.edit', compact('ciclo','escuelas','id_escuela','clasificacion'));
     }
 
     public function eliminar($id)
