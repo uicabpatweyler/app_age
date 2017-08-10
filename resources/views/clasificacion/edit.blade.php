@@ -55,7 +55,7 @@
                                     <div class="col-sm-5">
                                         <select name="escuela_id" id="escuela_id" class="form-control select_escuela_id" style="width: 100%;">
                                             @foreach($escuelas as $escuela)
-                                                @if($escuela->id === $id_escuela)
+                                                @if($escuela->id == $id_escuela)
                                                     <option value="{{$id_escuela}}" selected>
                                                         {{$escuela->NivelEscuela->nivel_nombre}}  -  {{$escuela->escuela_nombre}}
                                                     </option>
@@ -112,6 +112,99 @@
             });
 
             $("#boton_enviar").click(function(){
+                var escuela_id = $('.select_escuela_id').val();
+
+                //Es necesario elegir la escuela
+                if(escuela_id===null) {
+                    swal({
+                        title: "Error:",
+                        text: "Es necesario elegir una escuela",
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+                    return false;
+                }
+                //Se procede a validar el resto de los campos del formulario
+                else{
+
+                    jQuery.validator.setDefaults({
+                        debug: true,
+                        success: "valid"
+                    });
+
+                    $("#form_clasificacion").validate({
+                        focusCleanup: true,
+                        focusInvalid: false,
+                        rules:{
+                            clasificacion_nombre : { required: true }
+                        },
+                        messages:{
+                            clasificacion_nombre : 'El campo clasificacion es obligatorio'
+                        },
+                        invalidHandler: function(event, validator) {
+                            // 'this' refers to the form
+                            var errors = validator.numberOfInvalids();
+                            if (errors) {
+                                var message = 'El formulario es incorrecto.';
+                                swal({
+                                    title:"Error:",
+                                    text: message,
+                                    type: "error",
+                                    allowOutsideClick: false,
+                                    confirmButtonColor: '#d33',
+                                    confirmButtonText: "Corregir"
+                                });
+
+                            }
+                        },
+                        submitHandler: function(form) {
+                            ajaxSubmit();
+                        }
+                    });
+                }
+
+                function ajaxSubmit(){
+                    $.ajax({
+                        type:"POST",
+                        url:"{{route('updateclasificacion', $clasificacion->id)}}",
+                        data: $("#form_clasificacion").serialize(),
+                        dataType : 'json',
+                        success: function(data){
+                            swal({
+                                title:"",
+                                text: data.message,
+                                type: "success",
+                                allowOutsideClick: false,
+                                confirmButtonText: 'Continuar'
+                            }).then(function(){
+                                window.location = "{{ route('clasificaciones') }}";
+                            });
+                        },
+                        error: function(xhr,status, response ){
+                            //Obtener el valor de los errores devueltos por el controlador
+                            var error = jQuery.parseJSON(xhr.responseText);
+                            //Obtener los mensajes de error
+                            var info = error.message;
+                            //Crear la lista de errores
+                            var errorsHtml = '<ul>';
+                            $.each(info, function (key,value) {
+                                errorsHtml += '<li>' + value[0] + '</li>';
+                            });
+                            errorsHtml += '</ul>';
+                            //Mostrar el y/o los errores devuelto(s) por el controlador
+                            swal({
+                                title:"Error:",
+                                html: errorsHtml,
+                                type: "error",
+                                allowOutsideClick: false,
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: "Corregir"
+                            });
+                        }
+                    });
+                }
 
             });
 

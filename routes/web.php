@@ -48,11 +48,12 @@ Route::get('listaAjaxServicios/{id}','EscuelaController@listaAjaxServicios')->na
  */
 Route::get('clasificaciones', 'ClasificacionController@index')->name('clasificaciones');
 Route::get('nuevaclasificacion', 'ClasificacionController@create')->name('nuevaclasificacion');
-Route::post('guardarclasificacion', 'ClasificacionController@store')->name('guardarclasificacion');
 Route::get('clasificacionesPorEscuela/{id}','ClasificacionController@filtrarClasificaciones')->name('clasificacionesPorEscuela');
 Route::get('editarclasificacion/{id_clasificacion}/{id_escuela}', 'ClasificacionController@edit')->name('editarclasificacion');
+Route::post('guardarclasificacion', 'ClasificacionController@store')->name('guardarclasificacion');
+Route::post('updateclasificacion/{id}','ClasificacionController@update')->name('updateclasificacion');
 
-Route::get('eliminarciclo/{id}', 'ClasificacionController@eliminar')->name('eliminarclasificacion');
+
 
 /*
  * Configuración | Ciclo Escolar
@@ -61,7 +62,7 @@ Route::get('ciclos','CicloEscolarController@index')->name('ciclos');
 Route::get('nuevociclo','CicloEscolarController@create')->name('nuevociclo');
 Route::get('editarciclo/{id}','CicloEscolarController@edit')->name('editarciclo');
 Route::get('selectCiclos','CicloEscolarController@listaCiclosAjax')->name('selectCiclos');
-
+Route::get('eliminarciclo/{id}', 'ClasificacionController@eliminar')->name('eliminarclasificacion');
 Route::post('guardarciclo', 'CicloEscolarController@store')->name('guardarciclo');
 Route::post('cambiarciclo', 'CicloEscolarController@cambiarCicloPredeterminado')->name('cambiarciclo');
 Route::post('updateciclo/{id}', 'CicloEscolarController@update')->name('updateciclo');

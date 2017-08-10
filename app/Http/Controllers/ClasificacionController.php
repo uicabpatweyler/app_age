@@ -196,7 +196,39 @@ class ClasificacionController extends Controller{
      */
     public function update(Request $request, $id)
     {
-        //
+        $validation =Validator::make($request->all(),[
+            'ciclo_id'             => 'required',
+            'escuela_id'           => 'required',
+            'clasificacion_nombre' => 'required'
+        ]);
+
+        if($validation->passes()){
+
+            $updated_at = Carbon::now('America/Mexico_City Time Zone');
+
+            $clasificacion = Clasificacion::findOrFail($id);
+
+            $clasificacion->escuela_id = $request->get('escuela_id');
+            $clasificacion->clasificacion_nombre = $request->get('clasificacion_nombre');
+            $clasificacion->updated_at = $updated_at;
+
+            $clasificacion->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Los datos se han guardado correctamente.'
+            ], 200);
+
+        }
+
+        $errors = $validation->errors();
+        $errors =  json_decode($errors);
+
+        return response()->json([
+            'success' => false,
+            'message' => $errors
+        ], 422);
+
     }
 
     /**
