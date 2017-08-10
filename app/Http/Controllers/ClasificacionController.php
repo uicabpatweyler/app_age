@@ -182,11 +182,6 @@ class ClasificacionController extends Controller{
         return view('clasificacion.edit', compact('ciclo','escuelas','id_escuela','clasificacion'));
     }
 
-    public function eliminar($id)
-    {
-
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -237,8 +232,8 @@ class ClasificacionController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id_clasificacion,$id_escuela)
     {
-        //
+        return dd($id_clasificacion, $id_escuela);
     }
 }

@@ -140,7 +140,7 @@
                                 buttons += 'Editar';
                                 buttons += '</a>';
                                 buttons += ' | ';
-                                buttons += '<a class="'+"btn btn-xs btn-danger"+'" href="/eliminarclasificacion/'+data.id+'">';
+                                buttons += '<a class="'+"btn btn-xs btn-danger"+'" href="/eliminarclasificacion/'+data.id+'/'+data.escuela_id+'">';
                                 buttons += '<i class="'+"fa fa-trash-o fa-lg"+'" aria-hidden="'+"true"+'"></i>';
                                 buttons += 'Eliminar';
                                 buttons += '</a>';
