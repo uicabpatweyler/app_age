@@ -50,7 +50,8 @@ Route::get('clasificaciones',                                       'Clasificaci
 Route::get('nuevaclasificacion',                                    'ClasificacionController@create')->name('nuevaclasificacion');
 Route::get('clasificacionesPorEscuela/{id}',                        'ClasificacionController@filtrarClasificaciones')->name('clasificacionesPorEscuela');
 Route::get('editarclasificacion/{id_clasificacion}/{id_escuela}',   'ClasificacionController@edit')->name('editarclasificacion');
-Route::get('eliminarclasificacion/{id_clasificacion}/{id_escuela}', 'ClasificacionController@destroy')->name('eliminarclasificacion');
+Route::get('mostrarclasificacion/{id_clasificacion}/{id_escuela}',  'ClasificacionController@show')->name('mostrarclasificacion');
+Route::post('eliminarclasificacion/{id}',                            'ClasificacionController@destroy')->name('eliminarclasificacion');
 Route::post('guardarclasificacion',                                 'ClasificacionController@store')->name('guardarclasificacion');
 Route::post('updateclasificacion/{id}',                             'ClasificacionController@update')->name('updateclasificacion');
 
