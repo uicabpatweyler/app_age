@@ -24,7 +24,7 @@
                                     <li class="divider"></li>
                                     <li><a href="{{route('clasificaciones')}}"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Clasificación</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Grupos</a></li>
+                                    <li><a href="{{route('grupos')}}"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Grupos</a></li>
                                     <li class="divider"></li>
                                 </ul>
                             </li>
