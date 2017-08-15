@@ -156,9 +156,20 @@ class ClasificacionController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id_clasificacion,$id_escuela)
     {
-        //
+        //Obtener el ciclo escolar predeterminado de trabajo
+        $ciclo    = $this->cicloEscolarPredeterminado();
+
+        $escuela = Escuela::where('escuela_status', true)
+                   ->where('id', $id_escuela)
+                   ->first();
+
+        $clasificacion = Clasificacion::where('clasificacion_status', true)
+            ->where('id', $id_clasificacion)
+            ->first();
+
+        return view('clasificacion.delete',compact('id_clasificacion','ciclo','escuela','clasificacion'));
     }
 
     /**
@@ -232,8 +243,20 @@ class ClasificacionController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id_clasificacion,$id_escuela)
+    public function destroy(Request $request,$id)
     {
-        return dd($id_clasificacion, $id_escuela);
+        $updated_at = Carbon::now('America/Mexico_City Time Zone');
+
+        $clasificacion = Clasificacion::findOrFail($id);
+
+        $clasificacion->clasificacion_status = false;
+        $clasificacion->updated_at = $updated_at;
+
+        $clasificacion->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'El registro se ha eliminado correctamente.'
+        ], 200);
     }
 }
