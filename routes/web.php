@@ -55,8 +55,6 @@ Route::post('eliminarclasificacion/{id}',                            'Clasificac
 Route::post('guardarclasificacion',                                 'ClasificacionController@store')->name('guardarclasificacion');
 Route::post('updateclasificacion/{id}',                             'ClasificacionController@update')->name('updateclasificacion');
 
-
-
 /*
  * Configuración | Ciclo Escolar
  */
@@ -67,4 +65,10 @@ Route::get('selectCiclos','CicloEscolarController@listaCiclosAjax')->name('selec
 Route::post('guardarciclo', 'CicloEscolarController@store')->name('guardarciclo');
 Route::post('cambiarciclo', 'CicloEscolarController@cambiarCicloPredeterminado')->name('cambiarciclo');
 Route::post('updateciclo/{id}', 'CicloEscolarController@update')->name('updateciclo');
+
+/*
+ * Configuración: Grupos
+ */
+Route::get('grupos',     'GrupoController@index')->name('grupos');
+Route::get('nuevogrupo', 'GrupoController@create')->name('nuevogrupo');
 
