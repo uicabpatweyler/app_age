@@ -39,30 +39,34 @@
                         <!-- form start -->
                         <form class="form-horizontal" method="post" action="" name="form_grupo" id="form_grupo">
                             {{csrf_field()}}
-
+                            <input type="hidden" name="ciclo_id" id="ciclo_id" value="{{$ciclo->id}}">
                             <div class="box-body">
 
                                 <div class="form-group">
                                     <label for="grupo_cicloescolar" class="col-sm-2 control-label"><p class="text-left">Ciclo Escolar:(*)</p></label>
                                     <div class="col-sm-2">
-                                        <input type="text" class="form-control" id="grupo_cicloescolar" name="grupo_cicloescolar" value="" disabled>
+                                        <input type="text" class="form-control" id="grupo_cicloescolar" name="grupo_cicloescolar" value="{{$ciclo->ciclo_anioinicial}}-{{$ciclo->ciclo_aniofinal}}" disabled>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="grupo_escuela" class="col-sm-2 control-label"><p class="text-left">Escuela:(*)</p></label>
+                                    <label for="escuela_id" class="col-sm-2 control-label"><p class="text-left">Escuela:(*)</p></label>
                                     <div class="col-sm-5">
-                                        <select name="grupo_escuela" id="grupo_escuela" class="form-control select_grupo_escuela" style="width: 100%;">
+                                        <select name="escuela_id" id="escuela_id" class="form-control escuela_id" style="width: 100%;">
                                             <option value="-1" selected>[Elija una escuela]</option>
+                                            @foreach($escuelas as $escuela)
+                                                <option value="{{$escuela->id}}">
+                                                    {{$escuela->NivelEscuela->nivel_nombre}}  -  {{$escuela->escuela_nombre}}</option>
+                                            @endforeach
                                         </select>
 
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="grupo_clasificacion" class="col-sm-2 control-label"><p class="text-left">Clasificación:(*)</p></label>
+                                    <label for="clasificacion_id" class="col-sm-2 control-label"><p class="text-left">Clasificación:(*)</p></label>
                                     <div class="col-sm-3">
-                                        <select name="grupo_clasificacion" id="grupo_clasificacion" class="form-control select_grupo_clasificacion" style="width: 100%;" disabled>
+                                        <select name="clasificacion_id" id="clasificacion_id" class="form-control clasificacion_id" style="width: 100%;" disabled>
                                             <option value="-1" selected>[Elegir clasificación]</option>
                                         </select>
 
@@ -74,9 +78,9 @@
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" id="grupo_nombre" name="grupo_nombre">
                                     </div>
-                                    <label for="grupo_numalumnos" class="col-sm-2 control-label"><p class="text-left">Alumnos Permitidos:(*)</p></label>
+                                    <label for="grupo_alumnospermitidos" class="col-sm-2 control-label"><p class="text-left">Alumnos Permitidos:(*)</p></label>
                                     <div class="col-sm-1">
-                                        <input type="text" class="form-control" id="grupo_numalumnos" name="grupo_numalumnos">
+                                        <input type="text" class="form-control" id="grupo_alumnospermitidos" name="grupo_alumnospermitidos">
                                     </div>
                                 </div>
 
@@ -85,7 +89,7 @@
                                     <div class="col-sm-3">
                                         <label>
                                             Grupo disponible &nbsp; &nbsp; &nbsp;
-                                            <input type="checkbox" class="minimal" checked>
+                                            <input type="checkbox" class="minimal" checked name="grupo_disponible" id="grupo_disponible">
                                         </label>
                                     </div>
                                 </div>
@@ -117,7 +121,7 @@
     <script>
         $(document).ready(function () {
 
-            $('.select_grupo_escuela').select2({
+            $('.escuela_id').select2({
                 allowClear: true,
                 placeholder: {
                     id: "-1",
@@ -125,7 +129,7 @@
                 }
             });
 
-            $('.select_grupo_clasificacion').select2({
+            $('.clasificacion_id').select2({
                 allowClear: true,
                 placeholder: {
                     id: "-1",
@@ -137,6 +141,32 @@
             $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
                 checkboxClass: 'icheckbox_minimal-blue',
                 radioClass: 'iradio_minimal-blue'
+            });
+
+            $('.escuela_id').change(function () {
+
+                //Activamos el select de las clasificaciones
+                $(".clasificacion_id").removeAttr('disabled');
+                //Si el select contenia otros elementos estos se eliminan
+                $('.clasificacion_id').empty().change();
+                //Obtenemos el id del valor seleccionado del select de las escuelas
+                var escuela_id = $(this).val();
+                //Los parametros de la consulta son el ID de la escuela seleccionada
+                $.getJSON('/listaAjaxClasifPorEscuela/'+escuela_id, null, function (values) {
+                    $('.clasificacion_id').populateSelect(values);
+                });
+            });
+
+            $.fn.populateSelect = function (values) {
+                var options = '';
+                $.each(values, function (key, row) {
+                    options += '<option value="' + row.value + '">' + row.text + '</option>';
+                });
+                $(this).html(options);
+            }
+
+            $("#boton_enviar").click(function(){
+
             });
 
         });
