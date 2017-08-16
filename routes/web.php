@@ -71,4 +71,6 @@ Route::post('updateciclo/{id}', 'CicloEscolarController@update')->name('updateci
  */
 Route::get('grupos',     'GrupoController@index')->name('grupos');
 Route::get('nuevogrupo', 'GrupoController@create')->name('nuevogrupo');
+Route::get('listaAjaxClasifPorEscuela/{id}', 'GrupoController@listaAjaxClasifPorEscuela')->name('listaAjaxClasifPorEscuela');
 
+Route::post('guardargrupo', 'GrupoController@store')->name('guardargrupo');
