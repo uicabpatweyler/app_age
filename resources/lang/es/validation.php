@@ -144,7 +144,10 @@ return [
         'escuela_estado' => 'Estado',
         'escuela_pais' => 'País',
 
-        'clasificacion_nombre' => 'Clasificación'
+        'clasificacion_nombre' => 'Clasificación',
+
+        'grupo_nombre' => 'Nombre del grupo',
+        'grupo_alumnospermitidos' => 'Numero de alumnos'
     ],
 
 ];
