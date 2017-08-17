@@ -105,7 +105,7 @@ class GrupoController extends Controller
 
             if($grupo===null)
             {
-                //1.3) Si pasa la validacion y el grupo no existe procedemos a guardar el registro
+                //1.3) Sí pasa la validacion, y el grupo no existe, procedemos a guardar el registro
 
                 $now = Carbon::now('America/Mexico_City Time Zone');
 
@@ -132,10 +132,10 @@ class GrupoController extends Controller
             }
             else
             {
-               //El registro ya existe en la tabla GRUPOS
                 return response()->json([
+                    'extra'   => true,
                     'success' => false,
-                    'message' => 'El grupo que trata de crear ya existe.'
+                    'message' => 'El grupo que trata de crear ya existe'
                 ], 422);
 
             }
@@ -148,6 +148,7 @@ class GrupoController extends Controller
         $errors =  json_decode($errors);
 
         return response()->json([
+            'extra'   => false,
             'success' => false,
             'message' => $errors
         ], 422);
