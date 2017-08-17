@@ -166,6 +166,134 @@
             }
 
             $("#boton_enviar").click(function(){
+                //Obtenemos los valores de los select
+                var escuela_id = $('.escuela_id').val();
+                var clasificacion_id = $('.clasificacion_id').val();
+
+                //Obtenemos los valores de los cuadros de texto
+                var grupo_nombre = $('#grupo_nombre').val().length;
+                var grupo_alumnospermitidos = $('#grupo_alumnospermitidos').val().length;
+
+                //1) Verificamos que el usuario haya elegido una escuela del select
+                if(escuela_id==="-1")
+                {
+                    swal({
+                        title:"Error:",
+                        text: "Es necesario elegir una escuela",
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+                    return false;
+                }
+                //2) Verificamos que el usuario haya elegido una clasificacion para el grupo
+                else if(clasificacion_id==="-1")
+                {
+                    swal({
+                        title:"Error:",
+                        text: "Debe elegir una clasificación para el grupo",
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+                    return false;
+                }
+                else
+                {
+                    //Validamos el resto de los campos de texto del formulario
+                    jQuery.validator.setDefaults({
+                        debug: true,
+                        success: "valid"
+                    });
+
+                    $("#form_grupo").validate({
+                        focusCleanup: true,
+                        focusInvalid: false,
+                        rules:{
+                            grupo_nombre            : { required: true },
+                            grupo_alumnospermitidos : { required: true}
+                        },
+                        messages:{
+                            grupo_nombre            : 'Falta el nombre del grupo',
+                            grupo_alumnospermitidos : 'Incorrecto'
+                        },
+                        invalidHandler: function(event, validator) {
+                            // 'this' refers to the form
+                            var errors = validator.numberOfInvalids();
+                            if (errors) {
+                                var message = 'El formulario es incorrecto.';
+                                swal({
+                                    title:"Error:",
+                                    text: message,
+                                    type: "error",
+                                    allowOutsideClick: false,
+                                    confirmButtonColor: '#d33',
+                                    confirmButtonText: "Corregir"
+                                });
+                            }
+                        },
+                        submitHandler: function(form) {
+                            ajaxSubmit();
+                        }
+                    });
+                }
+
+                function ajaxSubmit(){
+                    $.ajax({
+                        type:"POST",
+                        url:"guardargrupo",
+                        data: $("#form_grupo").serialize(),
+                        dataType : 'json',
+                        success: function(data){
+                            swal({
+                                title:"",
+                                text: data.message,
+                                type: "success",
+                                allowOutsideClick: false,
+                                confirmButtonText: 'Continuar'
+                            }).then(function(){
+                                window.location = "{{ route('grupos') }}";
+                            });
+                        },
+                        error: function(xhr,status, response ){
+                            //Obtener el valor de los errores devueltos por el controlador
+                            var error = jQuery.parseJSON(xhr.responseText);
+                            //Obtener los mensajes de error
+                            var info = error.message;
+                            var extra = error.extra;
+                            if(extra===true){
+                                swal({
+                                    title:"Error:",
+                                    html: info,
+                                    type: "error",
+                                    allowOutsideClick: false,
+                                    confirmButtonColor: '#d33',
+                                    confirmButtonText: "Corregir"
+                                });
+                            }
+                            else {
+                                //Crear la lista de errores
+                                var errorsHtml = '<ul>';
+                                $.each(info, function (key,value) {
+                                    errorsHtml += '<li>' + value[0] + '</li>';
+                                });
+                                errorsHtml += '</ul>';
+                                //Mostrar el y/o los errores devuelto(s) por el controlador
+                                swal({
+                                    title:"Error:",
+                                    html: errorsHtml,
+                                    type: "error",
+                                    allowOutsideClick: false,
+                                    confirmButtonColor: '#d33',
+                                    confirmButtonText: "Corregir"
+                                });
+                            }
+
+                        }
+                    });
+                }
 
             });
 
