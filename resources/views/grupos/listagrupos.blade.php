@@ -16,7 +16,11 @@
                 <div class="box box-success">
 
                     <div class="box-header with-border">
+                        <a class="btn btn-xs btn-success" href="javascript:history.back(1)">
+                            <i class="fa fa-reply fa-lg" aria-hidden="true"></i> Regresar</a>
+
                         <h3 class="box-title">{{$escuela->NivelEscuela->nivel_nombre}} - {{$escuela->escuela_nombre}}</h3>
+                        <small>&nbsp;&nbsp;(Lista de grupos de la escuela elegida)</small>
                     </div>
                     <!-- /.box-header -->
 
@@ -34,9 +38,10 @@
                                 <th>Acciones</th>
                             </tr>
                             </thead>
+                            <?php $i=1 ?>
                             @foreach($grupos as $grupo)
                                 <tr>
-                                    <td></td>
+                                    <td><p class="text-center"><strong>{{$i++}}</strong></p></td>
                                     <td>{{$ciclo->ciclo_anioinicial}}-{{$ciclo->ciclo_aniofinal}}</td>
                                     <td>{{$grupo-> ClasificacionGrupo->clasificacion_nombre}}</td>
                                     <td>{{$grupo->grupo_nombre}}</td>
@@ -53,9 +58,16 @@
                                                 <span class="sr-only">40% Complete (success)</span>
                                             </div>
                                         </div>
-                                        10 de 32 (50%)
+                                    <td>
+                                        <a class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar" href="#">
+                                            <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Eliminar</a>
+                                        |
+                                        <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Editar" href="{{route('editargrupo', $grupo->id)}}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                                        |
+                                        <a class="btn btn-xs bg-yellow" data-toggle="tooltip" title="Asociar Pagos" href="#">
+                                            <i class="fa fa-usd" aria-hidden="true"></i></a>
                                     </td>
-                                    <td>Editar|Eliminar</td>
                                 </tr>
                             @endforeach
                         </table>
