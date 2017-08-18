@@ -196,7 +196,24 @@ class GrupoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ciclo = $this->cicloEscolarPredeterminado();
+
+        $escuelas = Escuela::where('escuela_status', true)
+                    ->get();
+
+        $grupo = Grupo::where('id', $id)
+                 ->first();
+
+        $clasificaciones = Clasificacion::where('ciclo_id',$ciclo->id)
+            ->where('escuela_id', $grupo->escuela_id)
+            ->where('clasificacion_status', true)
+            ->orderBy('id', 'ASC')
+            ->get();
+
+
+        //return dd($ciclo);
+        return view('grupos.edit', compact('ciclo','escuelas', 'grupo', 'clasificaciones'));
+
     }
 
     /**
@@ -208,7 +225,58 @@ class GrupoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //1) Validacion de datos
+
+        $validation =Validator::make($request->all(),[
+            'ciclo_id'                => 'required',
+            'escuela_id'              => 'required',
+            'clasificacion_id'        => 'required',
+            'grupo_nombre'            => 'required',
+            'grupo_alumnospermitidos' => 'required'
+        ]);
+
+        //1.1) La validadcion de datos fue correcta
+        if($validation->passes()){
+
+            //Establecer el valor del campo 'grupo_disponible'
+            if($request->get('grupo_disponible')==="on")
+            {
+                $grupo_disponible = true;
+            }
+            else{
+                $grupo_disponible = false;
+            }
+
+            $updated_at = Carbon::now('America/Mexico_City Time Zone');
+
+
+            $grupo = Grupo::findOrFail($id);
+
+            $grupo->ciclo_id                = $request->get('ciclo_id');
+            $grupo->escuela_id              = $request->get('escuela_id');
+            $grupo->clasificacion_id        = $request->get('clasificacion_id');
+            $grupo->grupo_nombre            = strtoupper(trim($request->get('grupo_nombre')));
+            $grupo->grupo_alumnospermitidos = $request->get('grupo_alumnospermitidos');
+            $grupo->grupo_disponible        = $grupo_disponible;
+            $grupo->updated_at              = $updated_at;
+
+            $grupo->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Los datos del grupo se han correctamente.'
+            ], 200);
+
+        }
+
+        //No se cumplieron las reglas de validacion de los datos
+        $errors = $validation->errors();
+        $errors =  json_decode($errors);
+
+        return response()->json([
+            'success' => false,
+            'message' => $errors
+        ], 422);
     }
 
     /**
