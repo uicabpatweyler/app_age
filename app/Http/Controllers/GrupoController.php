@@ -185,7 +185,10 @@ class GrupoController extends Controller
      */
     public function show($id)
     {
-        //
+        $grupo = Grupo::where('id', $id)
+            ->first();
+
+        return view('grupos.delete', compact('grupo'));
     }
 
     /**
@@ -287,6 +290,18 @@ class GrupoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $updated_at = Carbon::now('America/Mexico_City Time Zone');
+
+        $grupo = Grupo::findOrFail($id);
+
+        $grupo->grupo_status = false;
+        $grupo->updated_at = $updated_at;
+
+        $grupo->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'El registro se ha eliminado correctamente.'
+        ], 200);
     }
 }

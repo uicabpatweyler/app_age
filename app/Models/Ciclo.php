@@ -22,4 +22,10 @@ class Ciclo extends Model
         'ciclo_anioinicial',
         'ciclo_aniofinal'
     ];
+
+    //Relacion 1:M. Lado 1
+    //Un CICLO se usa para crear 1 o MUCHOS grupos
+    public function Grupos(){
+        return $this->hasMany(Grupo::class);
+    }
 }

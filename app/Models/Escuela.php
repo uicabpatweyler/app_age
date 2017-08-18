@@ -49,6 +49,12 @@ class Escuela extends Model
         return $this->belongsTo(Nivel::class,'escuela_nivel', 'id');
     }
 
+    //Relacion 1:M. Lado 1
+    //Una ESCUELA se usa para crear 1 o MUCHOS grupos
+    public function Grupos(){
+        return $this->hasMany(Grupo::class);
+    }
+
 
 
 }

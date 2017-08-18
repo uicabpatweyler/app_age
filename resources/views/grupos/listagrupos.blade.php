@@ -59,7 +59,7 @@
                                             </div>
                                         </div>
                                     <td>
-                                        <a class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar" href="#">
+                                        <a class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar" href="{{route('mostrargrupo',$grupo->id)}}">
                                             <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Eliminar</a>
                                         |
                                         <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Editar" href="{{route('editargrupo', $grupo->id)}}">
