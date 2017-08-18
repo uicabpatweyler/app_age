@@ -38,6 +38,23 @@ class GrupoController extends Controller
         return $ciclo;
     }
 
+    public function listaDeGrupos($id_escuela)
+    {
+        $ciclo = $this->cicloEscolarPredeterminado();
+
+        $escuela = Escuela::where('escuela_status', true)
+                  ->where('id', $id_escuela)
+                  ->first();
+
+        $grupos = Grupo::where('grupo_status', true)
+                  ->where('ciclo_id', $ciclo->id)
+                  ->where('escuela_id', $id_escuela)
+                  ->OrderBy('id', 'asc')
+                  ->get();
+
+        return view('grupos.listagrupos', compact('escuela','ciclo', 'grupos'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +62,12 @@ class GrupoController extends Controller
      */
     public function index()
     {
-        return view('grupos.index');
+        $ciclo = $this->cicloEscolarPredeterminado();
+
+        $escuelas = Escuela::where('escuela_status', true)
+                    ->get();
+
+        return view('grupos.index', compact('ciclo', 'escuelas'));
     }
 
     /**
