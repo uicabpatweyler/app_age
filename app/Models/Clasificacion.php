@@ -23,4 +23,10 @@ class Clasificacion extends Model
         'escuela_id',
         'clasificacion_nombre'
     ];
+
+    //Relacion 1:M. Lado 1
+    //Una CLASIFICACION se usa para crear 1 o MUCHOS grupos
+    public function Grupos(){
+        return $this->hasMany(Grupo::class);
+    }
 }
