@@ -73,5 +73,7 @@ Route::get('grupos',     'GrupoController@index')->name('grupos');
 Route::get('nuevogrupo', 'GrupoController@create')->name('nuevogrupo');
 Route::get('listargrupos/{id}', 'GrupoController@listaDeGrupos')->name('listargrupos');
 Route::get('listaAjaxClasifPorEscuela/{id}', 'GrupoController@listaAjaxClasifPorEscuela')->name('listaAjaxClasifPorEscuela');
+Route::get('editargrupo/{id}', 'GrupoController@edit')->name('editargrupo');
 
-Route::post('guardargrupo', 'GrupoController@store')->name('guardargrupo');
+Route::post('guardargrupo',     'GrupoController@store')->name('guardargrupo');
+Route::post('updategrupo/{id}', 'GrupoController@update')->name('updategrupo');
