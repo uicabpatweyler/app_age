@@ -147,7 +147,10 @@ return [
         'clasificacion_nombre' => 'Clasificación',
 
         'grupo_nombre' => 'Nombre del grupo',
-        'grupo_alumnospermitidos' => 'Numero de alumnos'
+        'grupo_alumnospermitidos' => 'Numero de alumnos',
+
+        'cuotainscripcion_nombre' => 'Nombre de la cuota',
+        'cuotainscripcion_cuota'  => 'Cantidad de la cuota'
     ],
 
 ];
