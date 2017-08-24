@@ -86,4 +86,6 @@ Route::post('eliminargrupo/{id}', 'GrupoController@destroy')->name('eliminargrup
 Route::get('cuotasdeinscripcion', 'CuotaInscripcionController@index')->name('cuotasdeinscripcion');
 //CDI = Cuota De Inscripcion
 Route::get('nueva_cdi',         'CuotaInscripcionController@create')->name('nueva_cdi');
+Route::get('lista_cdi/{id}',    'CuotaInscripcionController@listaCdi')->name('lista_cdi');
+Route::get('seleccionar_cdi/{id_grupo}', 'CuotaInscripcionController@seleccionarCDI')->name('seleccionar_cdi');
 Route::post('guardarcuota_cdi', 'CuotaInscripcionController@store')->name('guardarcuota_cdi');

@@ -100,7 +100,7 @@
                     return false;
                 }
                 else{
-                    //location.href ="cuotasinscripcion/" + escuela_id;
+                    location.href ="lista_cdi/" + escuela_id;
                     return false;
 
                 }

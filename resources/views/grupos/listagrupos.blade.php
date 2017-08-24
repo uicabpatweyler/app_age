@@ -65,8 +65,24 @@
                                         <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Editar" href="{{route('editargrupo', $grupo->id)}}">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
                                         |
-                                        <a class="btn btn-xs bg-yellow" data-toggle="tooltip" title="Asociar Pagos" href="#">
-                                            <i class="fa fa-usd" aria-hidden="true"></i></a>
+                                        <div class="btn-group">
+
+                                            <a class="btn btn-xs bg-yellow" data-toggle="tooltip" title="Detalle de Pagos" href="#">
+                                            <i class="fa fa-usd" aria-hidden="true"></i> Pagos</a>
+
+                                            <button type="button" class="btn bg-yellow btn-xs dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="{{route('seleccionar_cdi', $grupo->id)}}">Cuota de Inscripción</a></li>
+                                                <li><a href="#">Cuota de Colegiatura</a></li>
+                                                <li><a href="#">Otros Pagos</a></li>
+                                            </ul>
+
+                                        </div>
+
                                     </td>
                                 </tr>
                             @endforeach

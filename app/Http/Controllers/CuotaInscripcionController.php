@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ciclo;
 use App\Models\CuotaInscripcion;
 use App\Models\Escuela;
+use App\Models\Grupo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -19,6 +20,36 @@ class CuotaInscripcionController extends Controller
             ->first();
 
         return $ciclo;
+    }
+
+    public function listaCdi($id_escuela)
+    {
+        $ciclo = $this->cicloEscolarPredeterminado();
+
+        $escuela = Escuela::where('escuela_status', true)
+            ->where('id', $id_escuela)
+            ->first();
+
+        $cuotas = CuotaInscripcion::where('cuotainscripcion_status', true)
+            ->where('ciclo_id', $ciclo->id)
+            ->where('escuela_id', $id_escuela)
+            ->OrderBy('id', 'asc')
+            ->get();
+
+        return view('cuotasinscripcion.cuotasdeinscripcion', compact('escuela','ciclo', 'cuotas'));
+    }
+
+    public function seleccionarCDI($id_grupo){
+
+        $grupo = Grupo::where('id', $id_grupo)->first();
+
+        $cuotas = CuotaInscripcion::where('cuotainscripcion_status', true)
+                 ->where('cuotainscripcion_disponible', true)
+                 ->where('ciclo_id', $grupo->ciclo_id)
+                 ->where('escuela_id', $grupo->escuela_id)
+                 ->get();
+
+        return view('grupos.seleccionar_cdi', compact('grupo', 'cuotas'));
     }
 
     /**
@@ -75,7 +106,7 @@ class CuotaInscripcionController extends Controller
             $cuota = CuotaInscripcion::where('cuotainscripcion_status', true)
                      ->where('ciclo_id', $request->get('ciclo_id'))
                      ->where('escuela_id', $request->get('escuela_id'))
-                     ->where('cuotainscripcion_nombre', strtoupper(trim($request->get('cuotainscripcion_nombre'))))
+                     ->where('cuotainscripcion_nombre', mb_strtoupper(trim($request->get('cuotainscripcion_nombre'))))
                      ->where('cuotainscripcion_cuota',$request->get('cuotainscripcion_cuota2'))
                      ->first();
 
@@ -96,7 +127,7 @@ class CuotaInscripcionController extends Controller
 
                 $cuotainscripcion->ciclo_id = $request->get('ciclo_id');
                 $cuotainscripcion->escuela_id = $request->get('escuela_id');
-                $cuotainscripcion->cuotainscripcion_nombre = strtoupper(trim($request->get('cuotainscripcion_nombre')));
+                $cuotainscripcion->cuotainscripcion_nombre = mb_strtoupper(trim($request->get('cuotainscripcion_nombre')));
                 $cuotainscripcion->cuotainscripcion_cuota = $request->get('cuotainscripcion_cuota2');
                 $cuotainscripcion->cuotainscripcion_disponible = $cuotainscripcion_disponible;
                 $cuotainscripcion->cuotainscripcion_status = true;
