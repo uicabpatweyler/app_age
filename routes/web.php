@@ -96,6 +96,8 @@ Route::post('guardarcuota_cdi', 'CuotaInscripcionController@store')->name('guard
 //CDC = Cuota De Colegiatura
 Route::get('cuotasdecolegiatura', 'CuotaColegiaturaController@index')->name('cuotasdecolegiatura');
 Route::get('nueva_cdc', 'CuotaColegiaturaController@create')->name('nueva_cdc');
+Route::get('lista_cdc/{id}', 'CuotaColegiaturaController@listaCdc')->name('lista_cdc');
+Route::get('asignarmesesdepago', 'CuotaColegiaturaController@asignarMesesDePago')->name('asignarmesesdepago');
 
 Route::post('guardarcuota_cdc', 'CuotaColegiaturaController@store')->name('guardarcuota_cdc');
 

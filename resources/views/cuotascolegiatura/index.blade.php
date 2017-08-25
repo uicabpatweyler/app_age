@@ -100,7 +100,7 @@
                     return false;
                 }
                 else{
-                    location.href ="lista_cdi/" + escuela_id;
+                    location.href ="lista_cdc/" + escuela_id;
                     return false;
 
                 }

@@ -21,6 +21,26 @@ class CuotaColegiaturaController extends Controller
         return $ciclo;
     }
 
+    public function listaCdc($id_escuela){
+        $ciclo = $this->cicloEscolarPredeterminado();
+
+        $escuela = Escuela::where('escuela_status', true)
+            ->where('id', $id_escuela)
+            ->first();
+
+        $cuotas = CuotaColegiatura::where('cuotacolegiatura_status', true)
+            ->where('ciclo_id', $ciclo->id)
+            ->where('escuela_id', $id_escuela)
+            ->OrderBy('id', 'asc')
+            ->get();
+
+        return view('cuotascolegiatura.cuotasdecolegiatura', compact('escuela','ciclo', 'cuotas'));
+    }
+
+    public function asignarMesesDePago(){
+        return view('cuotascolegiatura.configurarmeses');
+    }
+
     /**
      * Display a listing of the resource.
      *
