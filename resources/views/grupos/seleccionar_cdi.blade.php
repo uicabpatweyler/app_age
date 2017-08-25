@@ -30,6 +30,7 @@
                         <!-- form start -->
                         <form class="form-horizontal" method="post" action="" name="form_asignar_cdi" id="form_asignar_cdi">
                             {{csrf_field()}}
+                            <input type="text" id="grupo_id" name="grupo_id" hidden value="{{$grupo->id}}">
                             <div class="box-body">
 
                                 <div class="form-group">
@@ -63,23 +64,39 @@
                                 <div class="form-group">
                                     <label for="cuotainscripcion_id" class="col-sm-2 control-label"><p class="text-left">Cuota de Inscripción:(*)</p></label>
                                     <div class="col-sm-5">
+                                        @if($grupo_cdi===null)
                                         <select id="cuotainscripcion_id" name="cuotainscripcion_id" class="form-control cuotainscripcion_id" style="width: 100%;">
                                             <option value="-1" selected>[Seleccione una cuota de inscripción]</option>
                                             @foreach($cuotas as $cuota)
                                                 <option value="{{$cuota->id}}">{{$cuota->cuotainscripcion_nombre}} ( $ {{number_format($cuota->cuotainscripcion_cuota, 2, '.', ',')}} )</option>
                                             @endforeach
                                         </select>
+                                        @else
+                                            <select id="cuotainscripcion_id" name="cuotainscripcion_id" class="form-control cuotainscripcion_id" style="width: 100%;">
+                                                @foreach($cuotas as $cuota)
+                                                    @if($cuota->id===$grupo_cdi->cuotainscripcion_id)
+                                                        <option value="{{$cuota->id}}" selected>{{$cuota->cuotainscripcion_nombre}} ( $ {{number_format($cuota->cuotainscripcion_cuota, 2, '.', ',')}} )</option>
+                                                    @else
+                                                        <option value="{{$cuota->id}}">{{$cuota->cuotainscripcion_nombre}} ( $ {{number_format($cuota->cuotainscripcion_cuota, 2, '.', ',')}} )</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        @endif
                                     </div>
                                 </div>
 
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <a class="btn btn-danger" href="">
+                                <a class="btn btn-danger" href="javascript:history.back(1)">
                                     <i class="fa fa-ban fa-lg" aria-hidden="true"></i>&nbsp;  Cancelar</a>
-
+                                @if($grupo_cdi===null)
                                 <button type="submit" class="btn btn-primary pull-right" name="boton_enviar" id="boton_enviar">
                                     <i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Guardar Datos</button>
+                                 @else
+                                    <button type="submit" class="btn btn-primary pull-right" name="boton_actualizar" id="boton_actualizar">
+                                        <i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Actualizar Cuota</button>
+                                 @endif
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -105,6 +122,72 @@
                     text: '[Seleccione una cuota de inscripción]'
                 }
             });
+
+            $("#boton_enviar").click(function(){
+
+                var cuotainscripcion_id = $('#cuotainscripcion_id').val();
+
+                if(cuotainscripcion_id==="-1"){
+                    swal({
+                        title:"Error:",
+                        text: "Es necesario elegir una cuota de inscripción",
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+                    return false;
+                }
+                else{
+                    ajaxSubmit();
+                    return false;
+                }
+            });
+
+            function ajaxSubmit(){
+                $.ajax({
+                    type:"POST",
+                    url:"{{route('guardar_grupo_cdi')}}",
+                    data: $("#form_asignar_cdi").serialize(),
+                    dataType : 'json',
+                    success: function(data){
+                        swal({
+                            title:"",
+                            text: data.message,
+                            type: "success",
+                            allowOutsideClick: false,
+                            confirmButtonText: 'Continuar'
+                        }).then(function(){
+                            window.location = "{{ route('listargrupos', $grupo->escuela_id) }}";
+                        });
+                    },
+                    error: function(xhr,status, response ){
+                        //Obtener el valor de los errores devueltos por el controlador
+                        var error = jQuery.parseJSON(xhr.responseText);
+                        //Obtener los mensajes de error
+                        var info = error.message;
+
+                            //Crear la lista de errores
+                            var errorsHtml = '<ul>';
+                            $.each(info, function (key,value) {
+                                errorsHtml += '<li>' + value[0] + '</li>';
+                            });
+                            errorsHtml += '</ul>';
+                            //Mostrar el y/o los errores devuelto(s) por el controlador
+                            swal({
+                                title:"Error:",
+                                html: errorsHtml,
+                                type: "error",
+                                allowOutsideClick: false,
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: "Corregir"
+                            });
+                    }
+
+                });
+            }
+
+
         });
 
 

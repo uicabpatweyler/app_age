@@ -6,6 +6,7 @@ use App\Models\Ciclo;
 use App\Models\CuotaInscripcion;
 use App\Models\Escuela;
 use App\Models\Grupo;
+use App\Models\GrupoCdi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -49,7 +50,12 @@ class CuotaInscripcionController extends Controller
                  ->where('escuela_id', $grupo->escuela_id)
                  ->get();
 
-        return view('grupos.seleccionar_cdi', compact('grupo', 'cuotas'));
+        $grupo_cdi = GrupoCdi::where('grupo_id', $id_grupo)
+                     ->where('ec_grupo_cdi_disponible', true)
+                     ->where('ec_grupo_cdi_status', true)
+                     ->first();
+
+        return view('grupos.seleccionar_cdi', compact('grupo', 'cuotas', 'grupo_cdi'));
     }
 
     /**

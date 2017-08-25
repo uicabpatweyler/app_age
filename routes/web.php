@@ -89,3 +89,8 @@ Route::get('nueva_cdi',         'CuotaInscripcionController@create')->name('nuev
 Route::get('lista_cdi/{id}',    'CuotaInscripcionController@listaCdi')->name('lista_cdi');
 Route::get('seleccionar_cdi/{id_grupo}', 'CuotaInscripcionController@seleccionarCDI')->name('seleccionar_cdi');
 Route::post('guardarcuota_cdi', 'CuotaInscripcionController@store')->name('guardarcuota_cdi');
+
+/*
+ * Entidad Compuesta para las relaciones entre Grupos y Cuotas de Inscripción
+ */
+Route::post('guardar_grupo_cdi', 'GrupoCdiController@store')->name('guardar_grupo_cdi');
