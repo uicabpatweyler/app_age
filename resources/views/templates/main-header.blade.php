@@ -28,6 +28,8 @@
                                     <li class="divider"></li>
                                     <li><a href="{{route('cuotasdeinscripcion')}}"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Cuotas de Inscripción</a></li>
                                     <li class="divider"></li>
+                                    <li><a href="{{route('cuotasdecolegiatura')}}"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Cuotas de Colegiatura</a></li>
+                                    <li class="divider"></li>
                                 </ul>
                             </li>
 
