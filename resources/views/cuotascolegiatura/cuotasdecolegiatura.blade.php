@@ -58,7 +58,7 @@
                                         <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Editar" href="">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
                                         |
-                                        <a class="btn btn-xs btn-warning" data-toggle="tooltip" title="Configurar Meses de Pago" href="{{route('asignarmesesdepago')}}">
+                                        <a class="btn btn-xs btn-warning" data-toggle="tooltip" title="Configurar Meses de Pago" href="{{route('asignarmesesdepago', $cuota->id)}}">
                                             <i class="fa fa-cogs" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
