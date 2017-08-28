@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
     <!-- Font Awesome 4.7.0 by @davegandy - http://fontawesome.io -->
     <link rel="stylesheet" href="{{asset('font-awesome/css/font-awesome.min.css')}}">
+    <!-- Daterange picker - http://www.daterangepicker.com/  -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     <!-- Sweet Alert CSS/JS -->
     <script src="{{asset('sweetalert/sweetalert2.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('sweetalert/sweetalert2.css')}}">
@@ -86,6 +88,9 @@ desired effect
 <script src="{{asset('adminlte//plugins/select2/select2.full.min.js')}}"></script>
 <!-- InputMask https://github.com/RobinHerbots/Inputmask -->
 <script src="{{asset('adminlte/plugins/input-mask/dist/jquery.inputmask.bundle.js')}}"></script>
+<!-- date-range-picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <!-- jQuery Validation https://jqueryvalidation.org/ -->
 <script src="{{asset('jquery-validation/dist/jquery.validate.js')}}"></script>
 <!-- AdminLTE App -->
