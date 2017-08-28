@@ -84,11 +84,11 @@ Route::post('eliminargrupo/{id}', 'GrupoController@destroy')->name('eliminargrup
  * Configuracion: Cuotas de Inscripción
  */
 //CDI = Cuota De Inscripcion
-Route::get('cuotasdeinscripcion', 'CuotaInscripcionController@index')->name('cuotasdeinscripcion');
-Route::get('nueva_cdi',         'CuotaInscripcionController@create')->name('nueva_cdi');
-Route::get('lista_cdi/{id}',    'CuotaInscripcionController@listaCdi')->name('lista_cdi');
+Route::get('cuotasdeinscripcion',        'CuotaInscripcionController@index')->name('cuotasdeinscripcion');
+Route::get('nueva_cdi',                  'CuotaInscripcionController@create')->name('nueva_cdi');
+Route::get('lista_cdi/{id}',             'CuotaInscripcionController@listaCdi')->name('lista_cdi');
 Route::get('seleccionar_cdi/{id_grupo}', 'CuotaInscripcionController@seleccionarCDI')->name('seleccionar_cdi');
-Route::post('guardarcuota_cdi', 'CuotaInscripcionController@store')->name('guardarcuota_cdi');
+Route::post('guardarcuota_cdi',          'CuotaInscripcionController@store')->name('guardarcuota_cdi');
 
 /*
  * Configuración: Cuotas de Colegiatura
@@ -97,7 +97,7 @@ Route::post('guardarcuota_cdi', 'CuotaInscripcionController@store')->name('guard
 Route::get('cuotasdecolegiatura', 'CuotaColegiaturaController@index')->name('cuotasdecolegiatura');
 Route::get('nueva_cdc', 'CuotaColegiaturaController@create')->name('nueva_cdc');
 Route::get('lista_cdc/{id}', 'CuotaColegiaturaController@listaCdc')->name('lista_cdc');
-Route::get('asignarmesesdepago', 'CuotaColegiaturaController@asignarMesesDePago')->name('asignarmesesdepago');
+Route::get('asignarmesesdepago/{id}', 'CuotaColegiaturaController@asignarMesesDePago')->name('asignarmesesdepago');
 
 Route::post('guardarcuota_cdc', 'CuotaColegiaturaController@store')->name('guardarcuota_cdc');
 
@@ -105,3 +105,8 @@ Route::post('guardarcuota_cdc', 'CuotaColegiaturaController@store')->name('guard
  * Entidad Compuesta para las relaciones entre Grupos y Cuotas de Inscripción
  */
 Route::post('guardar_grupo_cdi', 'GrupoCdiController@store')->name('guardar_grupo_cdi');
+
+/*
+ * Meses de Pago de la Colegiatura
+ */
+Route::post('guardarmespagocolegiatura', 'MesPagoColegiaturaController@store')->name('guardarmespagocolegiatura');
