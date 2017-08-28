@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ciclo;
 use App\Models\CuotaColegiatura;
 use App\Models\Escuela;
+use App\Models\MesPagoColegiatura;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -37,8 +38,26 @@ class CuotaColegiaturaController extends Controller
         return view('cuotascolegiatura.cuotasdecolegiatura', compact('escuela','ciclo', 'cuotas'));
     }
 
-    public function asignarMesesDePago(){
-        return view('cuotascolegiatura.configurarmeses');
+    public function asignarMesesDePago($id_cuota){
+
+        $cuota = CuotaColegiatura::findOrFail($id_cuota);
+
+        $mesescolegiatura = MesPagoColegiatura::where('colegiatura_id', $id_cuota)
+                            ->orderBy('orden_mes', 'asc')
+                            ->get();
+
+        //return dd($mesescolegiatura->fecha1_sin_recargo);
+
+
+        if(count($mesescolegiatura)===0)
+        {
+            return view('cuotascolegiatura.configurarmeses', compact('cuota'));
+        }
+        else
+        {
+            return view('cuotascolegiatura.configurarmeses', compact('cuota', 'mesescolegiatura'));
+
+        }
     }
 
     /**
