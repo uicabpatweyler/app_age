@@ -80,6 +80,10 @@ Route::post('guardargrupo',     'GrupoController@store')->name('guardargrupo');
 Route::post('updategrupo/{id}', 'GrupoController@update')->name('updategrupo');
 Route::post('eliminargrupo/{id}', 'GrupoController@destroy')->name('eliminargrupo');
 
+//Seleccionar cuota de inscripcion y colegiatura
+Route::get('seleccionar_cdi/{id_grupo}', 'GrupoController@seleccionarCDI')->name('seleccionar_cdi');
+Route::get('seleccionar_cdc/{id_grupo}', 'GrupoController@seleccionarCDC')->name('seleccionar_cdc');
+
 /*
  * Configuracion: Cuotas de Inscripción
  */
@@ -87,16 +91,16 @@ Route::post('eliminargrupo/{id}', 'GrupoController@destroy')->name('eliminargrup
 Route::get('cuotasdeinscripcion',        'CuotaInscripcionController@index')->name('cuotasdeinscripcion');
 Route::get('nueva_cdi',                  'CuotaInscripcionController@create')->name('nueva_cdi');
 Route::get('lista_cdi/{id}',             'CuotaInscripcionController@listaCdi')->name('lista_cdi');
-Route::get('seleccionar_cdi/{id_grupo}', 'CuotaInscripcionController@seleccionarCDI')->name('seleccionar_cdi');
+
 Route::post('guardarcuota_cdi',          'CuotaInscripcionController@store')->name('guardarcuota_cdi');
 
 /*
  * Configuración: Cuotas de Colegiatura
  */
 //CDC = Cuota De Colegiatura
-Route::get('cuotasdecolegiatura', 'CuotaColegiaturaController@index')->name('cuotasdecolegiatura');
-Route::get('nueva_cdc', 'CuotaColegiaturaController@create')->name('nueva_cdc');
-Route::get('lista_cdc/{id}', 'CuotaColegiaturaController@listaCdc')->name('lista_cdc');
+Route::get('cuotasdecolegiatura',     'CuotaColegiaturaController@index')->name('cuotasdecolegiatura');
+Route::get('nueva_cdc',               'CuotaColegiaturaController@create')->name('nueva_cdc');
+Route::get('lista_cdc/{id}',          'CuotaColegiaturaController@listaCdc')->name('lista_cdc');
 Route::get('asignarmesesdepago/{id}', 'CuotaColegiaturaController@asignarMesesDePago')->name('asignarmesesdepago');
 
 Route::post('guardarcuota_cdc', 'CuotaColegiaturaController@store')->name('guardarcuota_cdc');

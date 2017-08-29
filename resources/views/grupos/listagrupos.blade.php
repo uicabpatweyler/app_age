@@ -77,7 +77,7 @@
 
                                             <ul class="dropdown-menu" role="menu">
                                                 <li><a href="{{route('seleccionar_cdi', $grupo->id)}}">Cuota de Inscripción</a></li>
-                                                <li><a href="#">Cuota de Colegiatura</a></li>
+                                                <li><a href="{{route('seleccionar_cdc', $grupo->id)}}">Cuota de Colegiatura</a></li>
                                                 <li><a href="#">Otros Pagos</a></li>
                                             </ul>
 
