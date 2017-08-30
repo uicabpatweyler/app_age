@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Ciclo;
 use App\Models\Clasificacion;
+use App\Models\CuotaColegiatura;
 use App\Models\CuotaInscripcion;
 use App\Models\Escuela;
 use App\Models\Grupo;
+use App\Models\GrupoCdc;
 use App\Models\GrupoCdi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -81,13 +83,26 @@ class GrupoController extends Controller
     }
 
     /**
-     * Muestra el grupo elegido para poder seleccionar una Cuota de Colegiatura (CDC)
+     * Muestra el grupo elegido para poder seleccionar una Cuota de Colegitura (CDC)
      *
      * @return \Illuminate\Http\Response
      */
     public function seleccionarCDC($id_grupo)
     {
-        return dd($id_grupo);
+        $grupo = Grupo::where('id', $id_grupo)->first();
+
+        $cuotas = CuotaColegiatura::where('cuotacolegiatura_status', true)
+            ->where('cuotacolegiatura_disponible', true)
+            ->where('ciclo_id', $grupo->ciclo_id)
+            ->where('escuela_id', $grupo->escuela_id)
+            ->get();
+
+        $grupo_cdc = GrupoCdc::where('grupo_id', $id_grupo)
+            ->where('ec_grupo_cdc_disponible', true)
+            ->where('ec_grupo_cdc_status', true)
+            ->first();
+
+        return view('grupos.seleccionar_cdc', compact('grupo','cuotas','grupo_cdc'));
     }
 
     /**

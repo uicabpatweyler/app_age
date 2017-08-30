@@ -111,6 +111,10 @@ Route::post('guardarcuota_cdc', 'CuotaColegiaturaController@store')->name('guard
 Route::post('guardar_grupo_cdi', 'GrupoCdiController@store')->name('guardar_grupo_cdi');
 
 /*
+ * Entidad Compuesta para las relaciones entre Grupos y Cuotas de Colegiatura
+ */
+Route::post('guardar_grupo_cdc', 'GrupoCdcController@store')->name('guardar_grupo_cdc');
+/*
  * Meses de Pago de la Colegiatura
  */
 Route::post('guardarmespagocolegiatura', 'MesPagoColegiaturaController@store')->name('guardarmespagocolegiatura');
