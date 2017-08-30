@@ -28,4 +28,10 @@ class Ciclo extends Model
     public function Grupos(){
         return $this->hasMany(Grupo::class);
     }
+
+    //Relacion 1:M. Lado 1
+    //Un CICLO se usa para crear 1 o MUCHAS CUOTAS DE INSCRIPCION
+    public function CuotasDeInscripcion(){
+        return $this->hasMany(CuotaInscripcion::class);
+    }
 }

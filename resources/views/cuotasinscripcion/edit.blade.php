@@ -1,6 +1,6 @@
 @extends('templates.app_age')
 
-@section('title', 'Nueva Cuota de Inscripción')
+@section('title', 'Editar Cuota de Inscripción')
 
 @section('css')
 
@@ -11,18 +11,18 @@
             font-style: italic
         }
     </style>
-    @endsection
+@endsection
 
 
-    @section('content')
-            <!-- Full Width Column -->
+@section('content')
+    <!-- Full Width Column -->
     <div class="content-wrapper">
 
         <div class="container">
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Crear nueva cuota de inscripción
+                    Editar cuota de inscripción
                     <small></small>
                 </h1>
             </section>
@@ -33,65 +33,79 @@
                     <!-- Horizontal Form -->
                     <div class="box box-success">
                         <div class="box-header with-border">
+
+                            <a class="btn btn-xs btn-success" href="javascript:history.back(1)">
+                                <i class="fa fa-reply fa-lg" aria-hidden="true"></i> Regresar</a>
+
                             <h3 class="box-title"> Ingrese los siguientes datos</h3><small>&nbsp;&nbsp;(Los campos marcados con (*) son obligatorios)</small>
                         </div>
                         <!-- /.box-header -->
                         <form class="form-horizontal" method="post" action="" name="form_cuotainscripcion" id="form_cuotainscripcion">
                             {{csrf_field()}}
-                            <input type="hidden" name="ciclo_id" id="ciclo_id" value="{{$ciclo->id}}">
+                            <input type="hidden" name="ciclo_id" id="ciclo_id" value="{{$cuota->ciclo_id}}">
                             <input type="hidden" name="cuotainscripcion_cuota2" id="cuotainscripcion_cuota2">
 
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="grupo_cicloescolar" class="col-sm-2 control-label"><p class="text-left">Ciclo Escolar:(*)</p></label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="grupo_cicloescolar" name="grupo_cicloescolar" value="{{$ciclo->ciclo_anioinicial}}-{{$ciclo->ciclo_aniofinal}}" disabled>
-                                        </div>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="grupo_cicloescolar" name="grupo_cicloescolar" value="{{$cuota->CicloCDI->ciclo_anioinicial}}-{{$cuota->CicloCDI->ciclo_aniofinal}}" disabled>
+                                    </div>
                                 </div>
 
-                                    <div class="form-group">
-                                        <label for="escuela_id" class="col-sm-2 control-label"><p class="text-left">Escuela:(*)</p></label>
-                                        <div class="col-sm-5">
-                                            <select name="escuela_id" id="escuela_id" class="form-control escuela_id" style="width: 100%;">
-                                                <option value="-1" selected>[Elija una escuela]</option>
-                                                @foreach($escuelas as $escuela)
+                                <div class="form-group">
+                                    <label for="escuela_id" class="col-sm-2 control-label"><p class="text-left">Escuela:(*)</p></label>
+                                    <div class="col-sm-5">
+                                        <select name="escuela_id" id="escuela_id" class="form-control escuela_id" style="width: 100%;">
+                                            <option value="-1" selected>[Elija una escuela]</option>
+                                            @foreach($escuelas as $escuela)
+                                                @if($escuela->id === $cuota->escuela_id)
+                                                    <option value="{{$escuela->id}}" selected>
+                                                        {{$escuela->NivelEscuela->nivel_nombre}}  -  {{$escuela->escuela_nombre}}</option>
+                                                @else
                                                     <option value="{{$escuela->id}}">
                                                         {{$escuela->NivelEscuela->nivel_nombre}}  -  {{$escuela->escuela_nombre}}</option>
-                                                @endforeach
-                                            </select>
+                                                @endif
+                                            @endforeach
+                                        </select>
 
-                                        </div>
                                     </div>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="cuotainscripcion_nombre" class="col-sm-2 control-label"><p class="text-left">Nombre:(*)</p></label>
-                                        <div class="col-sm-5">
-                                            <input type="text" class="form-control" id="cuotainscripcion_nombre" name="cuotainscripcion_nombre" placeholder="Nombre para identificar a la cuota de inscripción">
-                                        </div>
+                                <div class="form-group">
+                                    <label for="cuotainscripcion_nombre" class="col-sm-2 control-label"><p class="text-left">Nombre:(*)</p></label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="cuotainscripcion_nombre" name="cuotainscripcion_nombre" placeholder="Nombre para identificar a la cuota de inscripción" value="{{$cuota->cuotainscripcion_nombre}}">
                                     </div>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="cuotainscripcion_cuota" class="col-sm-2 control-label"><p class="text-left">Cuota:(*)</p></label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="cuotainscripcion_cuota" name="cuotainscripcion_cuota">
-                                        </div>
+                                <div class="form-group">
+                                    <label for="cuotainscripcion_cuota" class="col-sm-2 control-label"><p class="text-left">Cuota:(*)</p></label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="cuotainscripcion_cuota" name="cuotainscripcion_cuota" value="{{$cuota->cuotainscripcion_cuota}}">
                                     </div>
+                                </div>
 
 
-                                    <div class="form-group">
-                                        <label for="cuotainscripcion_disponible" class="col-sm-2 control-label"><p class="text-left"></p></label>
-                                        <div class="col-sm-3">
-                                            <label>
-                                                Cuota disponible &nbsp; &nbsp; &nbsp;
+                                <div class="form-group">
+                                    <label for="cuotainscripcion_disponible" class="col-sm-2 control-label"><p class="text-left"></p></label>
+                                    <div class="col-sm-3">
+                                        <label>
+                                            @if($cuota->cuotainscripcion_disponible === 0)
+                                                <input type="checkbox" class="minimal" name="cuotainscripcion_disponible" id="cuotainscripcion_disponible">
+                                            @else
                                                 <input type="checkbox" class="minimal" checked name="cuotainscripcion_disponible" id="cuotainscripcion_disponible">
-                                            </label>
-                                        </div>
+                                            @endif
+                                            Cuota disponible &nbsp; &nbsp; &nbsp;
+
+                                        </label>
                                     </div>
+                                </div>
                             </div>
                             <!-- /.box-body -->
 
                             <div class="box-footer">
-                                <a class="btn btn-danger" href="#">
+                                <a class="btn btn-danger" href="javascript:history.back(1)">
                                     <i class="fa fa-ban fa-lg" aria-hidden="true"></i>&nbsp;  Cancelar</a>
 
                                 <button type="submit" class="btn btn-primary pull-right" name="boton_enviar" id="boton_enviar">
@@ -140,6 +154,7 @@
             });
 
             $("#boton_enviar").click(function(){
+
                 //https://github.com/RobinHerbots/Inputmask#unmaskedvalue
                 //Get the unmaskedvalue
                 //Obtenemos el valor de la cuota sin el signo de pesos, ya que el campo de la tabla no admite el simbolo de '$'
@@ -186,8 +201,9 @@
                     });
                     return false;
                 }
-                else{
-
+                else
+                {
+                    //La cuota de inscripcion sin el signo de '$' y sin ','
                     $('#cuotainscripcion_cuota2').val(cuota);
 
                     //Validamos el resto de los campos de texto del formulario
@@ -197,6 +213,7 @@
                     });
 
                     $("#form_cuotainscripcion").validate({
+
                         focusCleanup: true,
                         focusInvalid: false,
                         rules:{
@@ -223,17 +240,18 @@
                             }
                         },
                         submitHandler: function(form) {
-
-                           ajaxSubmit();
+                            ajaxSubmit();
                         }
+
                     });
                 }
+
             });
 
             function ajaxSubmit(){
                 $.ajax({
                     type:"POST",
-                    url:"{{route('guardarcuota_cdi')}}",
+                    url:"{{route('updatecdi',$cuota->id)}}",
                     data: $("#form_cuotainscripcion").serialize(),
                     dataType : 'json',
                     success: function(data){

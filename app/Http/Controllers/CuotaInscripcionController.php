@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ciclo;
 use App\Models\CuotaInscripcion;
 use App\Models\Escuela;
+use App\Models\GrupoCdi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -37,7 +38,6 @@ class CuotaInscripcionController extends Controller
 
         return view('cuotasinscripcion.cuotasdeinscripcion', compact('escuela','ciclo', 'cuotas'));
     }
-
 
 
     /**
@@ -168,9 +168,17 @@ class CuotaInscripcionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id_cdi)
     {
-        //
+        $cuota = CuotaInscripcion::where('id', $id_cdi)
+                 ->where('cuotainscripcion_status', true)
+                 ->first();
+
+        $escuelas = Escuela::where('escuela_status', true)
+                    ->get();
+
+        //return dd($ciclo);
+        return view('cuotasinscripcion.edit', compact('cuota','escuelas'));
     }
 
     /**
@@ -182,7 +190,79 @@ class CuotaInscripcionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //1) Validación de datos
+        $validation =Validator::make($request->all(),[
+            'ciclo_id'                => 'required',
+            'escuela_id'              => 'required',
+            'cuotainscripcion_nombre' => 'required|max: 120',
+            'cuotainscripcion_cuota'  => 'required'
+        ]);
+
+        if($validation->passes())
+        {
+
+            //Si el usuario desea poner en NO DISPONIBLE la cuota de incsripcion, verificar lo siguiente
+            //Que la CUOTA DE INSCRIPCION no se encuentre asignada a ningun grupo.
+            //Esto se obtiene haciendo una consulta a la entidad compuesta EC_GRUPO_CDI.
+            //Si la consulta devuelve un valor distinto de CERO significa que la CDI se esta usando en al menos
+            //un GRUPO, por lo tanto se le informa al usuario que no es posible realizar esa acción
+
+            if($request->get('cuotainscripcion_disponible')==="on")
+            {
+                $cuotainscripcion_disponible = true;
+
+            }
+            else
+            {
+                $verifica_cdi = GrupoCdi::all()
+                                ->where('cuotainscripcion_id', $id)
+                                ->count();
+
+                if($verifica_cdi === 0)
+                {
+                    $cuotainscripcion_disponible = false;
+
+                }
+                else
+                {
+                    return response()->json([
+                        'extra'   => true,
+                        'success' => false,
+                        'message' => 'No puede poner como NO DISPONIBLE la cuota actual de inscripción, ya que esta se encuentra en uso.'
+                    ], 422);
+                }
+            }
+
+            $update_at = Carbon::now('America/Mexico_City Time Zone');
+
+            $cuotainscripcion = CuotaInscripcion::findOrFail($id);
+
+            $cuotainscripcion->ciclo_id = $request->get('ciclo_id');
+            $cuotainscripcion->escuela_id = $request->get('escuela_id');
+            $cuotainscripcion->cuotainscripcion_nombre = mb_strtoupper(trim($request->get('cuotainscripcion_nombre')));
+            $cuotainscripcion->cuotainscripcion_cuota = $request->get('cuotainscripcion_cuota2');
+            $cuotainscripcion->cuotainscripcion_disponible = $cuotainscripcion_disponible;
+            $cuotainscripcion->updated_at = $update_at;
+
+            $cuotainscripcion->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'La cuota de inscripción se ha actualizado correctamente.'
+            ], 200);
+
+        }
+
+        //No se cumplieron las reglas de validacion de los datos
+        $errors = $validation->errors();
+        $errors =  json_decode($errors);
+
+        return response()->json([
+            'extra'   => false,
+            'success' => false,
+            'message' => $errors
+        ], 422);
+
     }
 
     /**

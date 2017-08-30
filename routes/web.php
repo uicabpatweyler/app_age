@@ -91,8 +91,9 @@ Route::get('seleccionar_cdc/{id_grupo}', 'GrupoController@seleccionarCDC')->name
 Route::get('cuotasdeinscripcion',        'CuotaInscripcionController@index')->name('cuotasdeinscripcion');
 Route::get('nueva_cdi',                  'CuotaInscripcionController@create')->name('nueva_cdi');
 Route::get('lista_cdi/{id}',             'CuotaInscripcionController@listaCdi')->name('lista_cdi');
-
+Route::get('editar_cdi/{id_cdi}',        'CuotaInscripcionController@edit')->name('editar_cdi');
 Route::post('guardarcuota_cdi',          'CuotaInscripcionController@store')->name('guardarcuota_cdi');
+Route::post('updatecdi/{id_cdi}',        'CuotaInscripcionController@update')->name('updatecdi');
 
 /*
  * Configuración: Cuotas de Colegiatura
