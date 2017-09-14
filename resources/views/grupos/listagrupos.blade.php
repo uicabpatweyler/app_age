@@ -45,7 +45,7 @@
                                     <td><p class="text-center"><strong>{{$i++}}</strong></p></td>
                                     <td style="display: none">{{$grupo->id}}</td>
                                     <td>{{$ciclo->ciclo_anioinicial}}-{{$ciclo->ciclo_aniofinal}}</td>
-                                    <td>{{$grupo-> ClasificacionGrupo->clasificacion_nombre}}</td>
+                                    <td>{{$grupo->clasificacion_nombre}}</td>
                                     <td>{{$grupo->grupo_nombre}}</td>
                                     <td>
                                         @if($grupo->grupo_disponible===0)

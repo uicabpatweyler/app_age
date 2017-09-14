@@ -23,6 +23,7 @@ class CreateMesesPagoColegiaturaTable extends Migration
             $table->date('fecha3_con_recargo');
             $table->date('fecha4_con_recargo');
             $table->decimal('porcentaje_recargo', 5, 2);
+            $table->decimal('porcentaje_descuento', 5, 2);
             $table->timestamps();
 
             $table->foreign('colegiatura_id')->references('id')->on('cuotas_colegiatura');

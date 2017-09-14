@@ -13,6 +13,7 @@ use App\Models\GrupoCdi;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class GrupoController extends Controller
@@ -50,12 +51,40 @@ class GrupoController extends Controller
         $escuela = Escuela::where('escuela_status', true)
                   ->where('id', $id_escuela)
                   ->first();
-
-        $grupos = Grupo::where('grupo_status', true)
-                  ->where('ciclo_id', $ciclo->id)
-                  ->where('escuela_id', $id_escuela)
-                  ->OrderBy('id', 'asc')
-                  ->get();
+        /*
+         * SELECT
+            clasificaciones.clasificacion_nombre,
+            grupos.id,
+            grupos.grupo_nombre,
+            grupos.grupo_alumnospermitidos,
+            grupos.grupo_disponible,
+            grupos.grupo_status,
+            grupos.created_at,
+            grupos.updated_at
+            FROM
+            clasificaciones
+            INNER JOIN grupos ON grupos.clasificacion_id = clasificaciones.id
+            WHERE
+            grupos.ciclo_id = '%s' AND
+            grupos.escuela_id = '%s' AND
+            grupos.grupo_status = true
+            ORDER BY
+            clasificaciones.id ASC,
+            grupos.grupo_nombre ASC
+         */
+        $grupos = DB::table('clasificaciones')
+                 ->join('grupos', 'grupos.clasificacion_id', '=', 'clasificaciones.id')
+                 ->select('clasificaciones.clasificacion_nombre',
+                          'grupos.id',
+                          'grupos.grupo_nombre',
+                          'grupos.grupo_alumnospermitidos',
+                          'grupos.grupo_disponible')
+                 ->where('grupos.ciclo_id', $ciclo->id)
+                 ->where('grupos.escuela_id', $id_escuela)
+                 ->where('grupos.grupo_status', true)
+                 ->orderBy('clasificaciones.id', 'asc')
+                 ->orderBy('grupos.grupo_nombre', 'asc')
+                 ->get();
 
         return view('grupos.listagrupos', compact('escuela','ciclo', 'grupos'));
     }

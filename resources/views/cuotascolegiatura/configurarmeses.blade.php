@@ -156,12 +156,14 @@
                                             </td>
                                             <td class="text-center" style="width: 10%">
                                                 <span class="label bg-gray-active">
-                                                    {{$registro->porcentaje_recargo}} %
+                                                    {{number_format($registro->porcentaje_recargo,2) }} %
                                                 </span>
                                             </td>
 
                                             <td class="text-center" style="width: 10%">
-
+                                                <span class="label bg-aqua-gradient">
+                                                    {{number_format($registro->porcentaje_descuento,2) }} %
+                                                </span>
                                             </td>
 
                                         </tr>
@@ -322,6 +324,10 @@
                 else if($('#porcentaje_recargo').val().length===0)
                 {
                     formularioIncorrecto('Falta el porcentaje de recargo');
+                }
+                else if($('#porcentaje_descuento').val().length===0)
+                {
+                    formularioIncorrecto('Falta el porcentaje de descuento');
                 }
                 else
                 {

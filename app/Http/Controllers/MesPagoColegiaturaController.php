@@ -68,6 +68,7 @@ class MesPagoColegiaturaController extends Controller
         {
 
             $duplicado = MesPagoColegiatura::where('colegiatura_id', $request->get('colegiatura_id'))
+                         ->where('orden_mes', $request->get('orden_mes'))
                          ->where('nombre_mes',$request->get('nombre_mes'))
                          ->first();
 
@@ -84,6 +85,7 @@ class MesPagoColegiaturaController extends Controller
                 $registro->fecha3_con_recargo = $this->formatearFecha(1,$request->get('periodo_con_recargo'));
                 $registro->fecha4_con_recargo = $this->formatearFecha(2,$request->get('periodo_con_recargo'));
                 $registro->porcentaje_recargo = $request->get('porcentaje_recargo');
+                $registro->porcentaje_descuento = $request->get('porcentaje_descuento');
                 $registro->created_at         = $now;
                 $registro->updated_at         = $now;
 
@@ -98,7 +100,7 @@ class MesPagoColegiaturaController extends Controller
                 return response()->json([
                     'extra'   => true,
                     'success' => false,
-                    'message' => 'El mes que trata de crear ya existe'
+                    'message' => 'El numero de orden o el mes que trata de crear ya existe.'
                 ], 422);
             }
 
