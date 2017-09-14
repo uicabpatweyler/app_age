@@ -30,6 +30,7 @@
                             <thead>
                             <tr>
                                 <th style="width: 10%;"></th>
+                                <th>ID</th>
                                 <th>Ciclo</th>
                                 <th>Nombre</th>
                                 <th>Cuota</th>
@@ -41,6 +42,7 @@
                             @foreach($cuotas as $cuota)
                                 <tr>
                                     <td><p class="text-center"><strong>{{$i++}}</strong></p></td>
+                                    <td>{{$cuota->id}}</td>
                                     <td>{{$ciclo->ciclo_anioinicial}}-{{$ciclo->ciclo_aniofinal}}</td>
                                     <td>{{$cuota->cuotacolegiatura_nombre}}</td>
                                     <td>$ {{number_format($cuota->cuotacolegiatura_cuota, 2, '.', ',')}}</td>
@@ -52,10 +54,10 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar" href="">
+                                        <a class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar" href="#">
                                             <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Eliminar</a>
                                         |
-                                        <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Editar" href="">
+                                        <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Editar" href="{{route('editar_cdc', $cuota->id)}}">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
                                         |
                                         <a class="btn btn-xs btn-warning" data-toggle="tooltip" title="Configurar Meses de Pago" href="{{route('asignarmesesdepago', $cuota->id)}}">
@@ -87,4 +89,63 @@
 
 </div>
 <!-- /.content-wrapper -->
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function(){
+
+        $(".btn-danger").click(function () {
+            //Columna 1 = ID de la cuota de colegiatura. Columna no visible
+            var id_cdc = $(this).parents("tr").find("td")[1].innerHTML;
+
+            swal({
+                title: '¿Esta seguro de querer eliminar la cuota de colegiatura elegida?',
+                text: "",
+                type: 'warning',
+                allowOutsideClick: false,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, deseo eliminarla!',
+                showLoaderOnConfirm: true,
+                cancelButtonText: 'No, me equivoqué',
+                focusCancel: true
+            }).then(function () {
+                $.ajax({
+                    type:"GET",
+                    url:'../eliminarcdc/'+id_cdc,
+                    dataType : 'json',
+                    success: function(data){
+                        swal({
+                            title:"",
+                            text: data.message,
+                            type: "success",
+                            allowOutsideClick: false,
+                            confirmButtonText: 'Continuar'
+                        }).then(function(){
+                            location.reload(true);
+                        });
+                    },
+                    error: function (xhr,status, response) {
+                        //Obtener el valor de los errores devueltos por el controlador
+                        var error = jQuery.parseJSON(xhr.responseText);
+                        var error_server = error.error_server;
+                        var error_code   = error.error_code;
+                        var error_message_user = error.error_message_user;
+                        swal({
+                            title:'Error: '+error_code+'. SQLSTATE: '+error_server,
+                            html: error_message_user,
+                            type: "error",
+                            allowOutsideClick: false,
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: "Corregir"
+                        });
+                    }
+                });
+            }).catch(swal.noop);
+
+        });
+
+    });
+</script>
 @endsection

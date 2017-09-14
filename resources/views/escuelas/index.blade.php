@@ -31,6 +31,7 @@
                         <table class="table table-striped">
                             <tr>
                                 <th style="width: 50px">#</th>
+                                <th style="display: none">ID</th>
                                 <th>Nivel</th>
                                 <th>Nombre de la escuela</th>
                                 <th>Acciones</th>
@@ -39,6 +40,7 @@
                             @foreach($escuelas as $escuela)
                             <tr>
                                 <td>{{$i++}}</td>
+                                <td style="display: none">{{$escuela->id}}</td>
                                 <td>{{$escuela->NivelEscuela->nivel_nombre}}</td>
                                 <td>{{$escuela->escuela_nombre}}</td>
                                 <td>
@@ -76,9 +78,13 @@
     //https://stackoverflow.com/questions/39321621/uncaught-in-promise-cancel-using-sweetalert2
     $(document).ready(function () {
         $(".btn-danger").click(function () {
+
+            //Columna 1 = ID de la escuela. Columna no visible
+            var id_escuela = $(this).parents("tr").find("td")[1].innerHTML;
+
             swal({
-                title: '¿Esta seguro de querer eliminar la siguiente escuela?',
-                text: "{{$escuela->escuela_nombre}}",
+                title: '¿Esta seguro de querer eliminar la escuela elegida?',
+                text: "",
                 type: 'warning',
                 allowOutsideClick: false,
                 showCancelButton: true,
@@ -86,12 +92,12 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Si, deseo eliminarla!',
                 showLoaderOnConfirm: true,
-                cancelButtonText: 'No, me equivoque',
+                cancelButtonText: 'No, me equivoqué',
                 focusCancel: true
             }).then(function () {
                $.ajax({
                    type:"GET",
-                   url:"{{route('eliminarescuela', $escuela->id)}}",
+                   url:'eliminarescuela/'+id_escuela,
                    dataType : 'json',
                    success: function(data){
                        swal({
@@ -101,7 +107,22 @@
                            allowOutsideClick: false,
                            confirmButtonText: 'Continuar'
                        }).then(function(){
-                           window.location = "{{ route('escuelas') }}";
+                           location.reload(true);
+                       });
+                   },
+                   error: function (xhr,status, response) {
+                       //Obtener el valor de los errores devueltos por el controlador
+                       var error = jQuery.parseJSON(xhr.responseText);
+                       var error_server = error.error_server;
+                       var error_code   = error.error_code;
+                       var error_message_user = error.error_message_user;
+                       swal({
+                           title:'Error: '+error_code+'. SQLSTATE: '+error_server,
+                           html: error_message_user,
+                           type: "error",
+                           allowOutsideClick: false,
+                           confirmButtonColor: '#d33',
+                           confirmButtonText: "Corregir"
                        });
                    }
                });

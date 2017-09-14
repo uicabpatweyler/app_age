@@ -11,6 +11,7 @@ use App\Models\Grupo;
 use App\Models\GrupoCdc;
 use App\Models\GrupoCdi;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -340,18 +341,35 @@ class GrupoController extends Controller
      */
     public function destroy($id)
     {
-        $updated_at = Carbon::now('America/Mexico_City Time Zone');
+        //https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html#error_er_row_is_referenced_2
+        try{
+            $grupo = Grupo::find($id);
+            $grupo->delete();
 
-        $grupo = Grupo::findOrFail($id);
+            return response()->json([
+                'success' => true,
+                'message' => 'El grupo se ha eliminado correctamente'
+            ], 200);
 
-        $grupo->grupo_status = false;
-        $grupo->updated_at = $updated_at;
+        }catch (Exception $e){
+            //Error: 1451. SQLSTATE: 2300
+            //Cannot delete or update a parent row: a foreign key constraint fails
+            $error_server  = $e->errorInfo[0];
+            $error_code    = $e->errorInfo[1];
+            $error_message = $e->errorInfo[2];
 
-        $grupo->save();
+            //return dd($e);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'El registro se ha eliminado correctamente.'
-        ], 200);
+            if($error_server == 23000 and $error_code == 1451)
+            {
+                return response()->json([
+                    'success'      => false,
+                    'error_server' => $error_server,
+                    'error_code'   => $error_code,
+                    'error_message_admin' => $error_message,
+                    'error_message_user' => 'El grupo que desea eliminar se encuentra en uso. Restricción de llave foránea.'
+                ],422);
+            }
+        }
     }
 }

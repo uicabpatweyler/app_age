@@ -30,6 +30,7 @@
                             <thead>
                             <tr>
                                 <th style="width: 10%;"></th>
+                                <th style="display: none">ID</th>
                                 <th>Ciclo</th>
                                 <th>Clasificacion</th>
                                 <th>Nombre</th>
@@ -42,6 +43,7 @@
                             @foreach($grupos as $grupo)
                                 <tr>
                                     <td><p class="text-center"><strong>{{$i++}}</strong></p></td>
+                                    <td style="display: none">{{$grupo->id}}</td>
                                     <td>{{$ciclo->ciclo_anioinicial}}-{{$ciclo->ciclo_aniofinal}}</td>
                                     <td>{{$grupo-> ClasificacionGrupo->clasificacion_nombre}}</td>
                                     <td>{{$grupo->grupo_nombre}}</td>
@@ -59,7 +61,7 @@
                                             </div>
                                         </div>
                                     <td>
-                                        <a class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar" href="{{route('mostrargrupo',$grupo->id)}}">
+                                        <a class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar" href="#">
                                             <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Eliminar</a>
                                         |
                                         <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Editar" href="{{route('editargrupo', $grupo->id)}}">
@@ -110,4 +112,61 @@
 
 </div>
 <!-- /.content-wrapper -->
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function(){
+        $(".btn-danger").click(function () {
+            //Columna 1 = ID del grupo. Columna no visible
+            var id_grupo = $(this).parents("tr").find("td")[1].innerHTML;
+
+            swal({
+                title: '¿Esta seguro de querer eliminar el grupo elegido?',
+                text: "",
+                type: 'warning',
+                allowOutsideClick: false,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, deseo eliminarlo!',
+                showLoaderOnConfirm: true,
+                cancelButtonText: 'No, me equivoqué',
+                focusCancel: true
+            }).then(function () {
+                $.ajax({
+                    type:"GET",
+                    url:'../eliminargrupo/'+id_grupo,
+                    dataType : 'json',
+                    success: function(data){
+                        swal({
+                            title:"",
+                            text: data.message,
+                            type: "success",
+                            allowOutsideClick: false,
+                            confirmButtonText: 'Continuar'
+                        }).then(function(){
+                            location.reload(true);
+                        });
+                    },
+                    error: function (xhr,status, response) {
+                        //Obtener el valor de los errores devueltos por el controlador
+                        var error = jQuery.parseJSON(xhr.responseText);
+                        var error_server = error.error_server;
+                        var error_code   = error.error_code;
+                        var error_message_user = error.error_message_user;
+                        swal({
+                            title:'Error: '+error_code+'. SQLSTATE: '+error_server,
+                            html: error_message_user,
+                            type: "error",
+                            allowOutsideClick: false,
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: "Corregir"
+                        });
+                    }
+                });
+            }).catch(swal.noop);
+
+        });
+    });
+</script>
 @endsection

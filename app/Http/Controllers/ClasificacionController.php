@@ -7,6 +7,7 @@ use App\Models\Ciclo;
 use App\Models\Clasificacion;
 use App\Models\Escuela;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -243,20 +244,37 @@ class ClasificacionController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$id)
+    public function destroy($id)
     {
-        $updated_at = Carbon::now('America/Mexico_City Time Zone');
+        //https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html#error_er_row_is_referenced_2
+        try{
+            $clasificacion = Clasificacion::find($id);
+            $clasificacion->delete();
 
-        $clasificacion = Clasificacion::findOrFail($id);
+            return response()->json([
+                'success' => true,
+                'message' => 'El registro se ha eliminado correctamente'
+            ], 200);
 
-        $clasificacion->clasificacion_status = false;
-        $clasificacion->updated_at = $updated_at;
+        }catch (Exception $e){
+            //Error: 1451. SQLSTATE: 2300
+            //Cannot delete or update a parent row: a foreign key constraint fails
+            $error_server  = $e->errorInfo[0];
+            $error_code    = $e->errorInfo[1];
+            $error_message = $e->errorInfo[2];
 
-        $clasificacion->save();
+            //return dd($e);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'El registro se ha eliminado correctamente.'
-        ], 200);
+            if($error_server == 23000 and $error_code == 1451)
+            {
+                return response()->json([
+                    'success'      => false,
+                    'error_server' => $error_server,
+                    'error_code'   => $error_code,
+                    'error_message_admin' => $error_message,
+                    'error_message_user' => 'No es posible eliminar el registro seleccionado. Restricción de llave foránea.'
+                ],422);
+            }
+        }
     }
 }

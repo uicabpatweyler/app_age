@@ -93,9 +93,8 @@
                         return new Promise(function (resolve, reject) {
                             setTimeout(function() {
                                 $.ajax({
-                                    type:"POST",
+                                    type:"GET",
                                     url:"{{route('eliminarclasificacion', $id_clasificacion)}}",
-                                    data: $("#form_clasificacion").serialize(),
                                     dataType : 'json',
                                     success: function(data){
                                         swal({
@@ -106,6 +105,21 @@
                                             confirmButtonText: 'Continuar'
                                         }).then(function(){
                                             window.location = "{{ route('clasificaciones') }}";
+                                        });
+                                    },
+                                    error: function (xhr,status, response) {
+                                        //Obtener el valor de los errores devueltos por el controlador
+                                        var error = jQuery.parseJSON(xhr.responseText);
+                                        var error_server = error.error_server;
+                                        var error_code   = error.error_code;
+                                        var error_message_user = error.error_message_user;
+                                        swal({
+                                            title:'Error: '+error_code+'. SQLSTATE: '+error_server,
+                                            html: error_message_user,
+                                            type: "error",
+                                            allowOutsideClick: false,
+                                            confirmButtonColor: '#d33',
+                                            confirmButtonText: "Corregir"
                                         });
                                     }
                                 });

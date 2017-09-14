@@ -29,8 +29,8 @@
 
                                 <div class="alert bg-aqua-active">
                                     <h4> {{$cuota->cuotacolegiatura_nombre}} - $ {{number_format($cuota->cuotacolegiatura_cuota, 2, '.', ',')}}</h4>
-                                    Seleccione un mes de la lista, agregue el periodo sin recargo, las fechas con recargo y por ultimo el porcentaje de
-                                    recargo a aplicar.
+                                    Seleccione un mes de la lista, agregue el periodo sin recargo, las fechas con recargo, el porcentaje de
+                                    recargo y el descuento a aplicar. (El descuento es opcional).
                                 </div>
 
                                 <form method="post" action="" class="form-horizontal" name="form_mesesdepago" id="form_mesesdepago">
@@ -78,6 +78,11 @@
                                         <div class="col-sm-1">
                                             <input type="text" class="form-control" id="porcentaje_recargo" name="porcentaje_recargo" placeholder="0 %">
                                         </div>
+
+                                        <div class="col-sm-1">
+                                            <input type="text" class="form-control" id="porcentaje_descuento" name="porcentaje_descuento" placeholder="0 %">
+                                        </div>
+
                                     </div>
 
                                     <a class="btn btn-danger" href="">
@@ -117,16 +122,19 @@
                                 <table class="table table-striped">
                                     <tr>
                                         <th style="width: 10%">#</th>
-                                        <th style="width: 25%">Mes</th>
+                                        <th style="width: 20%">Mes</th>
                                         <th class="text-center" style="width: 25%">Periodo sin recargo</th>
                                         <th class="text-center" style="width: 25%">Periodo con recargo</th>
-                                        <th class="text-center" style="width: 15%">Recargo</th>
+                                        <th class="text-center" style="width: 10%">Recargo.</th>
+                                        <th class="text-center" style="width: 10%">Desc.</th>
                                     </tr>
                                     @foreach($mesescolegiatura as $registro)
                                         <tr>
                                             <td style="width: 10%">{{$registro->orden_mes}}</td>
-                                            <td>{{$registro->nombre_mes}}</td>
-                                            <td class="text-center">
+
+                                            <td style="width: 20%">{{$registro->nombre_mes}}</td>
+
+                                            <td class="text-center" style="width: 25%">
                                                 <span class="badge bg-yellow">
                                                     {{ucwords($registro->fecha1_sin_recargo->format('D, d M Y'))}}
                                                 </span>
@@ -135,7 +143,8 @@
                                                     {{ucwords($registro->fecha2_sin_recargo->format('D, d M Y'))}}
                                                 </span>
                                             </td>
-                                            <td class="text-center">
+
+                                            <td class="text-center" style="width: 25%">
                                                 <span class="badge bg-red-active">
                                                     {{ucwords($registro->fecha3_con_recargo->format('D, d M Y'))}}
                                                 </span>
@@ -145,10 +154,14 @@
                                                 </span>
 
                                             </td>
-                                            <td class="text-center">
+                                            <td class="text-center" style="width: 10%">
                                                 <span class="label bg-gray-active">
                                                     {{$registro->porcentaje_recargo}} %
                                                 </span>
+                                            </td>
+
+                                            <td class="text-center" style="width: 10%">
+
                                             </td>
 
                                         </tr>

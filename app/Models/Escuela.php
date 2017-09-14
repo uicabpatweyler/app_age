@@ -55,6 +55,12 @@ class Escuela extends Model
         return $this->hasMany(Grupo::class);
     }
 
+    //Relacion 1:M. Lado 1
+    //Una ESCUELA se usa para crear 1 o MUHCAS CUOTAS DE INSCRIPCION
+    public function CuotasDeInscripcion(){
+        return $this->hasMany(CuotaInscripcion::class);
+    }
+
 
 
 }

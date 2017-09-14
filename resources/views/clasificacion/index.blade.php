@@ -135,14 +135,14 @@
                         { data: null,
                             "render": function ( data, type, full, meta ) {
                                 var buttons='';
-                                buttons += '<a class="'+"btn btn-xs btn-info"+'" href="/editarclasificacion/'+data.id+'/'+data.escuela_id+'">';
-                                buttons += '<i class="'+"fa fa-pencil-square-o"+'" aria-hidden="'+"true"+'"></i>';
-                                buttons += 'Editar';
-                                buttons += '</a>';
-                                buttons += ' | ';
                                 buttons += '<a class="'+"btn btn-xs btn-danger"+'" href="/mostrarclasificacion/'+data.id+'/'+data.escuela_id+'">';
                                 buttons += '<i class="'+"fa fa-trash-o fa-lg"+'" aria-hidden="'+"true"+'"></i>';
                                 buttons += 'Eliminar';
+                                buttons += '</a>';
+                                buttons += ' | ';
+                                buttons += '<a class="'+"btn btn-xs btn-info"+'" href="/editarclasificacion/'+data.id+'/'+data.escuela_id+'">';
+                                buttons += '<i class="'+"fa fa-pencil-square-o"+'" aria-hidden="'+"true"+'"></i>';
+                                buttons += 'Editar';
                                 buttons += '</a>';
                                 return buttons;
                             }

@@ -51,34 +51,34 @@ Route::get('nuevaclasificacion',                                    'Clasificaci
 Route::get('clasificacionesPorEscuela/{id}',                        'ClasificacionController@filtrarClasificaciones')->name('clasificacionesPorEscuela');
 Route::get('editarclasificacion/{id_clasificacion}/{id_escuela}',   'ClasificacionController@edit')->name('editarclasificacion');
 Route::get('mostrarclasificacion/{id_clasificacion}/{id_escuela}',  'ClasificacionController@show')->name('mostrarclasificacion');
-Route::post('eliminarclasificacion/{id}',                            'ClasificacionController@destroy')->name('eliminarclasificacion');
+Route::get('eliminarclasificacion/{id}',                            'ClasificacionController@destroy')->name('eliminarclasificacion');
 Route::post('guardarclasificacion',                                 'ClasificacionController@store')->name('guardarclasificacion');
 Route::post('updateclasificacion/{id}',                             'ClasificacionController@update')->name('updateclasificacion');
 
 /*
  * Configuración | Ciclo Escolar
  */
-Route::get('ciclos','CicloEscolarController@index')->name('ciclos');
-Route::get('nuevociclo','CicloEscolarController@create')->name('nuevociclo');
-Route::get('editarciclo/{id}','CicloEscolarController@edit')->name('editarciclo');
-Route::get('selectCiclos','CicloEscolarController@listaCiclosAjax')->name('selectCiclos');
-Route::post('guardarciclo', 'CicloEscolarController@store')->name('guardarciclo');
-Route::post('cambiarciclo', 'CicloEscolarController@cambiarCicloPredeterminado')->name('cambiarciclo');
-Route::post('updateciclo/{id}', 'CicloEscolarController@update')->name('updateciclo');
+Route::get('ciclos',             'CicloEscolarController@index')->name('ciclos');
+Route::get('nuevociclo',         'CicloEscolarController@create')->name('nuevociclo');
+Route::get('editarciclo/{id}',   'CicloEscolarController@edit')->name('editarciclo');
+Route::get('selectCiclos',       'CicloEscolarController@listaCiclosAjax')->name('selectCiclos');
+Route::get('eliminarciclo/{id}', 'CicloEscolarController@destroy')->name('eliminarciclo');
+Route::post('guardarciclo',      'CicloEscolarController@store')->name('guardarciclo');
+Route::post('cambiarciclo',      'CicloEscolarController@cambiarCicloPredeterminado')->name('cambiarciclo');
+Route::post('updateciclo/{id}',  'CicloEscolarController@update')->name('updateciclo');
 
 /*
  * Configuración: Grupos
  */
-Route::get('grupos',     'GrupoController@index')->name('grupos');
-Route::get('nuevogrupo', 'GrupoController@create')->name('nuevogrupo');
-Route::get('listargrupos/{id}', 'GrupoController@listaDeGrupos')->name('listargrupos');
+Route::get('grupos',                         'GrupoController@index')->name('grupos');
+Route::get('nuevogrupo',                     'GrupoController@create')->name('nuevogrupo');
+Route::get('listargrupos/{id}',              'GrupoController@listaDeGrupos')->name('listargrupos');
 Route::get('listaAjaxClasifPorEscuela/{id}', 'GrupoController@listaAjaxClasifPorEscuela')->name('listaAjaxClasifPorEscuela');
-Route::get('editargrupo/{id}', 'GrupoController@edit')->name('editargrupo');
-Route::get('mostrargrupo/{id}', 'GrupoController@show')->name('mostrargrupo');
-
-Route::post('guardargrupo',     'GrupoController@store')->name('guardargrupo');
-Route::post('updategrupo/{id}', 'GrupoController@update')->name('updategrupo');
-Route::post('eliminargrupo/{id}', 'GrupoController@destroy')->name('eliminargrupo');
+Route::get('editargrupo/{id}',               'GrupoController@edit')->name('editargrupo');
+Route::get('mostrargrupo/{id}',              'GrupoController@show')->name('mostrargrupo');
+Route::get('eliminargrupo/{id}',             'GrupoController@destroy')->name('eliminargrupo');
+Route::post('guardargrupo',                  'GrupoController@store')->name('guardargrupo');
+Route::post('updategrupo/{id}',              'GrupoController@update')->name('updategrupo');
 
 //Seleccionar cuota de inscripcion y colegiatura
 Route::get('seleccionar_cdi/{id_grupo}', 'GrupoController@seleccionarCDI')->name('seleccionar_cdi');
@@ -92,8 +92,11 @@ Route::get('cuotasdeinscripcion',        'CuotaInscripcionController@index')->na
 Route::get('nueva_cdi',                  'CuotaInscripcionController@create')->name('nueva_cdi');
 Route::get('lista_cdi/{id}',             'CuotaInscripcionController@listaCdi')->name('lista_cdi');
 Route::get('editar_cdi/{id_cdi}',        'CuotaInscripcionController@edit')->name('editar_cdi');
+Route::get('mostrarcdi/{id_cdi}',        'CuotaInscripcionController@show')->name('mostrar_cdi');
+Route::get('eliminarcdi/{id_cdi}',       'CuotaInscripcionController@destroy')->name('eliminarcdi');
 Route::post('guardarcuota_cdi',          'CuotaInscripcionController@store')->name('guardarcuota_cdi');
 Route::post('updatecdi/{id_cdi}',        'CuotaInscripcionController@update')->name('updatecdi');
+
 
 /*
  * Configuración: Cuotas de Colegiatura
@@ -103,8 +106,10 @@ Route::get('cuotasdecolegiatura',     'CuotaColegiaturaController@index')->name(
 Route::get('nueva_cdc',               'CuotaColegiaturaController@create')->name('nueva_cdc');
 Route::get('lista_cdc/{id}',          'CuotaColegiaturaController@listaCdc')->name('lista_cdc');
 Route::get('asignarmesesdepago/{id}', 'CuotaColegiaturaController@asignarMesesDePago')->name('asignarmesesdepago');
-
-Route::post('guardarcuota_cdc', 'CuotaColegiaturaController@store')->name('guardarcuota_cdc');
+Route::get('editar_cdc/{id_cdc}',     'CuotaColegiaturaController@edit')->name('editar_cdc');
+Route::get('eliminarcdc/{id_cdc}',    'CuotaColegiaturaController@destroy')->name('eliminar_cdc');
+Route::post('guardarcuota_cdc',       'CuotaColegiaturaController@store')->name('guardarcuota_cdc');
+Route::post('update_cdc/{id_cdc}',    'CuotaColegiaturaController@update')->name('update_cdc');
 
 /*
  * Entidad Compuesta para las relaciones entre Grupos y Cuotas de Inscripción

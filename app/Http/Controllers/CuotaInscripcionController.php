@@ -7,6 +7,7 @@ use App\Models\CuotaInscripcion;
 use App\Models\Escuela;
 use App\Models\GrupoCdi;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -159,7 +160,24 @@ class CuotaInscripcionController extends Controller
      */
     public function show($id)
     {
-        //
+        //Verificar si se encuentra en uso
+        $verifica_cdi = GrupoCdi::where('cuotainscripcion_id', $id)->first();
+
+        //Obtener la cuota de inscripción seleccionada
+        $cuota = CuotaInscripcion::findOrFail($id);
+
+        //La cuota de inscripcion seleccionada no se encuentra en uso
+        if($verifica_cdi === null)
+        {
+            return view('cuotasinscripcion.mostrarcdi', compact('cuota'));
+        }
+        else
+        {
+            $mensaje = "La cuota de inscripción seleccionada no puede ser eliminada porque se enuentra en uso.";
+            return view('cuotasinscripcion.mostrarcdi', compact('cuota', 'mensaje'));
+        }
+
+
     }
 
     /**
@@ -201,7 +219,7 @@ class CuotaInscripcionController extends Controller
         if($validation->passes())
         {
 
-            //Si el usuario desea poner en NO DISPONIBLE la cuota de incsripcion, verificar lo siguiente
+            //Si el usuario desea poner en NO DISPONIBLE la cuota de incsripcion, verificar lo siguiente:
             //Que la CUOTA DE INSCRIPCION no se encuentre asignada a ningun grupo.
             //Esto se obtiene haciendo una consulta a la entidad compuesta EC_GRUPO_CDI.
             //Si la consulta devuelve un valor distinto de CERO significa que la CDI se esta usando en al menos
@@ -273,6 +291,35 @@ class CuotaInscripcionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html#error_er_row_is_referenced_2
+        try{
+            $cdi = CuotaInscripcion::find($id);
+            $cdi->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'La cuota de inscripción se ha eliminado correctamente'
+            ], 200);
+
+        }catch (Exception $e){
+            //Error: 1451. SQLSTATE: 2300
+            //Cannot delete or update a parent row: a foreign key constraint fails
+            $error_server  = $e->errorInfo[0];
+            $error_code    = $e->errorInfo[1];
+            $error_message = $e->errorInfo[2];
+
+            //return dd($e);
+
+            if($error_server == 23000 and $error_code == 1451)
+            {
+                return response()->json([
+                    'success'      => false,
+                    'error_server' => $error_server,
+                    'error_code'   => $error_code,
+                    'error_message_admin' => $error_message,
+                    'error_message_user' => 'No es posible eliminar la cuota de inscripción. Restricción de llave foránea.'
+                ],422);
+            }
+        }
     }
 }

@@ -41,13 +41,36 @@
                                         {{ $empresa[0]->empresa_direccion }}
                                         # {{ $empresa[0]->empresa_numexterior}}
                                         {{$empresa[0]->empresa_numinterior}}
-                                        {{$empresa[0]->empresa_referencia}}.
-                                        Colonia: {{$empresa[0]->empresa_colonia}}.
-                                        C.P.:{{$empresa[0]->empresa_codigopostal}}.
-                                        &nbsp;&nbsp;
-                                        {{$empresa[0]->empresa_localidad}},
-                                        {{$empresa[0]->empresa_delegacion}},
-                                        {{$empresa[0]->empresa_estado}},
+                                        {{$empresa[0]->empresa_referencia}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-green color-palette" style="width: 20%"><strong>Colonia:</strong></td>
+                                    <td style="width: 80%">
+                                        {{$empresa[0]->empresa_colonia}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-green color-palette" style="width: 20%"><strong>Localidad:</strong></td>
+                                    <td style="width: 80%">
+                                        {{$empresa[0]->empresa_localidad}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-green color-palette" style="width: 20%"><strong>Delegación:</strong></td>
+                                    <td style="width: 80%">
+                                        {{$empresa[0]->empresa_delegacion}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-green color-palette" style="width: 20%"><strong>Estado:</strong></td>
+                                    <td style="width: 80%">
+                                        {{$empresa[0]->empresa_estado}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-green color-palette" style="width: 20%"><strong>País:</strong></td>
+                                    <td style="width: 80%">
                                         {{$empresa[0]->empresa_pais}}
                                     </td>
                                 </tr>

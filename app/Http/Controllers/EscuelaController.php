@@ -7,6 +7,7 @@ use App\Models\TipoDeServicio;
 use App\Models\Nivel;
 use App\Models\Servicio;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -251,20 +252,38 @@ class EscuelaController extends Controller
      */
     public function destroy($id)
     {
+        //https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html#error_er_row_is_referenced_2
+        try{
+            $escuela = Escuela::find($id);
+            $escuela->delete();
 
-        $escuela = Escuela::findOrFail($id);
+            return response()->json([
+                'success' => true,
+                'message' => 'La eliminación de la escuela se ha realizado correctamente'
+            ], 200);
 
-        //Cambiamos el Status a false, poniendola como inactiva. No se elimina fisicamente por las relaciones
-        //que pueda tener con otras tablas
-        $escuela->escuela_status = false;
+        }catch(Exception $e){
+            //Error: 1451. SQLSTATE: 2300
+            //Cannot delete or update a parent row: a foreign key constraint fails
+            $error_server  = $e->errorInfo[0];
+            $error_code    = $e->errorInfo[1];
+            $error_message = $e->errorInfo[2];
 
-        //Guardamos los datos
-        $escuela->save();
+            //return dd($e);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'La eliminación de la escuela se ha realizado correctamente'
-        ], 200);
+            if($error_server == 23000 and $error_code == 1451)
+            {
+                return response()->json([
+                    'success'      => false,
+                    'error_server' => $error_server,
+                    'error_code'   => $error_code,
+                    'error_message_admin' => $error_message,
+                    'error_message_user' => 'No es posible eliminar la escuela elegida. Restricción de llave foránea.'
+                ],422);
+            }
+        }
+
+
     }
 
     public function listaAjaxNiveles($id){

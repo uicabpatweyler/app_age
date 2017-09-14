@@ -80,7 +80,7 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <a class="btn btn-danger" href="{{route('clasificaciones')}}">
+                                <a class="btn btn-danger" href="javascript:history.back(1)">
                                     <i class="fa fa-ban fa-lg" aria-hidden="true"></i>&nbsp;  Cancelar</a>
 
                                 <button type="submit" class="btn btn-primary pull-right" name="boton_enviar" id="boton_enviar">
@@ -141,7 +141,7 @@
                             clasificacion_nombre : { required: true }
                         },
                         messages:{
-                            clasificacion_nombre : 'El campo clasificacion es obligatorio'
+                            clasificacion_nombre : 'El campo clasificación es obligatorio'
                         },
                         invalidHandler: function(event, validator) {
                             // 'this' refers to the form
