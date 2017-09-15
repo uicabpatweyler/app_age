@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Validator;
 
 class MesPagoColegiaturaController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     private function formatearFecha($tipo,$cadena)
     {
         $arreglo =explode(' / ', $cadena);

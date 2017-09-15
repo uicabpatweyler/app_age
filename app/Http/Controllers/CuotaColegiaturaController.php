@@ -14,6 +14,17 @@ use Illuminate\Support\Facades\Validator;
 
 class CuotaColegiaturaController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function cicloEscolarPredeterminado()
     {
         //Obtener el ID del ciclo actual de trabajo
@@ -69,12 +80,40 @@ class CuotaColegiaturaController extends Controller
      */
     public function index()
     {
-        $ciclo    = $this->cicloEscolarPredeterminado();
+        /*
+        * 1) Verificar que al menos exista una escuela activa
+        */
+        $numeroDeEscuelas = Escuela::all()
+            ->where('escuela_status', true)
+            ->count();
 
-        $escuelas = Escuela::where('escuela_status', true)
-            ->get();
+        if($numeroDeEscuelas===0)
+        {
+            //Nueva Escuela
+            return redirect()->route('nuevaescuela');
+        }
+        /*
+         * 2) Verificar que al menos exista un ciclo escolar creado y que este activo
+         * 3) Si existe al menos un ciclo escolar, debe existir el ciclo de trabajo predeterminado
+         */
+        else if($this->cicloEscolarPredeterminado()===null)
+        {
+            //1) No existe al menos un ciclo escolar creado
+            //2) Existe al menos un ciclo escolar, pero no se ha marcado como predeterminado
+            //3) Existe mas de un ciclo escolar, pero ninguno se ha marcado como predeterminado
+            //En cualquiera de los tres casos es necesario redirigir hacia la seccion de los CICLOS ESCOLARES
+            return redirect()->route('ciclos');
+        }
+        else
+        {
+            $ciclo    = $this->cicloEscolarPredeterminado();
 
-        return view('cuotascolegiatura.index', compact('ciclo', 'escuelas'));
+            $escuelas = Escuela::where('escuela_status', true)
+                        ->get();
+
+            return view('cuotascolegiatura.index', compact('ciclo', 'escuelas'));
+        }
+
     }
 
     /**

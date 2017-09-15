@@ -12,8 +12,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 
-class ClasificacionController extends Controller{
+class ClasificacionController extends Controller
+{
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function filtrarClasificaciones($id)
     {
         $ciclo  =   $this->cicloEscolarPredeterminado();
@@ -57,6 +68,7 @@ class ClasificacionController extends Controller{
             //Nueva Escuela
             return redirect()->route('nuevaescuela');
         }
+        
         /*
          * 2) Verificar que al menos exista un ciclo escolar creado y que este activo
          * 3) Si existe al menos un ciclo escolar, debe existir el ciclo de trabajo predeterminado

@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    //return view('welcome');
-    return view('mainHome');
-});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/',     'HomeController@index')->name('home');
+
+//Route::get('/', function () { return view('mainHome'); });
 
 /*
  * Configuración | Empresa
@@ -120,7 +122,9 @@ Route::post('guardar_grupo_cdi', 'GrupoCdiController@store')->name('guardar_grup
  * Entidad Compuesta para las relaciones entre Grupos y Cuotas de Colegiatura
  */
 Route::post('guardar_grupo_cdc', 'GrupoCdcController@store')->name('guardar_grupo_cdc');
+
 /*
  * Meses de Pago de la Colegiatura
  */
 Route::post('guardarmespagocolegiatura', 'MesPagoColegiaturaController@store')->name('guardarmespagocolegiatura');
+

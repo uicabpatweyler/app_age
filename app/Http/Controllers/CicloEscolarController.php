@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Validator;
 
 class CicloEscolarController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function listaCiclosAjax(){
         return $ciclos = Ciclo::select('id','ciclo_anioinicial as anio1','ciclo_aniofinal as anio2')
                 ->where('ciclo_activo',0)

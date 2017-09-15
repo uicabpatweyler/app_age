@@ -52,6 +52,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-money" aria-hidden="true"></i> Pagos <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="#"><i class="fa fa-caret-right text-red" aria-hidden="true"></i> Pago de Inscripción</a></li>
+                                    <li class="divider"></li>
                                     <li><a href="#"><i class="fa fa-caret-right text-red" aria-hidden="true"></i> Pago de colegiatura</a></li>
                                     <li class="divider"></li>
                                 </ul>
@@ -63,51 +64,25 @@
                     <!-- /.navbar-collapse -->
                     <!-- Navbar Right Menu -->
                     <div class="navbar-custom-menu">
-                        <ul class="nav navbar-nav">                        
-                            
-                            <!-- User Account Menu -->
-                            <li class="dropdown user user-menu">
-                                <!-- Menu Toggle Button -->
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <!-- The user image in the navbar-->
-                                    <img src="{{asset('adminlte/dist/img/user2-160x160.jpg')}}" class="user-image" alt="User Image">
-                                    <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                    <span class="hidden-xs">Alexander Pierce</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <!-- The user image in the menu -->
-                                    <li class="user-header">
-                                        <img src="{{asset('adminlte/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
+                                    &nbsp;&nbsp;{{ Auth::user()->name }} <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#"><i class="fa fa-user-o text-red" aria-hidden="true"></i> Mi Cuenta</a></li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="fa fa-power-off text-red" aria-hidden="true"></i>
+                                            Cerrar Sesión
+                                        </a>
 
-                                        <p>
-                                            Alexander Pierce - Web Developer
-                                            <small>Member since Nov. 2012</small>
-                                        </p>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+
                                     </li>
-                                    <!-- Menu Body -->
-                                    <li class="user-body">
-                                        <div class="row">
-                                            <div class="col-xs-4 text-center">
-                                                <a href="#">Followers</a>
-                                            </div>
-                                            <div class="col-xs-4 text-center">
-                                                <a href="#">Sales</a>
-                                            </div>
-                                            <div class="col-xs-4 text-center">
-                                                <a href="#">Friends</a>
-                                            </div>
-                                        </div>
-                                        <!-- /.row -->
-                                    </li>
-                                    <!-- Menu Footer-->
-                                    <li class="user-footer">
-                                        <div class="pull-left">
-                                            <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                        </div>
-                                        <div class="pull-right">
-                                            <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                                        </div>
-                                    </li>
+                                    <li class="divider"></li>
                                 </ul>
                             </li>
                         </ul>
