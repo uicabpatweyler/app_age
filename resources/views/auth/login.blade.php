@@ -124,7 +124,7 @@ desired effect
                                     </div>
 
                                     <a class="btn btn-social btn-default" href="{{ route('password.request') }}">
-                                        <i class="fa fa-question-circle" aria-hidden="true"></i> Olvide mi contraseña
+                                        <i class="fa fa-question-circle fa-lg" aria-hidden="true"></i> Olvide mi contraseña
                                     </a>
 
                                     <button type="submit" class="btn btn-primary btn-social btn-dropbox pull-right">

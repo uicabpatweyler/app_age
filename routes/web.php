@@ -19,6 +19,11 @@ Route::get('/',     'HomeController@index')->name('home');
 //Route::get('/', function () { return view('mainHome'); });
 
 /*
+ * Alumnos: Inscripcion
+ */
+Route::get('inscripcion_paso1', 'Alumno\InscripcionController@inscripcion_paso1')->name('inscripcion_paso1');
+
+/*
  * Configuración | Empresa
  */
 Route::get('empresa', 'EmpresaController@index')->name('empresa');
