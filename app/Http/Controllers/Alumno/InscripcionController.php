@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Alumno;
 
+use App\Models\Alumno;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -19,7 +20,26 @@ class InscripcionController extends Controller
 
     public function inscripcion_paso1()
     {
-        return view('alumnos.inscripcion.p1_verificarcurp');
+        return view('alumnos.inscripcion.inscripcion_paso1');
+    }
+
+    public function inscripcion_verificaCurp(Request $request)
+    {
+        $verificarCurp = Alumno::where('alumno_curp', $request->get('alumnocurp'))->count();
+
+        if($verificarCurp!=0)
+        {
+            $alumnos = Alumno::where('alumno_curp', $request->get('alumnocurp'))->get();
+            return view('alumnos.inscripcion.inscripcion_paso1', compact('verificarCurp','alumnos'));
+        }
+        else{
+            return redirect()->to('inscripcion_paso2');
+        }
+    }
+
+    public function inscripcion_paso2()
+    {
+        return view('alumnos.inscripcion.inscripcion_paso2');
     }
 
     /**

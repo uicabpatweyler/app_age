@@ -26,7 +26,9 @@
                         <!-- /.box-header -->
 
                         <!-- form start -->
-                        <form class="form-horizontal" method="post" action="" id="form_verificarcurp" name="form_verificarcurp">
+                        <form class="form-horizontal" method="post" action="{{route('inscripcion_verificacurp')}}" id="form_verificarcurp" name="form_verificarcurp">
+                            {{csrf_field()}}
+                            <input type="hidden" name="alumnocurp" id="alumnocurp">
 
                             <!-- box-body start -->
                             <div class="box-body">
@@ -35,7 +37,7 @@
                                     <label for="alumno_curp" class="col-sm-2 control-label">C.U.R.P del alumno: (*)</label>
 
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="alumno_curp" name="alumno_curp" placeholder="UIPW810622HYNCTY02" required>
+                                        <input type="text" class="form-control" id="alumno_curp" name="alumno_curp" placeholder="UIPW810622HYNCTY02" required >
                                     </div>
                                 </div>
 
@@ -59,6 +61,49 @@
 
                     </div>
                     <!-- /.box -->
+
+                    @if( isset($alumnos) and isset($verificarCurp) )
+                        <div class="box box-success box-solid">
+                            <div class="box-header with-border">
+                                <i class="fa fa-warning"></i>
+                                <h3 class="box-title">{{$verificarCurp > 1 ? 'Se encontraron '.$verificarCurp.'Coincidencias' : 'Se encontro '.$verificarCurp.' coincidencia.'}}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Matricula</th>
+                                        <th>CURP</th>
+                                        <th>Nombre</th>
+                                    </tr>
+                                    <tr>
+                                        @foreach($alumnos as $alumno)
+                                        @endforeach
+                                        <td>
+                                            @if($alumno->id<10)
+                                                00{{$alumno->id}}
+                                            @elseif($alumno->id<100)
+                                                0{{$alumno->id}}
+                                            @else
+                                                {{$alumno->id}}
+                                            @endif
+                                        </td>
+                                        <td>{{$alumno->alumno_curp}}</td>
+                                        <td>{{ucfirst($alumno->alumno_primernombre)}} {{ucfirst($alumno->alumno_segundonombre)}} {{ucfirst($alumno->alumno_apellidopaterno)}} {{ucfirst($alumno->alumno_apellidomaterno)}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    @endif
+
+
                 </div>
             </section>
             <!-- /.content -->
@@ -74,7 +119,7 @@
 <script>
     $(document).ready(function(){
         //$("#escuela_clavect").inputmask("9{2}A{3}9{4}A{1}");
-        $("#alumno_curp").inputmask("A{4}9{6}A{1}A{2}A{3}9{2}",{
+        $("#alumno_curp").inputmask("A{4} 9{6} A{1} A{2} A{3} 9|A{2}",{
             onKeyValidation: function(key, result){
                 if (!result){
                     swal({
@@ -97,8 +142,15 @@
 
         $("#boton_siguiente").click(function(){
             if ($("#alumno_curp").inputmask("isComplete")){
+                //Eliminamos la clase de error del cuadro de texto
                 $(".curp_alumno").removeClass("has-error");
-                return false;
+                //Obtenemos la CURP sin los espacios en blano
+                var curp_alumno = $('#alumno_curp').inputmask('unmaskedvalue');
+                //Se lo asignamos al campo oculto 'alumnocurp'
+                $("#alumnocurp").val(curp_alumno);
+                //Enviamos el formulario
+                $("#form_verificarcurp").submit();
+                //return false;
             }
             else{
                 $(".curp_alumno").addClass("has-error");
