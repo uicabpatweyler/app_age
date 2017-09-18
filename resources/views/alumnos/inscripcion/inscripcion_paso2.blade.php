@@ -38,13 +38,13 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="">Nombre:</label>
+                                        <label for="">Nombre</label>
                                         <div class="row">
                                             <div class="col-xs-6">
-                                                <input type="text" class="form-control" placeholder="Primer Nombre">
+                                                <input type="text" class="form-control" placeholder="Primer Nombre" id="alumno_primernombre" name="alumno_primernombre" required>
                                             </div>
                                             <div class="col-xs-6">
-                                                <input type="text" class="form-control" placeholder="Segundo Nombre">
+                                                <input type="text" class="form-control" placeholder="Segundo Nombre" id="alumno_segundonombre" name="alumno_segundonombre">
                                             </div>
                                         </div>
                                     </div>
@@ -52,13 +52,13 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="">Apellidos:</label>
+                                        <label for="">Apellidos</label>
                                         <div class="row">
                                             <div class="col-xs-6">
-                                                <input type="text" class="form-control" placeholder="Apellido Paterno">
+                                                <input type="text" class="form-control" placeholder="Apellido Paterno" id="alumno_apellidopaterno" name="alumno_apellidopaterno" required>
                                             </div>
                                             <div class="col-xs-6">
-                                                <input type="text" class="form-control" placeholder="Apellido Materno">
+                                                <input type="text" class="form-control" placeholder="Apellido Materno" id="alumno_apellidomaterno" name="alumno_apellidomaterno">
                                             </div>
                                         </div>
                                     </div>
@@ -70,10 +70,10 @@
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label for="">C.U.R.P.:</label>
+                                        <label for="">C.U.R.P.</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="UIPW810622HYNCTY02">
+                                                <input type="text" class="form-control" id="alumno_curp" name="alumno_curp" value="{{old('alumno_curp')}}">
                                             </div>
                                         </div>
                                     </div>
@@ -83,27 +83,37 @@
                                         <label for="">Fecha Nac.:</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="22-Junio-1981">
+                                                <div class="input-group date">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="alumno_fechanac" name="alumno_fechanac">
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label for="">Edad:</label>
+                                        <label for="">Edad</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="34 Anios">
+                                                <input type="text" class="form-control" id="alumno_edad" name="alumno_edad">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label for="">Sexo:</label>
+                                        <label for="">Sexo</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Masculino">
+                                                <select name="alumno_genero" id="alumno_genero" class="form-control alumno_genero" style="width: 100%;">
+                                                    <option value="-1" selected>[Elegir]</option>
+                                                    <option value="H">Hombre</option>
+                                                    <option value="M">Mujer</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -114,10 +124,10 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="">Dirección:</label>
+                                        <label for="">Dirección</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Dirección">
+                                                <input type="text" class="form-control" placeholder="Calle/Avenida" id="direccion_calle" name="direccion_calle" required>
                                             </div>
                                         </div>
                                     </div>
@@ -127,7 +137,7 @@
                                         <label for="">&nbsp;</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Num. Int.">
+                                                <input type="text" class="form-control" placeholder="Num. Int." id="direccion_numerointerior" name="direccion_numerointerior" required>
                                             </div>
                                         </div>
                                     </div>
@@ -137,7 +147,7 @@
                                         <label for="">&nbsp;</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Num. Ext.">
+                                                <input type="text" class="form-control" placeholder="Num. Ext." id="direccion_numeroexterior" name="direccion_numeroexterior">
                                             </div>
                                         </div>
                                     </div>
@@ -147,7 +157,7 @@
                                         <label for="">&nbsp;</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Referencias">
+                                                <input type="text" class="form-control" placeholder="Cruzamientos/Esquina/Entre Calles" id="direccion_referencias" name="direccion_referencias">
                                             </div>
                                         </div>
                                     </div>
@@ -158,20 +168,38 @@
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label for="">Colonia:</label>
+                                        <label for="">Colonia</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Colonia">
+                                                <select name="direccion_estado" id="direccion_estado" class="form-control direccion_estado" style="width: 100%;">
+                                                    <option value="-1" selected>[Elegir estado]</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-1">
+                                <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label for="">C.P.</label>
+                                        <label for="">Deleg/Munic.</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="77620">
+                                                <div class="col-xs-12">
+                                                    <select name="direccion_delegacion" id="direccion_delegacion" class="form-control direccion_delegacion" style="width: 100%;">
+                                                        <option value="-1" selected>[Elegir Deleg/Munic.]</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="">Colonia</label>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <select name="direccion_colonia" id="direccion_colonia" class="form-control direccion_colonia" style="width: 100%;">
+                                                    <option value="-1" selected>[Elegir Colonia]</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -181,27 +209,17 @@
                                         <label for="">Localidad</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Localidad" value="Chetumal">
+                                                <input type="text" class="form-control" name="direccion_localidad" id="direccion_localidad">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-1">
                                     <div class="form-group">
-                                        <label for="">Deleg./Munic.</label>
+                                        <label for="">C.P.</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Deleg./Munic." value="Othón P. Blanco">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="">Estado</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Estado" value="Quintana Roo">
+                                                <input type="text" class="form-control" placeholder="00000">
                                             </div>
                                         </div>
                                     </div>
@@ -210,45 +228,57 @@
 
                             <!-- Fila los telefonos de contacto del alumno -->
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="">Teléfono de casa:</label>
+                                        <label for="">Teléfono de casa</label>
                                         <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="">
+                                            <div class="col-xs-8">
+                                                <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonocasa" id="contacto_telefonocasa">
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <input type="text" class="form-control" name="referencia1" id="referencia1">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="">Telefono tutor:</label>
+                                        <label for="">Telefono tutor</label>
                                         <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="">
+                                            <div class="col-xs-8">
+                                                <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonotutor" id="contacto_telefonotutor">
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <input type="text" class="form-control" name="referencia2" id="referencia3">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="">Celular:</label>
+                                        <label for="">Celular</label>
                                         <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="">
+                                            <div class="col-xs-8">
+                                                <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonocelular" id="contacto_telefonocelular">
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <input type="text" class="form-control" name="referencia3" id="referencia3">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="">Otro:</label>
+                                        <label for="">Otro</label>
                                         <div class="row">
-                                            <div class="col-xs-7">
-                                                <input type="text" class="form-control" placeholder="">
+                                            <div class="col-xs-8">
+                                                <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefono_otro" id="contacto_telefono_otro">
                                             </div>
-                                            <div class="col-xs-5">
-                                                <input type="text" class="form-control" placeholder="">
+                                            <div class="col-xs-4">
+                                                <input type="text" class="form-control" name="referencia4" id="referencia4">
                                             </div>
                                         </div>
                                     </div>
@@ -703,5 +733,66 @@
 @endsection
 
 @section('scripts')
+<script>
+    $(document).ready(function(){
 
+        //https://bootstrap-datepicker.readthedocs.io/en/latest/index.html
+        //https://momentjs.com/docs/
+        //https://github.com/uxsolutions/bootstrap-datepicker
+
+        var curp = "{{old('curp')}}";
+        var curp_split = curp.split(" ");
+        var fecha_nac = curp_split[1];
+        moment.locale('es');
+
+        $("#alumno_fechanac").datepicker({
+            format: "dd-MM-yyyy",
+            language: "es",
+            autoclose: true,
+            todayBtn: "linked",
+            defaultViewDate: { year: moment(fecha_nac, "YYMMDD").format('YYYY'), month: moment(fecha_nac, "YYMMDD").subtract(1, 'months').format('MM'), day: moment(fecha_nac, "YYMMDD").format('DD') }
+        });
+
+        $("#alumno_fechanac").val(moment(fecha_nac, "YYMMDD").format('DD-MMMM-YYYY'));
+        $("#alumno_edad").val(moment(fecha_nac, "YYMMDD").fromNow(true));
+
+        $('.alumno_genero').select2({
+            allowClear: true,
+            placeholder: {
+                id: "-1",
+                text: '[Elegir]'
+            }
+        });
+
+        $('.direccion_estado').select2({
+            allowClear: true,
+            placeholder: {
+                id: "-1",
+                text: '[Elegir estado]'
+            }
+        });
+
+        $('.direccion_delegacion').select2({
+            allowClear: true,
+            placeholder: {
+                id: "-1",
+                text: '[Elegir Deleg/Munic.]'
+            }
+        });
+
+        $('.direccion_colonia').select2({
+            allowClear: true,
+            placeholder: {
+                id: "-1",
+                text: '[Elegir Colonia]'
+            }
+        });
+
+        $("#contacto_telefonocasa").inputmask("(999)-999-9999");
+        $("#contacto_telefonotutor").inputmask("(999)-999-9999");
+        $("#contacto_telefonocelular").inputmask("(999)-999-9999");
+        $("#contacto_telefono_otro").inputmask("(999)-999-9999");
+
+    });
+</script>
 @endsection

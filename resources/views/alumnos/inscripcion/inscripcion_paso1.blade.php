@@ -28,16 +28,16 @@
                         <!-- form start -->
                         <form class="form-horizontal" method="post" action="{{route('inscripcion_verificacurp')}}" id="form_verificarcurp" name="form_verificarcurp">
                             {{csrf_field()}}
-                            <input type="hidden" name="alumnocurp" id="alumnocurp">
+                            <input type="hidden" name="alumno_curp" id="alumno_curp">
 
                             <!-- box-body start -->
                             <div class="box-body">
 
-                                <div class="form-group curp_alumno">
-                                    <label for="alumno_curp" class="col-sm-2 control-label">C.U.R.P del alumno: (*)</label>
+                                <div class="form-group curp">
+                                    <label for="curp" class="col-sm-2 control-label">C.U.R.P del alumno: (*)</label>
 
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="alumno_curp" name="alumno_curp" placeholder="UIPW810622HYNCTY02" required >
+                                        <input type="text" class="form-control" id="curp" name="curp" placeholder="UIPW810622HYNCTY02" required >
                                     </div>
                                 </div>
 
@@ -45,9 +45,11 @@
                             <!-- /.box-body -->
 
                             <div class="box-footer">
-                                <a class="btn btn-social btn-danger" href="#">
-                                    <i class="fa fa-ban fa-lg" aria-hidden="true"></i> Cancelar
-                                </a>
+                                @if( isset($alumnos) and isset($verificarCurp) )
+                                    <a class="btn btn-social btn-danger" href="{{route('inscripcion_paso1')}}">
+                                        <i class="fa fa-ban fa-lg" aria-hidden="true"></i> Cancelar
+                                    </a>
+                                @endif
 
                                 <button type="submit" class="btn btn-primary btn-social btn-dropbox pull-right" id="boton_siguiente">
                                     <i class="fa fa-arrow-right fa-lg" aria-hidden="true"></i>
@@ -86,12 +88,13 @@
                                         @endforeach
                                         <td>
                                             @if($alumno->id<10)
-                                                00{{$alumno->id}}
+                                                00{{$alumno->id}}-{{$alumno->created_at->format('dmy')}}
                                             @elseif($alumno->id<100)
-                                                0{{$alumno->id}}
+                                                0{{$alumno->id}}-{{$alumno->created_at->format('dmy')}}
                                             @else
-                                                {{$alumno->id}}
+                                                0{{$alumno->id}}-{{$alumno->created_at->format('dmy')}}
                                             @endif
+
                                         </td>
                                         <td>{{$alumno->alumno_curp}}</td>
                                         <td>{{ucfirst($alumno->alumno_primernombre)}} {{ucfirst($alumno->alumno_segundonombre)}} {{ucfirst($alumno->alumno_apellidopaterno)}} {{ucfirst($alumno->alumno_apellidomaterno)}}</td>
@@ -118,8 +121,8 @@
 
 <script>
     $(document).ready(function(){
-        //$("#escuela_clavect").inputmask("9{2}A{3}9{4}A{1}");
-        $("#alumno_curp").inputmask("A{4} 9{6} A{1} A{2} A{3} 9|A{2}",{
+
+        $("#curp").inputmask("A{4} 9{6} A{1} A{2} A{3} 9|A{2}",{
             onKeyValidation: function(key, result){
                 if (!result){
                     swal({
@@ -133,28 +136,28 @@
                 }
             },
             onincomplete : function(){
-                $(".curp_alumno").addClass("has-error");
+                $(".curp").addClass("has-error");
             },
             oncomplete : function(){
-                $(".curp_alumno").removeClass("has-error");
+                $(".curp").removeClass("has-error");
             }
         });
 
         $("#boton_siguiente").click(function(){
-            if ($("#alumno_curp").inputmask("isComplete")){
+            if ($("#curp").inputmask("isComplete")){
                 //Eliminamos la clase de error del cuadro de texto
-                $(".curp_alumno").removeClass("has-error");
+                $(".curp").removeClass("has-error");
                 //Obtenemos la CURP sin los espacios en blano
-                var curp_alumno = $('#alumno_curp').inputmask('unmaskedvalue');
+                var curp_alumno = $('#curp').inputmask('unmaskedvalue');
                 //Se lo asignamos al campo oculto 'alumnocurp'
-                $("#alumnocurp").val(curp_alumno);
+                $("#alumno_curp").val(curp_alumno);
                 //Enviamos el formulario
                 $("#form_verificarcurp").submit();
                 //return false;
             }
             else{
-                $(".curp_alumno").addClass("has-error");
-                $( "#alumno_curp").focus();
+                $(".curp").addClass("has-error");
+                $( "#curp").focus();
                 swal({
                     title:"Error:",
                     text: "La CURP es incorrecta",

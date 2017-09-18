@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{asset('font-awesome/css/font-awesome.min.css')}}">
     <!-- Daterange picker - http://www.daterangepicker.com/  -->
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.css">
     <!-- Sweet Alert CSS/JS -->
     <script src="{{asset('sweetalert/sweetalert2.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('sweetalert/sweetalert2.css')}}">
@@ -89,8 +91,12 @@ desired effect
 <!-- InputMask https://github.com/RobinHerbots/Inputmask -->
 <script src="{{asset('adminlte/plugins/input-mask/dist/jquery.inputmask.bundle.js')}}"></script>
 <!-- date-range-picker -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="{{asset("adminlte/plugins/moment/moment.min.js")}}"></script>
+<script type="text/javascript" src="{{asset("adminlte/plugins/moment/moment-with-locales.js")}}"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.es.min.js"></script>
 <!-- jQuery Validation https://jqueryvalidation.org/ -->
 <script src="{{asset('jquery-validation/dist/jquery.validate.js')}}"></script>
 <!-- AdminLTE App -->

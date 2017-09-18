@@ -25,7 +25,7 @@ class InscripcionController extends Controller
 
     public function inscripcion_verificaCurp(Request $request)
     {
-        $verificarCurp = Alumno::where('alumno_curp', $request->get('alumnocurp'))->count();
+        $verificarCurp = Alumno::where('alumno_curp', $request->get('alumno_curp'))->count();
 
         if($verificarCurp!=0)
         {
@@ -33,7 +33,8 @@ class InscripcionController extends Controller
             return view('alumnos.inscripcion.inscripcion_paso1', compact('verificarCurp','alumnos'));
         }
         else{
-            return redirect()->to('inscripcion_paso2');
+            //http://laraveldaily.com/all-about-redirects-in-laravel-5/
+            return redirect()->route('inscripcion_paso2')->withInput();
         }
     }
 
