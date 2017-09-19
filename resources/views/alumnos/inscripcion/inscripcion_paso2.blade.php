@@ -4,8 +4,7 @@
 
 @section('css')
     <style>
-        label span.error { color: red; }
-
+        span.error { color: #a94442; }
     </style>
 @endsection
 
@@ -53,14 +52,14 @@
                             <div class="row">
 
                                 <div class="col-sm-6">
-                                    <div class="form-group alumno_primernombre">
+                                    <div class="form-group">
                                         <label for="alumno_primernombre">Nombre</label>
                                         <div class="row">
-                                            <div class="col-xs-6">
-                                                <input type="text" class="form-control" placeholder="Primer Nombre" id="alumno_primernombre" name="alumno_primernombre" required>
+                                            <div class="col-xs-6 myerror">
+                                                <input type="text" class="form-control" placeholder="Primer Nombre" id="alumno_primernombre" name="alumno_primernombre" style="text-transform:capitalize" required minlength="2">
                                             </div>
                                             <div class="col-xs-6">
-                                                <input type="text" class="form-control" placeholder="Segundo Nombre" id="alumno_segundonombre" name="alumno_segundonombre">
+                                                <input type="text" class="form-control" placeholder="Segundo Nombre" id="alumno_segundonombre" name="alumno_segundonombre" style="text-transform:capitalize">
                                             </div>
                                         </div>
                                     </div>
@@ -68,13 +67,13 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="">Apellidos</label>
+                                        <label for="alumno_apellidopaterno">Apellidos</label>
                                         <div class="row">
-                                            <div class="col-xs-6">
-                                                <input type="text" class="form-control" placeholder="Apellido Paterno" id="alumno_apellidopaterno" name="alumno_apellidopaterno">
+                                            <div class="col-xs-6 myerror">
+                                                <input type="text" class="form-control" placeholder="Apellido Paterno" id="alumno_apellidopaterno" name="alumno_apellidopaterno" required minlength="2" style="text-transform:capitalize">
                                             </div>
                                             <div class="col-xs-6">
-                                                <input type="text" class="form-control" placeholder="Apellido Materno" id="alumno_apellidomaterno" name="alumno_apellidomaterno">
+                                                <input type="text" class="form-control" placeholder="Apellido Materno" id="alumno_apellidomaterno" name="alumno_apellidomaterno" style="text-transform:capitalize">
                                             </div>
                                         </div>
                                     </div>
@@ -89,7 +88,7 @@
                                         <label for="">C.U.R.P.</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" id="alumno_curp" name="alumno_curp" value="{{$alumno_curp}}">
+                                                <input type="text" class="form-control" id="alumno_curp" name="alumno_curp" value="{{$alumno_curp}}" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -103,7 +102,7 @@
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
-                                                    <input type="text" class="form-control" id="alumno_fechanac" name="alumno_fechanac">
+                                                    <input type="text" class="form-control" id="alumno_fechanac" name="alumno_fechanac" disabled>
                                                 </div>
 
                                             </div>
@@ -115,18 +114,18 @@
                                         <label for="">Edad</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" id="alumno_edad" name="alumno_edad">
+                                                <input type="text" class="form-control" id="alumno_edad" name="alumno_edad" disabled>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label for="">Sexo</label>
+                                        <label for="alumno_genero">Sexo</label>
                                         <div class="row">
-                                            <div class="col-xs-12">
-                                                <select name="alumno_genero" id="alumno_genero" class="form-control alumno_genero" style="width: 100%;">
-                                                    <option value="-1" selected>[Elegir]</option>
+                                            <div class="col-xs-12 myerror">
+                                                <select name="alumno_genero" id="alumno_genero" class="form-control" style="width: 100%;" required>
+                                                    <option value="" selected>[Elegir]</option>
                                                     <option value="H">Hombre</option>
                                                     <option value="M">Mujer</option>
                                                 </select>
@@ -140,10 +139,20 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="">Dirección</label>
+                                        <label for="direccion_calle">Dirección</label>
                                         <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Calle/Avenida" id="direccion_calle" name="direccion_calle">
+                                            <div class="col-xs-12 myerror">
+                                                <input type="text" class="form-control" placeholder="Calle/Avenida" id="direccion_calle" name="direccion_calle" style="text-transform:capitalize" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label for="direccion_numerointerior">&nbsp;</label>
+                                        <div class="row">
+                                            <div class="col-xs-12 myerror">
+                                                <input type="text" class="form-control" placeholder="Num. Int." id="direccion_numerointerior" name="direccion_numerointerior" style="text-transform:capitalize" required>
                                             </div>
                                         </div>
                                     </div>
@@ -153,27 +162,17 @@
                                         <label for="">&nbsp;</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Num. Int." id="direccion_numerointerior" name="direccion_numerointerior">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label for="">&nbsp;</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Num. Ext." id="direccion_numeroexterior" name="direccion_numeroexterior">
+                                                <input type="text" class="form-control" placeholder="Num. Ext." id="direccion_numeroexterior" style="text-transform:capitalize" name="direccion_numeroexterior">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="">&nbsp;</label>
+                                        <label for="direccion_referencias">&nbsp;</label>
                                         <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Cruzamientos/Esquina/Entre Calles" id="direccion_referencias" name="direccion_referencias">
+                                            <div class="col-xs-12 myerror">
+                                                <input type="text" class="form-control" placeholder="Cruzamientos/Esquina/Entre Calles" id="direccion_referencias" name="direccion_referencias" style="text-transform:capitalize" required>
                                             </div>
                                         </div>
                                     </div>
@@ -182,13 +181,13 @@
 
                             <!-- Fila para la Colonia, C.P., Localidad, Estado -->
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="">Estado *</label>
+                                        <label for="direccion_estado">Estado</label>
                                         <div class="row">
-                                            <div class="col-xs-12">
-                                                <select name="direccion_estado" id="direccion_estado" class="form-control direccion_estado" style="width: 100%;">
-                                                    <option value="-1" selected>[Elegir estado]</option>
+                                            <div class="col-xs-12 myerror">
+                                                <select name="direccion_estado" id="direccion_estado" class="form-control" style="width: 100%;" required>
+                                                    <option value="" selected>[Elegir estado]</option>
                                                     @foreach($estados as $estado)
                                                         <option value="{{$estado->id}}">{{$estado->estado_nombre}}</option>
                                                     @endforeach
@@ -197,48 +196,60 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="">Deleg/Munic.</label>
+                                        <label for="direccion_delegacion">Deleg/Munic.</label>
                                         <div class="row">
-                                            <div class="col-xs-12">
-                                                <div class="col-xs-12">
-                                                    <select name="direccion_delegacion" id="direccion_delegacion" class="form-control direccion_delegacion" style="width: 100%;">
-                                                        <option value="-1" selected>[Elegir Deleg/Munic.]</option>
-                                                    </select>
-                                                </div>
+                                            <div class="col-xs-12 myerror">
+                                                <select name="direccion_delegacion" id="direccion_delegacion" class="form-control" style="width: 100%;" required>
+                                                    <option value="" selected>[Elegir Deleg/Munic.]</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="direccion_colonia">Colonia</label>
+                                        <div class="row">
+                                            <div class="col-xs-12 myerror">
+                                                <select name="direccion_colonia" id="direccion_colonia" class="form-control" style="width: 100%;" required>
+                                                    <option value="" selected>[Elegir Colonia]</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label for="">Colonia</label>
+                                        <label for="direccion_localidad">Localidad</label>
                                         <div class="row">
-                                            <div class="col-xs-12">
-                                                <select name="direccion_colonia" id="direccion_colonia" class="form-control direccion_colonia" style="width: 100%;">
-                                                    <option value="-1" selected>[Elegir Colonia]</option>
-                                                </select>
+                                            <div class="col-xs-12 myerror">
+                                                <input type="text" class="form-control" name="direccion_localidad" id="direccion_localidad" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label for="direccion_colonia_2">Detalles de la Colonia</label>
+                                        <div class="row">
+                                            <div class="col-xs-12 myerror">
+                                                <input type="text" class="form-control" name="direccion_colonia_2" id="direccion_colonia_2" required>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="form-group">
-                                        <label for="">Localidad</label>
+                                        <label for="direccion_codigopostal">C.P.</label>
                                         <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" name="direccion_localidad" id="direccion_localidad">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-1">
-                                    <div class="form-group">
-                                        <label for="">C.P.</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="00000">
+                                            <div class="col-xs-12 myerror">
+                                                <input type="text" class="form-control" placeholder="00000" name="direccion_codigopostal" id="direccion_codigopostal" required>
                                             </div>
                                         </div>
                                     </div>
@@ -791,42 +802,132 @@
         $("#alumno_edad").val(moment(fecha_nac, "YYMMDD").fromNow(true));
 
 
-        $('.alumno_genero').select2({
+        $('#alumno_genero').select2({
             allowClear: true,
-            placeholder: {
-                id: "-1",
-                text: '[Elegir]'
-            }
+            placeholder: '[Elegir]'
         });
 
-        $('.direccion_estado').select2({
+        $('#direccion_estado').select2({
             allowClear: true,
-            placeholder: {
-                id: "-1",
-                text: '[Elegir estado]'
-            }
+            placeholder: '[Elegir estado]'
         });
 
-        $('.direccion_delegacion').select2({
+        $('#direccion_delegacion').select2({
             allowClear: true,
-            placeholder: {
-                id: "-1",
-                text: '[Elegir Deleg/Munic.]'
-            }
+            placeholder: '[Elegir Deleg/Munic.]'
         });
 
-        $('.direccion_colonia').select2({
+        $('#direccion_colonia').select2({
             allowClear: true,
-            placeholder: {
-                id: "-1",
-                text: '[Elegir Colonia]'
-            }
+            placeholder: '[Elegir Colonia]'
         });
 
         $("#contacto_telefonocasa").inputmask("(999)-999-9999");
         $("#contacto_telefonotutor").inputmask("(999)-999-9999");
         $("#contacto_telefonocelular").inputmask("(999)-999-9999");
         $("#contacto_telefono_otro").inputmask("(999)-999-9999");
+
+        $("#direccion_delegacion").attr('disabled','-1');
+        $("#direccion_colonia").attr('disabled','-1');
+        $("#direccion_localidad").attr('disabled','-1');
+        $("#direccion_codigopostal").attr('disabled','-1')
+        $("#direccion_colonia_2").attr('disabled','-1')
+
+        $.fn.populateSelect = function (values) {
+
+            var options='';
+
+            $.each(values, function (key, row) {
+                options += '<option value="' + row.value + '">' + row.text + '</option>';
+            });
+
+            $(this).html(options);
+        };
+
+        $('#direccion_estado').change(function () {
+
+            var estado_id = $(this).val();
+
+            console.log("Estado id: "+estado_id)
+
+            if(estado_id===null)
+            {
+
+            }
+            if(estado_id==="")
+            {
+                $('#direccion_delegacion').empty().change();
+                $('#direccion_colonia').empty().change();
+            }
+            else
+            {
+                $("#direccion_delegacion").removeAttr('disabled');
+                $('#direccion_delegacion').empty().change();
+                $('#direccion_colonia').empty().change();
+
+                $.getJSON('../delegaciones_por_estado/'+estado_id, null, function (values) {
+                    $('#direccion_delegacion').populateSelect(values);
+                });
+            }
+
+        });
+
+        $('#direccion_delegacion').change(function () {
+
+            var estado_id = $("#direccion_estado").val();
+            var delegacion_id = $(this).val();
+
+            if(delegacion_id===null)
+            {
+
+            }
+            else if(delegacion_id === "" )
+            {
+                $('#direccion_colonia').empty().change();
+            }
+            else if(estado_id==="")
+            {
+
+            }
+            else
+            {
+                $("#direccion_colonia").removeAttr('disabled');
+
+
+                $.getJSON('../colonias_por_delegacion/'+estado_id+'/'+delegacion_id, null, function (values) {
+                    $('#direccion_colonia').populateSelect(values);
+                });
+            }
+        });
+
+        $('#direccion_colonia').change(function () {
+            var colonia_id = $(this).val();
+
+            console.log("Colonia id: "+colonia_id);
+
+            if(colonia_id===null || colonia_id==="")
+            {
+
+            }
+            else
+            {
+                $("#direccion_localidad").removeAttr('disabled');
+                $("#direccion_colonia_2").removeAttr('disabled');
+                $("#direccion_codigopostal").removeAttr('disabled');
+
+                $("#direccion_localidad").empty().change();
+                $("#direccion_colonia_2").empty().change();
+                $("#direccion_codigopostal").empty().change();
+
+                $.getJSON('../detalle_colonia/'+colonia_id, null, function (data) {
+                    $("#direccion_localidad").val(data.cp_ciudad);
+                    $("#direccion_colonia_2").val(data.cp_asentamiento+' ( '+data.cp_tipoasentamiento+' )');
+                    $("#direccion_codigopostal").val(data.cp_codigo);
+                });
+
+            }
+        });
+
 
         jQuery.validator.setDefaults({
             submitHandler: function() {
@@ -839,18 +940,93 @@
 
         $("#form_hojadeinscripcion").validate({
 
-            errorPlacement: function(error, element) {
-                // Append error within linked label
-                $( element ).closest( "form" ).find( "label[for='" + element.attr( "id" ) + "']" ).append( error );
-                //console.log(element.attr( "id" ));
-                //$('.'+element.attr( "id" )).addClass("has-error");
-            },
+            //errorElement: "em",
             errorElement: "span",
+            errorPlacement: function(error, element) {
+
+                $( element )
+                    .closest( "form" )
+                    .find( "label[for='" + element.attr( "id" ) + "']" )
+                    .append( error );
+
+                //error.addClass( "help-block" );
+                //error.insertAfter( element );
+                //console.log(element.attr( "id" )+"Error: errorPlacement");
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".myerror" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".myerror" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
             rules:{
-                alumno_primernombre : { required: true }
+                alumno_primernombre      : { required: true },
+                alumno_apellidopaterno   : { required: true },
+                alumno_genero            : { required: true },
+                direccion_calle          : { required: true },
+                direccion_numerointerior : { required: true },
+                direccion_referencias    : { required: true },
+                direccion_estado         : { required: true },
+                direccion_delegacion     : { required: true },
+                direccion_colonia        : { required: true },
+                direccion_localidad      : { required: true },
+                direccion_codigopostal   : { required: true }
+
             },
             messages :{
-                alumno_primernombre : " (requerido)"
+                alumno_primernombre : {
+                    required: " (*)",
+                    minlength: " (Incorrecto)"
+
+                },
+                alumno_apellidopaterno : {
+                    required: " (*)",
+                    minlength: " (Incorrecto)"
+
+                },
+                alumno_genero :{
+                    required: " (*)"
+                },
+                direccion_calle:{
+                    required: " (*)"
+                },
+                direccion_numerointerior : {
+                    required: " (*)"
+                },
+                direccion_referencias : {
+                    required: " (*)"
+                },
+                direccion_estado : {
+                    required: " (*)"
+                },
+                direccion_delegacion : {
+                    required: " (*)"
+                },
+                direccion_colonia    : {
+                    required: " (*)"
+                },
+                direccion_localidad  : {
+                    required: " (*)"
+                },
+                direccion_codigopostal : {
+                    required: " (*)"
+                }
+            },
+            invalidHandler: function(event, validator) {
+                // 'this' refers to the form
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                    var message = 'Los campos marcados con (*) son obligatorios.';
+                    swal({
+                        title:"Error:",
+                        text: message,
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+
+                }
             }
 
         });
