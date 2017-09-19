@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Alumno;
 
 use App\Models\Alumno;
+use App\Models\Estado;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -23,24 +24,32 @@ class InscripcionController extends Controller
         return view('alumnos.inscripcion.inscripcion_paso1');
     }
 
-    public function inscripcion_verificaCurp(Request $request)
+    public function verificaCurpAlumno($curp)
     {
-        $verificarCurp = Alumno::where('alumno_curp', $request->get('alumno_curp'))->count();
+        $verificarCurp = Alumno::where('alumno_curp', $curp)->count();
+
+        return $verificarCurp;
+    }
+
+    public function inscripcion_paso2(Request $request)
+    {
+        $verificarCurp = $this->verificaCurpAlumno($request->get('alumno_curp'));
 
         if($verificarCurp!=0)
         {
-            $alumnos = Alumno::where('alumno_curp', $request->get('alumnocurp'))->get();
+            $alumnos = Alumno::where('alumno_curp', $request->get('alumno_curp'))->get();
             return view('alumnos.inscripcion.inscripcion_paso1', compact('verificarCurp','alumnos'));
         }
-        else{
-            //http://laraveldaily.com/all-about-redirects-in-laravel-5/
-            return redirect()->route('inscripcion_paso2')->withInput();
+        else
+        {
+            $estados = Estado::select('id','estado_nombre')
+                ->orderBy('estado_nombre', 'asc')
+                ->get();
+            $curp = $request->get('curp');
+            $alumno_curp = $request->get('alumno_curp');
+            
+            return view('alumnos.inscripcion.inscripcion_paso2', compact('curp','alumno_curp','estados'));
         }
-    }
-
-    public function inscripcion_paso2()
-    {
-        return view('alumnos.inscripcion.inscripcion_paso2');
     }
 
     /**

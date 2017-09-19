@@ -2,6 +2,13 @@
 
 @section('title', 'Hoja de Inscripción')
 
+@section('css')
+    <style>
+        label span.error { color: red; }
+
+    </style>
+@endsection
+
 @section('content')
         <!-- Full Width Column -->
 <div class="content-wrapper">
@@ -16,7 +23,8 @@
         <section class="content">
             <div class="col-md-12">
 
-                <form action="" role="form" method="post">
+                <form action="" role="form" method="post" id="form_hojadeinscripcion" name="form_hojadeinscripcion">
+                    {{csrf_field()}}
 
                     <!-- Inicia: Datos Personales del alumno -->
                     <div class="box box-success">
@@ -24,8 +32,16 @@
                             <h3 class="box-title"> Datos personales del alumno</h3><small>&nbsp;&nbsp;(Los campos marcados con (*) son obligatorios)</small>
 
                             <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                </button>
+
+                                <button type="button" class="btn btn-success btn-sm pull-right" data-widget="collapse" data-toggle="tooltip" title="Minimizar">
+                                    <i class="fa fa-minus"></i></button>
+
+                                <button type="submit" class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Guardar" style="margin-right: 5px;">
+                                    <i class="fa fa-floppy-o fa-lg"></i></button>
+
+                                <button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="Cancelar" style="margin-right: 5px;">
+                                    <i class="fa fa-ban fa-lg"></i></button>
+
                             </div>
 
                         </div>
@@ -37,8 +53,8 @@
                             <div class="row">
 
                                 <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="">Nombre</label>
+                                    <div class="form-group alumno_primernombre">
+                                        <label for="alumno_primernombre">Nombre</label>
                                         <div class="row">
                                             <div class="col-xs-6">
                                                 <input type="text" class="form-control" placeholder="Primer Nombre" id="alumno_primernombre" name="alumno_primernombre" required>
@@ -55,7 +71,7 @@
                                         <label for="">Apellidos</label>
                                         <div class="row">
                                             <div class="col-xs-6">
-                                                <input type="text" class="form-control" placeholder="Apellido Paterno" id="alumno_apellidopaterno" name="alumno_apellidopaterno" required>
+                                                <input type="text" class="form-control" placeholder="Apellido Paterno" id="alumno_apellidopaterno" name="alumno_apellidopaterno">
                                             </div>
                                             <div class="col-xs-6">
                                                 <input type="text" class="form-control" placeholder="Apellido Materno" id="alumno_apellidomaterno" name="alumno_apellidomaterno">
@@ -73,7 +89,7 @@
                                         <label for="">C.U.R.P.</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" id="alumno_curp" name="alumno_curp" value="{{old('alumno_curp')}}">
+                                                <input type="text" class="form-control" id="alumno_curp" name="alumno_curp" value="{{$alumno_curp}}">
                                             </div>
                                         </div>
                                     </div>
@@ -127,7 +143,7 @@
                                         <label for="">Dirección</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Calle/Avenida" id="direccion_calle" name="direccion_calle" required>
+                                                <input type="text" class="form-control" placeholder="Calle/Avenida" id="direccion_calle" name="direccion_calle">
                                             </div>
                                         </div>
                                     </div>
@@ -137,7 +153,7 @@
                                         <label for="">&nbsp;</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Num. Int." id="direccion_numerointerior" name="direccion_numerointerior" required>
+                                                <input type="text" class="form-control" placeholder="Num. Int." id="direccion_numerointerior" name="direccion_numerointerior">
                                             </div>
                                         </div>
                                     </div>
@@ -168,11 +184,14 @@
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label for="">Colonia</label>
+                                        <label for="">Estado *</label>
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <select name="direccion_estado" id="direccion_estado" class="form-control direccion_estado" style="width: 100%;">
                                                     <option value="-1" selected>[Elegir estado]</option>
+                                                    @foreach($estados as $estado)
+                                                        <option value="{{$estado->id}}">{{$estado->estado_nombre}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -350,8 +369,16 @@
                             <h3 class="box-title"> Datos del Papá/Mamá ó Tutor</h3><small>&nbsp;&nbsp;(Los campos marcados con (*) son obligatorios)</small>
 
                             <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                </button>
+
+                                <button type="button" class="btn btn-warning btn-sm pull-right" data-widget="collapse" data-toggle="tooltip" title="Minimizar">
+                                    <i class="fa fa-minus"></i></button>
+
+                                <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Guardar" style="margin-right: 5px;">
+                                    <i class="fa fa-floppy-o fa-lg"></i></button>
+
+                                <button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="Cancelar" style="margin-right: 5px;">
+                                    <i class="fa fa-ban fa-lg"></i></button>
+
                             </div>
 
                         </div>
@@ -683,8 +710,16 @@
                             <h3 class="box-title"> Otros Datos</h3><small>&nbsp;&nbsp;(Los campos marcados con (*) son obligatorios)</small>
 
                             <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                </button>
+
+                                <button type="button" class="btn btn-info btn-sm pull-right" data-widget="collapse" data-toggle="tooltip" title="Minimizar">
+                                    <i class="fa fa-minus"></i></button>
+
+                                <button type="submit" class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Guardar" style="margin-right: 5px;" id="boton_guardar">
+                                    <i class="fa fa-floppy-o fa-lg"></i></button>
+
+                                <button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="Cancelar" style="margin-right: 5px;">
+                                    <i class="fa fa-ban fa-lg"></i></button>
+
                             </div>
 
                         </div>
@@ -709,7 +744,7 @@
                                         <label for="">¿ Porqué quieres estudiar Inglés ?:</label>
                                         <div class="row">
                                             <div class="col-xs-6">
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="email" class="form-control" placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -736,11 +771,10 @@
 <script>
     $(document).ready(function(){
 
-        //https://bootstrap-datepicker.readthedocs.io/en/latest/index.html
         //https://momentjs.com/docs/
         //https://github.com/uxsolutions/bootstrap-datepicker
 
-        var curp = "{{old('curp')}}";
+        var curp = "{{$curp}}";
         var curp_split = curp.split(" ");
         var fecha_nac = curp_split[1];
         moment.locale('es');
@@ -755,6 +789,7 @@
 
         $("#alumno_fechanac").val(moment(fecha_nac, "YYMMDD").format('DD-MMMM-YYYY'));
         $("#alumno_edad").val(moment(fecha_nac, "YYMMDD").fromNow(true));
+
 
         $('.alumno_genero').select2({
             allowClear: true,
@@ -792,6 +827,33 @@
         $("#contacto_telefonotutor").inputmask("(999)-999-9999");
         $("#contacto_telefonocelular").inputmask("(999)-999-9999");
         $("#contacto_telefono_otro").inputmask("(999)-999-9999");
+
+        jQuery.validator.setDefaults({
+            submitHandler: function() {
+                alert("submitted!");
+            }
+        });
+        //https://jqueryvalidation.org/
+        //https://jqueryvalidation.org/files/demo/
+        //https://jqueryvalidation.org/files/demo/bootstrap/index.html
+
+        $("#form_hojadeinscripcion").validate({
+
+            errorPlacement: function(error, element) {
+                // Append error within linked label
+                $( element ).closest( "form" ).find( "label[for='" + element.attr( "id" ) + "']" ).append( error );
+                //console.log(element.attr( "id" ));
+                //$('.'+element.attr( "id" )).addClass("has-error");
+            },
+            errorElement: "span",
+            rules:{
+                alumno_primernombre : { required: true }
+            },
+            messages :{
+                alumno_primernombre : " (requerido)"
+            }
+
+        });
 
     });
 </script>

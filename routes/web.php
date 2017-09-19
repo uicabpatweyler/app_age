@@ -22,8 +22,8 @@ Route::get('/',     'HomeController@index')->name('home');
  * Alumnos: Inscripcion
  */
 Route::get('inscripcion_paso1',        'Alumno\InscripcionController@inscripcion_paso1')->name('inscripcion_paso1');
-Route::get('inscripcion_paso2',        'Alumno\InscripcionController@inscripcion_paso2')->name('inscripcion_paso2');
-Route::post('inscripcion_verificacurp','Alumno\InscripcionController@inscripcion_verificaCurp')->name('inscripcion_verificacurp');
+Route::post('inscripcion_paso2',        'Alumno\InscripcionController@inscripcion_paso2')->name('inscripcion_paso2');
+
 
 /*
  * Configuración | Empresa

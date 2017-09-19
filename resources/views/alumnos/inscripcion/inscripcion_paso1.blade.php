@@ -26,7 +26,7 @@
                         <!-- /.box-header -->
 
                         <!-- form start -->
-                        <form class="form-horizontal" method="post" action="{{route('inscripcion_verificacurp')}}" id="form_verificarcurp" name="form_verificarcurp">
+                        <form class="form-horizontal" method="post" action="{{route('inscripcion_paso2')}}" id="form_verificarcurp" name="form_verificarcurp">
                             {{csrf_field()}}
                             <input type="hidden" name="alumno_curp" id="alumno_curp">
 
