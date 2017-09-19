@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Alumno;
 
 use App\Models\Alumno;
+use App\Models\CodigoPostal;
+use App\Models\Delegacion;
 use App\Models\Estado;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,6 +31,42 @@ class InscripcionController extends Controller
         $verificarCurp = Alumno::where('alumno_curp', $curp)->count();
 
         return $verificarCurp;
+    }
+
+    public function delegacionesPorEstado($id_estado)
+    {
+        $delegaciones = Delegacion::where('estado_id',$id_estado)
+                        ->select('delegacion_clave as value', 'delegacion_nombre as text')
+                        ->orderBy('delegacion_nombre', 'asc')
+                        ->get()
+                        ->toArray();
+        array_unshift($delegaciones, ['value' => '', 'text' => '[Elegir Deleg/Munic.]']);
+        return $delegaciones;
+    }
+
+    public function coloniasPorDelegacion($id_estado,$id_delegacion)
+    {
+        $colonias = CodigoPostal::where('estado_id',$id_estado)
+                    ->where('delegacion_id',$id_delegacion)
+                    ->select('id as value', 'cp_asentamiento as text')
+                    ->orderBy('cp_asentamiento', 'asc')
+                    ->get()
+                    ->toArray();
+        array_unshift($colonias, ['value' => '', 'text' => '[Elegir Colonia]']);
+        return $colonias;
+    }
+
+    public function detalleColonia($id_colonia)
+    {
+        $colonia = CodigoPostal::where('id', $id_colonia)
+                   ->first();
+
+        return response()->json([
+            'cp_codigo'           => $colonia->cp_codigo,
+            'cp_tipoasentamiento' => $colonia->cp_tipoasentamiento,
+            'cp_asentamiento'     => $colonia->cp_asentamiento,
+            'cp_ciudad'           => $colonia->cp_ciudad
+        ]);
     }
 
     public function inscripcion_paso2(Request $request)
