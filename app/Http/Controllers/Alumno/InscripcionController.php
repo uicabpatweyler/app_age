@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Exception;
 
 class InscripcionController extends Controller
 {
@@ -164,63 +165,81 @@ class InscripcionController extends Controller
         if($validation->passes())
         {
 
-            $alumno = new Alumno();
+            try{
 
-            $now = Carbon::now('America/Mexico_City Time Zone');
+                $alumno = new Alumno();
 
-            $alumno->alumno_primernombre    = mb_strtolower($request->get('alumno_primernombre'),'UTF-8');
-            $alumno->alumno_segundonombre   = mb_strtolower($request->get('alumno_segundonombre'),'UTF-8');
-            $alumno->alumno_apellidopaterno = mb_strtolower($request->get('alumno_apellidopaterno'),'UTF-8');
-            $alumno->alumno_apellidomaterno = mb_strtolower($request->get('alumno_apellidomaterno'),'UTF-8');
-            $alumno->alumno_curp            = $request->get('alumno_curp');
-            $alumno->alumno_fechanacimiento = $request->get('fecha_nacimiento');
-            $alumno->alumno_genero          = $request->get('alumno_genero');
-            $alumno->alumno_status          = true;
-            $alumno->created_at             = $now;
-            $alumno->updated_at             = $now;
+                $now = Carbon::now('America/Mexico_City Time Zone');
 
-            $alumno->save();
+                $alumno->alumno_primernombre    = mb_strtolower($request->get('alumno_primernombre'),'UTF-8');
+                $alumno->alumno_segundonombre   = mb_strtolower($request->get('alumno_segundonombre'),'UTF-8');
+                $alumno->alumno_apellidopaterno = mb_strtolower($request->get('alumno_apellidopaterno'),'UTF-8');
+                $alumno->alumno_apellidomaterno = mb_strtolower($request->get('alumno_apellidomaterno'),'UTF-8');
+                $alumno->alumno_curp            = $request->get('alumno_curp');
+                $alumno->alumno_fechanacimiento = $request->get('fecha_nacimiento');
+                $alumno->alumno_genero          = $request->get('alumno_genero');
+                $alumno->alumno_status          = true;
+                $alumno->created_at             = $now;
+                $alumno->updated_at             = $now;
 
-            //Obtenemos el ultimo id insertado para usarlo en la tabla ALUMNOS_DATOSPERSONALES
-            $id_alumno = $alumno->id;
+                $alumno->save();
 
-            $alumnoDatosPersonales = new AlumnoDatosPersonales();
+                //Obtenemos el ultimo id insertado para usarlo en la tabla ALUMNOS_DATOSPERSONALES
+                $id_alumno = $alumno->id;
 
-            $now = Carbon::now('America/Mexico_City Time Zone');
+                $alumnoDatosPersonales = new AlumnoDatosPersonales();
 
-            $alumnoDatosPersonales->escuela_id = $request->get('escuela_id');
-            $alumnoDatosPersonales->ciclo_id   = $request->get('ciclo_id');
-            $alumnoDatosPersonales->alumno_id  = $id_alumno;
-            $alumnoDatosPersonales->alumno_edad = $request->get('alumno_edad');
-            $alumnoDatosPersonales->direccion_calle = $request->get('direccion_calle');
-            $alumnoDatosPersonales->direccion_numerointerior = $request->get('direccion_numerointerior');
-            $alumnoDatosPersonales->direccion_numeroexterior = $request->get('direccion_numeroexterior');
-            $alumnoDatosPersonales->direccion_referencias    = $request->get('direccion_referencias');
-            $alumnoDatosPersonales->direccion_colonia        = $request->get('direccion_colonia_2');
-            $alumnoDatosPersonales->direccion_codigopostal   = $request->get('direccion_codigopostal');
-            $alumnoDatosPersonales->direccion_localidad      = $request->get('direccion_localidad');
-            $alumnoDatosPersonales->direccion_delegacion     = $request->get('nombre_delegacion');
-            $alumnoDatosPersonales->direccion_estado         = $request->get('nombre_estado');
-            $alumnoDatosPersonales->contacto_telefonocasa       = $request->get('contacto_telefonocasa');
-            $alumnoDatosPersonales->contacto_telefonotutor      = $request->get('contacto_telefonotutor');
-            $alumnoDatosPersonales->contacto_telefonocelular    = $request->get('contacto_telefonocelular');
-            $alumnoDatosPersonales->contacto_telefono_otro      = $request->get('contacto_telefono_otro');
-            $alumnoDatosPersonales->contacto_nombre_escuela  = $request->get('contacto_nombre_escuela');
-            $alumnoDatosPersonales->contacto_lugartrabajo    = $request->get('contacto_lugartrabajo');
-            $alumnoDatosPersonales->alumno_ultimogrado       = $request->get('alumno_ultimogrado');
-            $alumnoDatosPersonales->alumno_email             = $request->get('alumno_email');
-            $alumnoDatosPersonales->alumno_status            = true;
-            $alumnoDatosPersonales->created_at             = $now;
-            $alumnoDatosPersonales->updated_at             = $now;
+                $now = Carbon::now('America/Mexico_City Time Zone');
 
-            $alumnoDatosPersonales->save();
+                $alumnoDatosPersonales->escuela_id               = $request->get('escuela_id');
+                $alumnoDatosPersonales->ciclo_id                 = $request->get('ciclo_id');
+                $alumnoDatosPersonales->alumno_id                = $id_alumno;
+                $alumnoDatosPersonales->alumno_edad              = $request->get('alumno_edad');
+                $alumnoDatosPersonales->direccion_calle          = mb_strtolower($request->get('direccion_calle'),'UTF-8');
+                $alumnoDatosPersonales->direccion_numerointerior = mb_strtolower($request->get('direccion_numerointerior'),'UTF-8');
+                $alumnoDatosPersonales->direccion_numeroexterior = mb_strtolower($request->get('direccion_numeroexterior'),'UTF-8');
+                $alumnoDatosPersonales->direccion_referencias    = mb_strtolower($request->get('direccion_referencias'),'UTF-8');
+                $alumnoDatosPersonales->direccion_colonia        = mb_strtolower($request->get('direccion_colonia_2'),'UTF-8');
+                $alumnoDatosPersonales->direccion_codigopostal   = $request->get('direccion_codigopostal');
+                $alumnoDatosPersonales->direccion_localidad      = mb_strtolower($request->get('direccion_localidad'),'UTF-8');
+                $alumnoDatosPersonales->direccion_delegacion     = $request->get('nombre_delegacion');
+                $alumnoDatosPersonales->direccion_estado         = $request->get('nombre_estado');
+                $alumnoDatosPersonales->contacto_telefonocasa       = $request->get('contacto_telefonocasa').'/'.mb_strtolower($request->get('referencia1'),'UTF-8');
+                $alumnoDatosPersonales->contacto_telefonotutor      = $request->get('contacto_telefonotutor').'/'.mb_strtolower($request->get('referencia2'),'UTF-8');
+                $alumnoDatosPersonales->contacto_telefonocelular    = $request->get('contacto_telefonocelular').'/'.mb_strtolower($request->get('referencia3'),'UTF-8');
+                $alumnoDatosPersonales->contacto_telefono_otro      = $request->get('contacto_telefono_otro').'/'.mb_strtolower($request->get('referencia4'),'UTF-8');
+                $alumnoDatosPersonales->contacto_nombre_escuela  = mb_strtolower($request->get('contacto_nombre_escuela'),'UTF-8');
+                $alumnoDatosPersonales->contacto_lugartrabajo    = mb_strtolower($request->get('contacto_lugartrabajo'),'UTF-8');
+                $alumnoDatosPersonales->alumno_ultimogrado       = mb_strtolower($request->get('alumno_ultimogrado'),'UTF-8');
+                $alumnoDatosPersonales->alumno_email             = $request->get('alumno_email');
+                $alumnoDatosPersonales->alumno_status            = true;
+                $alumnoDatosPersonales->created_at               = $now;
+                $alumnoDatosPersonales->updated_at               = $now;
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Los datos de inscripción se han guardado correctamente.'
-            ], 200);
+                $alumnoDatosPersonales->save();
 
-            //return $id_alumno;
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Los datos de inscripción se han guardado correctamente.'
+                ], 200);
+
+            }
+            catch (Exception $e){
+
+                $error_server  = $e->errorInfo[0];
+                $error_code    = $e->errorInfo[1];
+                $error_message = $e->errorInfo[2];
+
+                return response()->json([
+                    'exception'    => true,
+                    'success'      => false,
+                    'error_server' => $error_server,
+                    'error_code'   => $error_code,
+                    'error_message_admin' => $error_message,
+                    'error_message_user' => 'Error al guardar los datos de inscripción. Intente mas tarde o contacte al administrador del sistema.'
+                ],422);
+
+            } //catch exception
 
         }
 
@@ -228,8 +247,9 @@ class InscripcionController extends Controller
         $errors =  json_decode($errors);
 
         return response()->json([
-            'success' => false,
-            'message' => $errors
+            'exception' => false,
+            'success'   => false,
+            'message'   => $errors
         ], 422);
     }
 
