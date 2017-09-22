@@ -825,18 +825,6 @@
         var fecha_nac = curp_split[1];
         moment.locale('es');
 
-        $("#alumno_fechanacimiento").datepicker({
-            format: "dd-MM-yyyy",
-            language: "es",
-            autoclose: true,
-            todayBtn: "linked",
-            defaultViewDate: {
-                year: moment(fecha_nac, "YYMMDD").format('YYYY'),
-                month: moment(fecha_nac, "YYMMDD").subtract(1, 'months').format('MM'),
-                day: moment(fecha_nac, "YYMMDD").format('DD')
-            }
-        });
-
         $("#alumno_fechanacimiento").val(moment(fecha_nac, "YYMMDD").format('DD-MMMM-YYYY'));
         //https://momentjs.com/docs/#/displaying/difference/
 
@@ -879,6 +867,22 @@
         $("#contacto_telefonotutor").inputmask("(999)-999-9999");
         $("#contacto_telefonocelular").inputmask("(999)-999-9999");
         $("#contacto_telefono_otro").inputmask("(999)-999-9999");
+        //email mask
+        $("#alumno_email").inputmask({
+            mask: "*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]",
+            greedy: false,
+            onBeforePaste: function (pastedValue, opts) {
+                pastedValue = pastedValue.toLowerCase();
+                return pastedValue.replace("mailto:", "");
+            },
+            definitions: {
+                '*': {
+                    validator: "[0-9A-Za-z!#$%&'*+/=?^_`{|}~\-]",
+                    cardinality: 1,
+                    casing: "lower"
+                }
+            }
+        });
 
         //Desactivamos los campos que forman parte de la colonia y el codigo postal
         $("#direccion_delegacion").attr('disabled','-1');
@@ -1028,21 +1032,41 @@
                     var error = jQuery.parseJSON(xhr.responseText);
                     //Obtener los mensajes de error
                     var info = error.message;
-                    //Crear la lista de errores
-                    var errorsHtml = '<ul>';
-                    $.each(info, function (key,value) {
-                        errorsHtml += '<li>' + value[0] + '</li>';
-                    });
-                    errorsHtml += '</ul>';
-                    //Mostrar el y/o los errores devuelto(s) por el controlador
-                    swal({
-                        title:"Error:",
-                        html: errorsHtml,
-                        type: "error",
-                        allowOutsideClick: false,
-                        confirmButtonColor: '#d33',
-                        confirmButtonText: "Corregir"
-                    });
+                    //Verificar si el mensaje proviene de una Excepcion al guardar los datos
+                    var excepcion = error.exception;
+                    if(excepcion===true)
+                    {
+                        var error_server = error.error_server;
+                        var error_code   = error.error_code;
+                        var error_message_user = error.error_message_user;
+                        swal({
+                            title:'Error: '+error_code+'. SQLSTATE: '+error_server,
+                            html: error_message_user,
+                            type: "error",
+                            allowOutsideClick: false,
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: "Corregir"
+                        });
+                    }
+                    else
+                    {
+                        //Crear la lista de errores
+                        var errorsHtml = '<ul>';
+                        $.each(info, function (key,value) {
+                            errorsHtml += '<li>' + value[0] + '</li>';
+                        });
+                        errorsHtml += '</ul>';
+                        //Mostrar el y/o los errores devuelto(s) por el controlador
+                        swal({
+                            title:"Error:",
+                            html: errorsHtml,
+                            type: "error",
+                            allowOutsideClick: false,
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: "Corregir"
+                        });
+                    }
+
                 }
             });
         }
