@@ -97,7 +97,7 @@
 
                                         </td>
                                         <td>{{$alumno->alumno_curp}}</td>
-                                        <td>{{ucfirst($alumno->alumno_primernombre)}} {{ucfirst($alumno->alumno_segundonombre)}} {{ucfirst($alumno->alumno_apellidopaterno)}} {{ucfirst($alumno->alumno_apellidomaterno)}}</td>
+                                        <td>{{ucwords($alumno->alumno_primernombre)}} {{ucwords($alumno->alumno_segundonombre)}} {{ucwords($alumno->alumno_apellidopaterno)}} {{ucwords($alumno->alumno_apellidomaterno)}}</td>
                                     </tr>
                                 </table>
                             </div>

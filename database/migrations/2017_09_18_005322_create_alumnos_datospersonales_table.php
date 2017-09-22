@@ -18,7 +18,7 @@ class CreateAlumnosDatospersonalesTable extends Migration
             $table->integer('escuela_id')->unsigned();
             $table->integer('ciclo_id')->unsigned();
             $table->integer('alumno_id')->unsigned();
-            $table->char('alumno_edad',3);
+            $table->char('alumno_edad',10);
             $table->string('direccion_calle',120);
             $table->string('direccion_numerointerior',40);
             $table->string('direccion_numeroexterior',40)->nullable();
@@ -34,7 +34,7 @@ class CreateAlumnosDatospersonalesTable extends Migration
             $table->string('contacto_telefono_otro',30)->nullable();
             $table->string('contacto_nombre_escuela')->nullable();
             $table->string('contacto_lugartrabajo')->nullable();
-            $table->string('alumno_ultimogrado');
+            $table->string('alumno_ultimogrado')->nullable();
             $table->string('alumno_email',60)->nullable();
             $table->boolean('alumno_status')->default(true);
             $table->timestamps();

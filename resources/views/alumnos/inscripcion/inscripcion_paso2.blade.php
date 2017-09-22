@@ -24,6 +24,10 @@
 
                 <form action="" role="form" method="post" id="form_hojadeinscripcion" name="form_hojadeinscripcion">
                     {{csrf_field()}}
+                    <input type="hidden" name="nombre_estado" id="nombre_estado">
+                    <input type="hidden" name="nombre_delegacion" id="nombre_delegacion">
+                    <input type="hidden" name="fecha_nacimiento" id="fecha_nacimiento">
+                    <input type="hidden" name="ciclo_id" id="ciclo_id" value="{{$ciclo->id}}">
 
                     <!-- Inicia: Datos Personales del alumno -->
                     <div class="box box-success">
@@ -38,8 +42,8 @@
                                 <button type="submit" class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Guardar" style="margin-right: 5px;">
                                     <i class="fa fa-floppy-o fa-lg"></i></button>
 
-                                <button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="Cancelar" style="margin-right: 5px;">
-                                    <i class="fa fa-ban fa-lg"></i></button>
+                                <a class="btn btn-danger btn-sm pull-right" href="{{route('inscripcion_paso1')}}" data-toggle="tooltip" title="Cancelar" style="margin-right: 5px;">
+                                    <i class="fa fa-ban fa-lg" aria-hidden="true"></i></a>
 
                             </div>
 
@@ -47,6 +51,37 @@
 
 
                         <div class="box-body">
+
+                            <!-- Fila para la escuela y el ciclo escolar -->
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="escuela_id">Escuela</label>
+                                        <div class="row">
+                                            <div class="col-xs-12 myerror">
+                                                <select class="form-control" name="escuela_id" id="escuela_id" style="width: 100%;" required>
+                                                    <option value="" selected="selected">[Elija una escuela]</option>
+                                                    @foreach($escuelas as $escuela)
+                                                        <option value="{{$escuela->id}}">
+                                                            {{$escuela->NivelEscuela->nivel_nombre}}  -  {{$escuela->escuela_nombre}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="ciclo_escolar">Ciclo Escolar</label>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <input type="text" class="form-control" id="ciclo_escolar" name="ciclo_escolar" value="{{$ciclo->ciclo_anioinicial}}-{{$ciclo->ciclo_aniofinal}}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <!-- Fila para el nombre y apellidos del alumno -->
                             <div class="row">
@@ -88,7 +123,7 @@
                                         <label for="">C.U.R.P.</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" id="alumno_curp" name="alumno_curp" value="{{$alumno_curp}}" disabled>
+                                                <input type="text" class="form-control" id="alumno_curp" name="alumno_curp" value="{{$alumno_curp}}" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -102,7 +137,7 @@
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
-                                                    <input type="text" class="form-control" id="alumno_fechanac" name="alumno_fechanac" disabled>
+                                                    <input type="text" class="form-control" id="alumno_fechanacimiento" name="alumno_fechanacimiento" readonly>
                                                 </div>
 
                                             </div>
@@ -114,7 +149,7 @@
                                         <label for="">Edad</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" id="alumno_edad" name="alumno_edad" disabled>
+                                                <input type="text" class="form-control" id="alumno_edad" name="alumno_edad" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -323,7 +358,7 @@
                                         <label for="">Escuela:</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Escuela">
+                                                <input type="text" class="form-control" placeholder="Escuela" name="contacto_nombre_escuela" id="contacto_nombre_escuela">
                                             </div>
                                         </div>
                                     </div>
@@ -334,7 +369,7 @@
                                         <label for="">Lugar de trabajo:</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Lugar de Trabajo">
+                                                <input type="text" class="form-control" placeholder="Lugar de Trabajo" name="contacto_lugartrabajo" id="contacto_lugartrabajo">
                                             </div>
                                         </div>
                                     </div>
@@ -350,7 +385,7 @@
                                         <label for="">Último grado escolar a cursar:</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Último grado escolar a cursar">
+                                                <input type="text" class="form-control" placeholder="Último grado escolar a cursar" name="alumno_ultimogrado" id="alumno_ultimogrado">
                                             </div>
                                         </div>
                                     </div>
@@ -361,7 +396,7 @@
                                         <label for="">Correo Electrónico:</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Correo Electrónico">
+                                                <input type="text" class="form-control" placeholder="Correo Electrónico" name="alumno_email" id="alumno_email">
                                             </div>
                                         </div>
                                     </div>
@@ -790,17 +825,35 @@
         var fecha_nac = curp_split[1];
         moment.locale('es');
 
-        $("#alumno_fechanac").datepicker({
+        $("#alumno_fechanacimiento").datepicker({
             format: "dd-MM-yyyy",
             language: "es",
             autoclose: true,
             todayBtn: "linked",
-            defaultViewDate: { year: moment(fecha_nac, "YYMMDD").format('YYYY'), month: moment(fecha_nac, "YYMMDD").subtract(1, 'months').format('MM'), day: moment(fecha_nac, "YYMMDD").format('DD') }
+            defaultViewDate: {
+                year: moment(fecha_nac, "YYMMDD").format('YYYY'),
+                month: moment(fecha_nac, "YYMMDD").subtract(1, 'months').format('MM'),
+                day: moment(fecha_nac, "YYMMDD").format('DD')
+            }
         });
 
-        $("#alumno_fechanac").val(moment(fecha_nac, "YYMMDD").format('DD-MMMM-YYYY'));
-        $("#alumno_edad").val(moment(fecha_nac, "YYMMDD").fromNow(true));
+        $("#alumno_fechanacimiento").val(moment(fecha_nac, "YYMMDD").format('DD-MMMM-YYYY'));
+        //https://momentjs.com/docs/#/displaying/difference/
 
+        //La fecha de nacimiento
+        var a = moment(fecha_nac, "YYMMDD");
+        a = moment(a,'MM/DD/YYYY');
+        //La fecha actual
+        var b = moment();
+
+        //Diferencia de años entre la fecha actual y la fecha de nacimiento
+        $("#alumno_edad").val(b.diff(a, 'years')+' años');
+
+
+        $('#escuela_id').select2({
+            allowClear: true,
+            placeholder: '[Elija una escuela]'
+        });
 
         $('#alumno_genero').select2({
             allowClear: true,
@@ -827,12 +880,14 @@
         $("#contacto_telefonocelular").inputmask("(999)-999-9999");
         $("#contacto_telefono_otro").inputmask("(999)-999-9999");
 
+        //Desactivamos los campos que forman parte de la colonia y el codigo postal
         $("#direccion_delegacion").attr('disabled','-1');
         $("#direccion_colonia").attr('disabled','-1');
         $("#direccion_localidad").attr('disabled','-1');
         $("#direccion_codigopostal").attr('disabled','-1')
         $("#direccion_colonia_2").attr('disabled','-1')
 
+        //Funcion para llenar los select con los datos devueltos mediante AJAX
         $.fn.populateSelect = function (values) {
 
             var options='';
@@ -844,27 +899,30 @@
             $(this).html(options);
         };
 
+        //El usuaro selecciona un estado
         $('#direccion_estado').change(function () {
 
             var estado_id = $(this).val();
-
-            console.log("Estado id: "+estado_id)
-
+            //El usuario no selecciono algun elemento
             if(estado_id===null)
             {
 
             }
-            if(estado_id==="")
+            //El usuario elimina la seleccion del select
+            else if(estado_id==="")
             {
+                //Eliminamos el contenido de los input text correspondientes
                 $('#direccion_delegacion').empty().change();
                 $('#direccion_colonia').empty().change();
             }
             else
             {
+                //El usuario selecciono un elemento valido
                 $("#direccion_delegacion").removeAttr('disabled');
                 $('#direccion_delegacion').empty().change();
                 $('#direccion_colonia').empty().change();
 
+                //Consulta AJAX mediante el id del estado seleccionado
                 $.getJSON('../delegaciones_por_estado/'+estado_id, null, function (values) {
                     $('#direccion_delegacion').populateSelect(values);
                 });
@@ -872,8 +930,9 @@
 
         });
 
+        //El usuario selecciona una delegacion
         $('#direccion_delegacion').change(function () {
-
+            //El id del elemento seleccionado
             var estado_id = $("#direccion_estado").val();
             var delegacion_id = $(this).val();
 
@@ -903,8 +962,6 @@
         $('#direccion_colonia').change(function () {
             var colonia_id = $(this).val();
 
-            console.log("Colonia id: "+colonia_id);
-
             if(colonia_id===null || colonia_id==="")
             {
 
@@ -930,17 +987,71 @@
 
 
         jQuery.validator.setDefaults({
-            submitHandler: function() {
-                alert("submitted!");
+            submitHandler: function(form) {
+
+                //Obtenemos el nombre del estado seleccionado
+                var estado = $("#direccion_estado option:selected").html();
+                //Obtenemos el nombre de la delegacion seleccionada
+                var delegacion = $("#direccion_delegacion option:selected").html();
+                //Obtenemos la fecha de nacimiento en el formato correcto para mysql y la guardamos
+                $("#fecha_nacimiento").val(moment(fecha_nac, "YYMMDD").format('YYYY-MM-DD'));
+                //Guardamos el nombre del estado
+                $("#nombre_estado").val(estado);
+                //Guardamos el nombre de la delegacion
+                $("#nombre_delegacion").val(delegacion);
+                //El formulario cumple con las reglas de validacion
+                //form.submit();
+                ajaxSubmit();
             }
         });
+
+
+        function ajaxSubmit(){
+            $.ajax({
+                type:"POST",
+                url:"{{route('guardar_hoja_inscripcion')}}",
+                data: $("#form_hojadeinscripcion").serialize(),
+                dataType : 'json',
+                success: function(data){
+                    swal({
+                        title:"",
+                        text: data.message,
+                        type: "success",
+                        allowOutsideClick: false,
+                        confirmButtonText: 'Continuar'
+                    }).then(function(){
+                        window.location = "{{ route('inscripcion_paso1') }}";
+                    });
+                },
+                error: function(xhr,status, response ){
+                    //Obtener el valor de los errores devueltos por el controlador
+                    var error = jQuery.parseJSON(xhr.responseText);
+                    //Obtener los mensajes de error
+                    var info = error.message;
+                    //Crear la lista de errores
+                    var errorsHtml = '<ul>';
+                    $.each(info, function (key,value) {
+                        errorsHtml += '<li>' + value[0] + '</li>';
+                    });
+                    errorsHtml += '</ul>';
+                    //Mostrar el y/o los errores devuelto(s) por el controlador
+                    swal({
+                        title:"Error:",
+                        html: errorsHtml,
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+                }
+            });
+        }
+
         //https://jqueryvalidation.org/
         //https://jqueryvalidation.org/files/demo/
         //https://jqueryvalidation.org/files/demo/bootstrap/index.html
 
         $("#form_hojadeinscripcion").validate({
-
-            //errorElement: "em",
             errorElement: "span",
             errorPlacement: function(error, element) {
 
@@ -948,10 +1059,6 @@
                     .closest( "form" )
                     .find( "label[for='" + element.attr( "id" ) + "']" )
                     .append( error );
-
-                //error.addClass( "help-block" );
-                //error.insertAfter( element );
-                //console.log(element.attr( "id" )+"Error: errorPlacement");
             },
             highlight: function ( element, errorClass, validClass ) {
                 $( element ).parents( ".myerror" ).addClass( "has-error" ).removeClass( "has-success" );
@@ -970,10 +1077,15 @@
                 direccion_delegacion     : { required: true },
                 direccion_colonia        : { required: true },
                 direccion_localidad      : { required: true },
-                direccion_codigopostal   : { required: true }
+                direccion_codigopostal   : { required: true },
+                escuela_id               : { required: true}
 
             },
             messages :{
+                escuela_id : {
+                    required: " (*)"
+
+                },
                 alumno_primernombre : {
                     required: " (*)",
                     minlength: " (Incorrecto)"

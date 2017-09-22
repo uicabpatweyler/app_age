@@ -3,15 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Jenssegers\Date\Date;
 
-class Alumno extends Model
+class AlumnoDatosPersonales extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'alumnos';
-
+    protected $table = 'alumnos_datospersonales';
 }
