@@ -212,6 +212,8 @@ class InscripcionController extends Controller
                 $alumnoDatosPersonales->contacto_lugartrabajo    = mb_strtolower($request->get('contacto_lugartrabajo'),'UTF-8');
                 $alumnoDatosPersonales->alumno_ultimogrado       = mb_strtolower($request->get('alumno_ultimogrado'),'UTF-8');
                 $alumnoDatosPersonales->alumno_email             = $request->get('alumno_email');
+                $alumnoDatosPersonales->encuesta_pregunta1       = $request->get('encuesta_pregunta1');
+                $alumnoDatosPersonales->encuesta_pregunta2       = $request->get('encuesta_pregunta2');
                 $alumnoDatosPersonales->alumno_status            = true;
                 $alumnoDatosPersonales->created_at               = $now;
                 $alumnoDatosPersonales->updated_at               = $now;
