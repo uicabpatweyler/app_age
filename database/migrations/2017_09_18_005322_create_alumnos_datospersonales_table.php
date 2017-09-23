@@ -36,6 +36,8 @@ class CreateAlumnosDatospersonalesTable extends Migration
             $table->string('contacto_lugartrabajo')->nullable();
             $table->string('alumno_ultimogrado')->nullable();
             $table->string('alumno_email',60)->nullable();
+            $table->string('encuesta_pregunta1',120)->nullable();
+            $table->string('encuesta_pregunta2',120)->nullable();
             $table->boolean('alumno_status')->default(true);
             $table->timestamps();
 
