@@ -54,6 +54,7 @@
 
                             <!-- Fila para la escuela y el ciclo escolar -->
                             <div class="row">
+
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="escuela_id">Escuela</label>
@@ -169,637 +170,318 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Fila para la direccion -->
+                            <br />
+                            <!-- Fila para el TabPanel de Dirección, Telefonos y Otros Datos -->
                             <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="direccion_calle">Dirección</label>
-                                        <div class="row">
-                                            <div class="col-xs-12 myerror">
-                                                <input type="text" class="form-control" placeholder="Calle/Avenida" id="direccion_calle" name="direccion_calle" style="text-transform:capitalize" required>
+                                <div class="col-sm-12">
+                                    <!-- Begin Custom Tabs -->
+                                    <div class="nav-tabs-custom">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-address-card fa-lg" aria-hidden="true"></i>&nbsp; Dirección</a></li>
+                                            <li><a href="#tab_2" data-toggle="tab"><i class="fa fa-phone fa-lg" aria-hidden="true"></i>&nbsp;Telefonos</a></li>
+                                            <li><a href="#tab_3" data-toggle="tab"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>&nbsp;Educación y Trabajo</a></li>
+                                            <li><a href="#tab_4" data-toggle="tab"><i class="fa fa-commenting fa-lg" aria-hidden="true"></i></i>&nbsp;Otros Datos</a></li>
+                                        </ul>
+
+                                        <div class="tab-content">
+
+                                            <div class="tab-pane active" id="tab_1">
+
+                                                <!-- Fila para la direccion -->
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="direccion_calle">Dirección</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" placeholder="Calle/Avenida" id="direccion_calle" name="direccion_calle" style="text-transform:capitalize" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <label for="direccion_numerointerior">&nbsp;</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" placeholder="Num. Int." id="direccion_numerointerior" name="direccion_numerointerior" style="text-transform:capitalize" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <label for="">&nbsp;</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <input type="text" class="form-control" placeholder="Num. Ext." id="direccion_numeroexterior" style="text-transform:capitalize" name="direccion_numeroexterior">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="direccion_referencias">&nbsp;</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" placeholder="Cruzamientos/Esquina/Entre Calles" id="direccion_referencias" name="direccion_referencias" style="text-transform:capitalize" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Fila para los select de Estado, Delegacion/Municipio y Colonia -->
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="direccion_estado">Estado</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <select name="direccion_estado" id="direccion_estado" class="form-control" style="width: 100%;" required>
+                                                                        <option value="" selected>[Elegir estado]</option>
+                                                                        @foreach($estados as $estado)
+                                                                            <option value="{{$estado->id}}">{{$estado->estado_nombre}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="direccion_delegacion">Deleg/Munic.</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <select name="direccion_delegacion" id="direccion_delegacion" class="form-control" style="width: 100%;" required>
+                                                                        <option value="" selected>[Elegir Deleg/Munic.]</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="direccion_colonia">Colonia</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <select name="direccion_colonia" id="direccion_colonia" class="form-control" style="width: 100%;" required>
+                                                                        <option value="" selected>[Elegir Colonia]</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Fila para los input text del nombre de la localidad, colonia y codigo postal -->
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="direccion_localidad">Localidad</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" name="direccion_localidad" id="direccion_localidad" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="form-group">
+                                                            <label for="direccion_colonia_2">Detalles de la Colonia</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" name="direccion_colonia_2" id="direccion_colonia_2" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <label for="direccion_codigopostal">C.P.</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" placeholder="00000" name="direccion_codigopostal" id="direccion_codigopostal" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label for="direccion_numerointerior">&nbsp;</label>
-                                        <div class="row">
-                                            <div class="col-xs-12 myerror">
-                                                <input type="text" class="form-control" placeholder="Num. Int." id="direccion_numerointerior" name="direccion_numerointerior" style="text-transform:capitalize" required>
+                                            <!-- /.tab-pane Dirección -->
+
+                                            <div class="tab-pane" id="tab_2">
+                                                <!-- Fila los telefonos de contacto del alumno -->
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="">Teléfono de casa</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-8">
+                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonocasa" id="contacto_telefonocasa">
+                                                                </div>
+                                                                <div class="col-xs-4">
+                                                                    <input type="text" class="form-control" name="referencia1" id="referencia1">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="">Telefono tutor</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-8">
+                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonotutor" id="contacto_telefonotutor">
+                                                                </div>
+                                                                <div class="col-xs-4">
+                                                                    <input type="text" class="form-control" name="referencia2" id="referencia3">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="">Celular</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-8">
+                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonocelular" id="contacto_telefonocelular">
+                                                                </div>
+                                                                <div class="col-xs-4">
+                                                                    <input type="text" class="form-control" name="referencia3" id="referencia3">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="">Otro</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-8">
+                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefono_otro" id="contacto_telefono_otro">
+                                                                </div>
+                                                                <div class="col-xs-4">
+                                                                    <input type="text" class="form-control" name="referencia4" id="referencia4">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label for="">&nbsp;</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Num. Ext." id="direccion_numeroexterior" style="text-transform:capitalize" name="direccion_numeroexterior">
+                                            <!-- /.tab-pane Telefonos -->
+
+                                            <div class="tab-pane" id="tab_3">
+                                                <!-- Fila para la escuela y lugar de trabajo -->
+                                                <div class="row">
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="">Escuela:</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <input type="text" class="form-control" placeholder="Escuela" name="contacto_nombre_escuela" id="contacto_nombre_escuela" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="">Lugar de trabajo:</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <input type="text" class="form-control" placeholder="Lugar de Trabajo" name="contacto_lugartrabajo" id="contacto_lugartrabajo" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Fila para el ultimo grado escolar a cursar y correo electronico -->
+                                                <div class="row">
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="">Último grado escolar a cursar:</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <input type="text" class="form-control" placeholder="Último grado escolar a cursar" name="alumno_ultimogrado" id="alumno_ultimogrado" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="">Correo Electrónico:</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <input type="text" class="form-control" placeholder="Correo Electrónico" name="alumno_email" id="alumno_email">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="direccion_referencias">&nbsp;</label>
-                                        <div class="row">
-                                            <div class="col-xs-12 myerror">
-                                                <input type="text" class="form-control" placeholder="Cruzamientos/Esquina/Entre Calles" id="direccion_referencias" name="direccion_referencias" style="text-transform:capitalize" required>
+                                            <!-- /.tab-pane Educación y Trabajo -->
+
+                                            <div class="tab-pane" id="tab_4">
+                                                <!-- Fila los select de la encuesta -->
+                                                <div class="row">
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="encuesta_pregunta1">¿Cómo te enteraste de la escuela?</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-6 myerror">
+                                                                    <select name="encuesta_pregunta1" id="encuesta_pregunta1" class="form-control" style="width: 100%;" required>
+                                                                        <option value="" selected>[Elegir]</option>
+                                                                        <option value="Radio">Radio</option>
+                                                                        <option value="Periodico">Periodico</option>
+                                                                        <option value="Familiares">Familiares</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="encuesta_pregunta2">¿Por qué quieres estudiar inglés?</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-6 myerror">
+                                                                    <select name="encuesta_pregunta2" id="encuesta_pregunta2" class="form-control" style="width: 100%;" required>
+                                                                        <option value="" selected>[Elegir]</option>
+                                                                        <option value="Escuela">Escuela</option>
+                                                                        <option value="Empleo">Empleo</option>
+                                                                        <option value="Tiempo Libre">Tiempo Libre</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
                                             </div>
+                                            <!-- /.tab-pane Encuesta -->
+
                                         </div>
+                                        <!-- /.tab-content -->
                                     </div>
+                                    <!-- End Custom Tabs -->
                                 </div>
+                                <!-- /. col-sm-12 -->
                             </div>
-
-                            <!-- Fila para la Colonia, C.P., Localidad, Estado -->
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="direccion_estado">Estado</label>
-                                        <div class="row">
-                                            <div class="col-xs-12 myerror">
-                                                <select name="direccion_estado" id="direccion_estado" class="form-control" style="width: 100%;" required>
-                                                    <option value="" selected>[Elegir estado]</option>
-                                                    @foreach($estados as $estado)
-                                                        <option value="{{$estado->id}}">{{$estado->estado_nombre}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="direccion_delegacion">Deleg/Munic.</label>
-                                        <div class="row">
-                                            <div class="col-xs-12 myerror">
-                                                <select name="direccion_delegacion" id="direccion_delegacion" class="form-control" style="width: 100%;" required>
-                                                    <option value="" selected>[Elegir Deleg/Munic.]</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="direccion_colonia">Colonia</label>
-                                        <div class="row">
-                                            <div class="col-xs-12 myerror">
-                                                <select name="direccion_colonia" id="direccion_colonia" class="form-control" style="width: 100%;" required>
-                                                    <option value="" selected>[Elegir Colonia]</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="direccion_localidad">Localidad</label>
-                                        <div class="row">
-                                            <div class="col-xs-12 myerror">
-                                                <input type="text" class="form-control" name="direccion_localidad" id="direccion_localidad" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-5">
-                                    <div class="form-group">
-                                        <label for="direccion_colonia_2">Detalles de la Colonia</label>
-                                        <div class="row">
-                                            <div class="col-xs-12 myerror">
-                                                <input type="text" class="form-control" name="direccion_colonia_2" id="direccion_colonia_2" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label for="direccion_codigopostal">C.P.</label>
-                                        <div class="row">
-                                            <div class="col-xs-12 myerror">
-                                                <input type="text" class="form-control" placeholder="00000" name="direccion_codigopostal" id="direccion_codigopostal" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Fila los telefonos de contacto del alumno -->
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="">Teléfono de casa</label>
-                                        <div class="row">
-                                            <div class="col-xs-8">
-                                                <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonocasa" id="contacto_telefonocasa">
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <input type="text" class="form-control" name="referencia1" id="referencia1">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="">Telefono tutor</label>
-                                        <div class="row">
-                                            <div class="col-xs-8">
-                                                <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonotutor" id="contacto_telefonotutor">
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <input type="text" class="form-control" name="referencia2" id="referencia3">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="">Celular</label>
-                                        <div class="row">
-                                            <div class="col-xs-8">
-                                                <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonocelular" id="contacto_telefonocelular">
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <input type="text" class="form-control" name="referencia3" id="referencia3">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="">Otro</label>
-                                        <div class="row">
-                                            <div class="col-xs-8">
-                                                <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefono_otro" id="contacto_telefono_otro">
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <input type="text" class="form-control" name="referencia4" id="referencia4">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Fila para la escuela y lugar de trabajo -->
-                            <div class="row">
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="">Escuela:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Escuela" name="contacto_nombre_escuela" id="contacto_nombre_escuela">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="">Lugar de trabajo:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Lugar de Trabajo" name="contacto_lugartrabajo" id="contacto_lugartrabajo">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <!-- Fila para el ultimo grado escolar a cursar y correo electronico -->
-                            <div class="row">
-
-                                <div class="col-sm-5">
-                                    <div class="form-group">
-                                        <label for="">Último grado escolar a cursar:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Último grado escolar a cursar" name="alumno_ultimogrado" id="alumno_ultimogrado">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-5">
-                                    <div class="form-group">
-                                        <label for="">Correo Electrónico:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Correo Electrónico" name="alumno_email" id="alumno_email">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
+                            <!-- Termina Fila para el TabPanel de Dirección, Telefonos y Otros Datos -->
                         </div>
-
+                        <!-- /. box-body -->
                     </div>
-                    <!-- Termina: Datos Personales del alumno -->
-
-                    <!-- Inicia: Datos Personales del tutor -->
-                    <div class="box box-warning">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"> Datos del Papá/Mamá ó Tutor</h3><small>&nbsp;&nbsp;(Los campos marcados con (*) son obligatorios)</small>
-
-                            <div class="box-tools pull-right">
-
-                                <button type="button" class="btn btn-warning btn-sm pull-right" data-widget="collapse" data-toggle="tooltip" title="Minimizar">
-                                    <i class="fa fa-minus"></i></button>
-
-                                <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Guardar" style="margin-right: 5px;">
-                                    <i class="fa fa-floppy-o fa-lg"></i></button>
-
-                                <button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="Cancelar" style="margin-right: 5px;">
-                                    <i class="fa fa-ban fa-lg"></i></button>
-
-                            </div>
-
-                        </div>
-                        <div class="box-body">
-
-                            <!-- Fila para el nombre y apellidos del tutor -->
-                            <div class="row">
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="">Nombre:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Nombre(s)">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="">Apellidos:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Apellido(s)">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="">Sexo:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Sexo">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <!-- Fila para la direccion del tutor -->
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="">Dirección:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Dirección">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label for="">&nbsp;</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Num. Int.">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label for="">&nbsp;</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Num. Ext.">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="">&nbsp;</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Referencias">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Fila para la Colonia, C.P., Localidad, Estado -->
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="">Colonia:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Colonia">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-1">
-                                    <div class="form-group">
-                                        <label for="">C.P.</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="77620">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label for="">Localidad</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Localidad" value="Chetumal">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="">Deleg./Munic.</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Deleg./Munic." value="Othón P. Blanco">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="">Estado</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Estado" value="Quintana Roo">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Fila los telefonos de contacto del tutor -->
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="">Teléfono de casa:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="">Celular:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="">Telefóno del trabajo:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="">Otro:</label>
-                                        <div class="row">
-                                            <div class="col-xs-7">
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
-                                            <div class="col-xs-5">
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Fila para el lugar de trabajo del tutor -->
-                            <div class="row">
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="">Nombre del lugar de trabajo:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Nombre(s)">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6"></div>
-                            </div>
-
-                            <!-- Fila para la direccion de trabajo del tutor -->
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="">Dirección del lugar de trabajo:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Dirección">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label for="">&nbsp;</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Num. Int.">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label for="">&nbsp;</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Num. Ext.">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="">&nbsp;</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Referencias">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Fila para la Colonia, C.P., Localidad, Estado del lugar de trabajo del tutor -->
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="">Colonia:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Colonia">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-1">
-                                    <div class="form-group">
-                                        <label for="">C.P.</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="77620">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label for="">Localidad</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Localidad" value="Chetumal">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="">Deleg./Munic.</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Deleg./Munic." value="Othón P. Blanco">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="">Estado</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Estado" value="Quintana Roo">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Fila para el correo electrónico del tutor -->
-                            <div class="row">
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="">Correo Electrónico:</label>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="Nombre(s)">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-8"></div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- Termina: Datos Personales del tutor -->
-
-                    <!-- Inicia: Otros Datos -->
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"> Otros Datos</h3><small>&nbsp;&nbsp;(Los campos marcados con (*) son obligatorios)</small>
-
-                            <div class="box-tools pull-right">
-
-                                <button type="button" class="btn btn-info btn-sm pull-right" data-widget="collapse" data-toggle="tooltip" title="Minimizar">
-                                    <i class="fa fa-minus"></i></button>
-
-                                <button type="submit" class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Guardar" style="margin-right: 5px;" id="boton_guardar">
-                                    <i class="fa fa-floppy-o fa-lg"></i></button>
-
-                                <button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="Cancelar" style="margin-right: 5px;">
-                                    <i class="fa fa-ban fa-lg"></i></button>
-
-                            </div>
-
-                        </div>
-                        <div class="box-body">
-
-                            <!-- Fila para preguntas de encuesta -->
-                            <div class="row">
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="">¿ Comó te enteraste de la escuela ?:</label>
-                                        <div class="row">
-                                            <div class="col-xs-6">
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="">¿ Porqué quieres estudiar Inglés ?:</label>
-                                        <div class="row">
-                                            <div class="col-xs-6">
-                                                <input type="email" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Termina: Otros Datos -->
+                    <!-- /. box-success -->
 
                 </form>
 
@@ -861,6 +543,16 @@
         $('#direccion_colonia').select2({
             allowClear: true,
             placeholder: '[Elegir Colonia]'
+        });
+
+        $('#encuesta_pregunta1').select2({
+            allowClear: true,
+            placeholder: '[Elegir]'
+        });
+
+        $('#encuesta_pregunta2').select2({
+            allowClear: true,
+            placeholder: '[Elegir]'
         });
 
         $("#contacto_telefonocasa").inputmask("(999)-999-9999");
@@ -1005,7 +697,19 @@
                 $("#nombre_delegacion").val(delegacion);
                 //El formulario cumple con las reglas de validacion
                 //form.submit();
-                ajaxSubmit();
+                swal({
+                    title: '¿Desea guardar los datos de inscripción?',
+                    text: "",
+                    type: 'warning',
+                    showCancelButton: true,
+                    allowOutsideClick: false,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'No',
+                    confirmButtonText: 'Si'
+                }).then(function () {
+                    ajaxSubmit();
+                })
             }
         });
 
