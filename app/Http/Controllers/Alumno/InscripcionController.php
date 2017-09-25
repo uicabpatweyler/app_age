@@ -97,8 +97,8 @@ class InscripcionController extends Controller
         else
         {
             $estados = Estado::select('id','estado_nombre')
-                ->orderBy('estado_nombre', 'asc')
-                ->get();
+                       ->orderBy('estado_nombre', 'asc')
+                       ->get();
 
             $ciclo = $this->cicloEscolarPredeterminado();
 
@@ -111,6 +111,37 @@ class InscripcionController extends Controller
             
             return view('alumnos.inscripcion.inscripcion_paso2', compact('curp','alumno_curp','estados','escuelas', 'ciclo'));
         }
+    }
+
+
+    /**
+     * Paso 3 de una nueva inscripcion. Agregar los datos del tutor del alumno en cuestion.
+     * ID del ciclo actual de trabajo
+     * ID del alumno recien creado de la entidad ALUMNOS
+     * ID del registro recien creado de los datos personales del alumno de la entidad ALUMNOS_DATOSPERSONALES
+     *
+     * @param int $id_alumno
+     * @param int $id_registro
+     * @param int $id_ciclo
+     */
+    public function inscripcion_paso3($id_ciclo,$id_alumno, $id_registro)
+    {
+        //Datos del ciclo escolar
+        $ciclo = Ciclo::where('id', $id_ciclo)->first();
+
+        //El alumno al cual se asignara el tutor
+        $alumno = Alumno::where('id', $id_alumno)->first();
+
+        //Datos del registro recien creado de la tabla ALUMNOS_DATOSPERSONALES
+        $alumno_datospersonales = AlumnoDatosPersonales::where('id', $id_registro)->first();
+
+        $estados = Estado::select('id','estado_nombre')
+                   ->orderBy('estado_nombre', 'asc')
+                   ->get();
+
+        //return view('alumnos.inscripcion');
+        //return dd($ciclo, $alumno, $alumno_datospersonales);
+        return view('alumnos.inscripcion.inscripcion_paso3', compact('ciclo', 'alumno','alumno_datospersonales', 'estados'));
     }
 
     /**
@@ -219,10 +250,13 @@ class InscripcionController extends Controller
                 $alumnoDatosPersonales->updated_at               = $now;
 
                 $alumnoDatosPersonales->save();
+                $id_registro = $alumnoDatosPersonales->id;
 
                 return response()->json([
-                    'success' => true,
-                    'message' => 'Los datos de inscripción se han guardado correctamente.'
+                    'success'   => true,
+                    'id_alumno' => $id_alumno,
+                    'id_registro' => $id_registro,
+                    'message'  => 'Los datos de inscripción se han guardado correctamente.'
                 ], 200);
 
             }

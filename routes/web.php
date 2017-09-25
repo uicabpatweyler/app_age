@@ -23,6 +23,7 @@ Route::get('/',     'HomeController@index')->name('home');
  */
 Route::get('inscripcion_paso1',                   'Alumno\InscripcionController@inscripcion_paso1')->name('inscripcion_paso1');
 Route::post('inscripcion_paso2',                  'Alumno\InscripcionController@inscripcion_paso2')->name('inscripcion_paso2');
+Route::get('inscripcion_paso3/{id_ciclo}/{id_alumno}/{id_registro}', 'Alumno\InscripcionController@inscripcion_paso3')->name('inscripcion_paso3');
 Route::get('delegaciones_por_estado/{id_estado}', 'Alumno\InscripcionController@delegacionesPorEstado')->name('delegaciones_por_estado');
 Route::get('colonias_por_delegacion/{id_estado}/{id_delegacion}', 'Alumno\InscripcionController@coloniasPorDelegacion')->name('colonias_por_delegacion');
 Route::get('detalle_colonia/{id_colonia}',        'Alumno\InscripcionController@detalleColonia')->name('detalle_colonia');

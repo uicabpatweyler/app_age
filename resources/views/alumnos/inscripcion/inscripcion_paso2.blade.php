@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-        <!-- Full Width Column -->
+<!-- Full Width Column -->
 <div class="content-wrapper">
 
     <div class="container">
@@ -281,7 +281,7 @@
                                                             <label for="direccion_localidad">Localidad</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" name="direccion_localidad" id="direccion_localidad" required>
+                                                                    <input type="text" class="form-control" name="direccion_localidad" id="direccion_localidad" style="text-transform:capitalize" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -335,7 +335,7 @@
                                                                     <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonotutor" id="contacto_telefonotutor">
                                                                 </div>
                                                                 <div class="col-xs-4">
-                                                                    <input type="text" class="form-control" name="referencia2" id="referencia3">
+                                                                    <input type="text" class="form-control" name="referencia2" id="referencia2">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -721,6 +721,9 @@
                 data: $("#form_hojadeinscripcion").serialize(),
                 dataType : 'json',
                 success: function(data){
+                    var id_ciclo    = '{{$ciclo->id}}';
+                    var id_alumno   = data.id_alumno;
+                    var id_registro = data.id_registro;
                     swal({
                         title:"",
                         text: data.message,
@@ -728,7 +731,7 @@
                         allowOutsideClick: false,
                         confirmButtonText: 'Continuar'
                     }).then(function(){
-                        window.location = "{{ route('inscripcion_paso1') }}";
+                        window.location = '../inscripcion_paso3/'+id_ciclo+'/'+id_alumno+'/'+id_registro;
                     });
                 },
                 error: function(xhr,status, response ){
