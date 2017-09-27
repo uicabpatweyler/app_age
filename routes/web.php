@@ -28,6 +28,7 @@ Route::get('delegaciones_por_estado/{id_estado}', 'Alumno\InscripcionController@
 Route::get('colonias_por_delegacion/{id_estado}/{id_delegacion}', 'Alumno\InscripcionController@coloniasPorDelegacion')->name('colonias_por_delegacion');
 Route::get('detalle_colonia/{id_colonia}',        'Alumno\InscripcionController@detalleColonia')->name('detalle_colonia');
 Route::post('guardar_hoja_inscripcion',            'Alumno\InscripcionController@store')->name('guardar_hoja_inscripcion');
+Route::post('guardar_datos_tutor',            'Alumno\InscripcionController@guardarDatosTutor')->name('guardar_datos_tutor');
 
 
 /*

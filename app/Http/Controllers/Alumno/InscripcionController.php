@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Alumno;
 
 use App\Models\Alumno;
 use App\Models\AlumnoDatosPersonales;
+use App\Models\AlumnoTutor;
 use App\Models\Ciclo;
 use App\Models\CodigoPostal;
 use App\Models\Delegacion;
@@ -164,6 +165,103 @@ class InscripcionController extends Controller
         //
     }
 
+    public function guardarDatosTutor(Request $request)
+    {
+        //return dd($request->all());
+
+        $validation = Validator::make($request->all(),[
+            'tutor_primernombre'           => 'required|min:2|max:30',
+            'tutor_primerapellido'         => 'required|min:2|max:30',
+            'tutor_genero'                 => 'required|min:1|max:1',
+            'ciclo_id'                     => 'required',
+            'alumno_id'                    => 'required',
+            'registro_id'                  => 'required',
+            'tutor_direccion_calle'        => 'required',
+            'tutor_direccion_numinterior'  => 'required',
+            'tutor_direccion_referencias'  => 'required',
+            'tutor_direccion_colonia'      => 'required',
+            'tutor_direccion_codigopostal' => 'required|min:5|max:5',
+            'tutor_direccion_localidad'    => 'required',
+            'tutor_direccion_delegacion'   => 'required',
+            'tutor_direccion_estado'       => 'required'
+        ]);
+
+        if($validation->passes())
+        {
+            try
+            {
+                $alumno_tutor = new AlumnoTutor();
+
+                $now = Carbon::now('America/Mexico_City Time Zone');
+
+                $alumno_tutor->ciclo_id                     = $request->get('ciclo_id');
+                $alumno_tutor->alumno_id                    = $request->get('alumno_id');
+                $alumno_tutor->registro_id                  = $request->get('registro_id');
+                $alumno_tutor->tutor_primernombre           = mb_strtolower($request->get('tutor_primernombre'),'UTF-8');
+                $alumno_tutor->tutor_segundonombre          = mb_strtolower($request->get('tutor_segundonombre'),'UTF-8');
+                $alumno_tutor->tutor_primerapellido         = mb_strtolower($request->get('tutor_primerapellido'),'UTF-8');
+                $alumno_tutor->tutor_segundoapellido        = mb_strtolower($request->get('tutor_segundoapellido'),'UTF-8');
+                $alumno_tutor->tutor_genero                 = $request->get('tutor_genero');
+                $alumno_tutor->tutor_email                  = $request->get('tutor_email');
+                $alumno_tutor->tutor_direccion_calle        = mb_strtolower($request->get('tutor_direccion_calle'),'UTF-8');
+                $alumno_tutor->tutor_direccion_numinterior  = mb_strtolower($request->get('tutor_direccion_numinterior'),'UTF-8');
+                $alumno_tutor->tutor_direccion_numexterior  = mb_strtolower($request->get('tutor_direccion_numexterior'),'UTF-8');
+                $alumno_tutor->tutor_direccion_referencias  = mb_strtolower($request->get('tutor_direccion_referencias'),'UTF-8');
+                $alumno_tutor->tutor_direccion_colonia      = mb_strtolower($request->get('tutor_direccion_colonia'),'UTF-8');
+                $alumno_tutor->tutor_direccion_codigopostal = $request->get('tutor_direccion_codigopostal');
+                $alumno_tutor->tutor_direccion_localidad    = mb_strtolower($request->get('tutor_direccion_localidad'),'UTF-8');
+                $alumno_tutor->tutor_direccion_delegacion   = mb_strtolower($request->get('tutor_direccion_delegacion'),'UTF-8');
+                $alumno_tutor->tutor_direccion_estado       = mb_strtolower($request->get('tutor_direccion_estado'),'UTF-8');
+                $alumno_tutor->tutor_telefonocasa           = $request->get('tutor_telefonocasa').'/'.mb_strtolower($request->get('referencia1'),'UTF-8');
+                $alumno_tutor->tutor_telefonotrabajo        = $request->get('tutor_telefonotrabajo').'/'.mb_strtolower($request->get('referencia2'),'UTF-8');
+                $alumno_tutor->tutor_telefonocelular        = $request->get('tutor_telefonocelular').'/'.mb_strtolower($request->get('referencia3'),'UTF-8');
+                $alumno_tutor->tutor_telefono_otro          = $request->get('tutor_telefono_otro').'/'.mb_strtolower($request->get('referencia4'),'UTF-8');
+                $alumno_tutor->tutor_ocupacion              = mb_strtolower($request->get('tutor_ocupacion'),'UTF-8');
+                $alumno_tutor->tutor_lugardetrabajo	        = mb_strtolower($request->get('tutor_lugardetrabajo'),'UTF-8');
+                $alumno_tutor->tutor_ldt_calle              = mb_strtolower($request->get('tutor_ldt_calle'),'UTF-8');
+                $alumno_tutor->tutor_ldt_numinterior        = mb_strtolower($request->get('tutor_ldt_numinterior'),'UTF-8');
+                $alumno_tutor->tutor_ldt_numexterior        = mb_strtolower($request->get('tutor_ldt_numexterior'),'UTF-8');
+                $alumno_tutor->tutor_ldt_referencias        = mb_strtolower($request->get('tutor_ldt_referencias'),'UTF-8');
+                $alumno_tutor->tutor_ldt_colonia            = mb_strtolower($request->get('tutor_ldt_colonia'),'UTF-8');
+                $alumno_tutor->tutor_ldt_codigopostal       = $request->get('tutor_ldt_codigopostal');
+                $alumno_tutor->tutor_ldt_localidad          = mb_strtolower($request->get('tutor_ldt_localidad'),'UTF-8');
+                $alumno_tutor->tutor_ldt_delegacion         = mb_strtolower($request->get('tutor_ldt_delegacion'),'UTF-8');
+                $alumno_tutor->tutor_ldt_estado             = mb_strtolower($request->get('tutor_ldt_estado'),'UTF-8');
+                $alumno_tutor->tutor_status = true;
+                $alumno_tutor->created_at   = $now;
+                $alumno_tutor->updated_at   = $now;
+
+                $alumno_tutor->save();
+
+                return response()->json([
+                    'success'   => true,
+                    'message'  => 'Los datos del tutor se han guardado correctamente.'
+                ], 200);
+
+
+            }
+            catch (Exception $e) {
+
+                return response()->json([
+                    'exception'    => true,
+                    'success'      => false,
+                    'error_message_user' => 'Error de consulta o del servidor de la base de datos. Contacte al administrador del sistema'
+                ],422);
+
+            }
+        }
+
+        $errors = $validation->errors();
+        $errors =  json_decode($errors);
+
+        return response()->json([
+            'exception' => false,
+            'success'   => false,
+            'message'   => $errors
+        ], 422);
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -262,17 +360,10 @@ class InscripcionController extends Controller
             }
             catch (Exception $e){
 
-                $error_server  = $e->errorInfo[0];
-                $error_code    = $e->errorInfo[1];
-                $error_message = $e->errorInfo[2];
-
                 return response()->json([
                     'exception'    => true,
                     'success'      => false,
-                    'error_server' => $error_server,
-                    'error_code'   => $error_code,
-                    'error_message_admin' => $error_message,
-                    'error_message_user' => 'Error al guardar los datos de inscripción. Intente mas tarde o contacte al administrador del sistema.'
+                    'error_message_user' => 'Error de consulta o del servidor de la base de datos. Contacte al administrador del sistema'
                 ],422);
 
             } //catch exception

@@ -17,14 +17,16 @@ class CreateAlumnosTutoresTable extends Migration
             $table->increments('id');
             $table->integer('ciclo_id')->unsigned();
             $table->integer('alumno_id')->unsigned();
+            $table->integer('registro_id')->unsigned();
             $table->string('tutor_primernombre', 120);
             $table->string('tutor_segundonombre', 120)->nullable();
             $table->string('tutor_primerapellido', 120);
             $table->string('tutor_segundoapellido', 120)->nullable();
+            $table->char('tutor_genero',1);
             $table->string('tutor_email',60)->nullable();
             $table->string('tutor_direccion_calle',120);
             $table->string('tutor_direccion_numinterior',40);
-            $table->string('tutor_direccion_numexterior',40);
+            $table->string('tutor_direccion_numexterior',40)->nullable();
             $table->string('tutor_direccion_referencias',120);
             $table->string('tutor_direccion_colonia',120);
             $table->string('tutor_direccion_codigopostal',5);
@@ -51,6 +53,7 @@ class CreateAlumnosTutoresTable extends Migration
 
             $table->foreign('ciclo_id')->references('id')->on('ciclos');
             $table->foreign('alumno_id')->references('id')->on('alumnos');
+            $table->foreign('registro_id')->references('id')->on('alumnos_datospersonales');
         });
     }
 

@@ -322,7 +322,7 @@
                                                                     <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonocasa" id="contacto_telefonocasa">
                                                                 </div>
                                                                 <div class="col-xs-4">
-                                                                    <input type="text" class="form-control" name="referencia1" id="referencia1">
+                                                                    <input type="text" class="form-control" name="referencia1" id="referencia1" style="text-transform:capitalize">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -335,7 +335,7 @@
                                                                     <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonotutor" id="contacto_telefonotutor">
                                                                 </div>
                                                                 <div class="col-xs-4">
-                                                                    <input type="text" class="form-control" name="referencia2" id="referencia2">
+                                                                    <input type="text" class="form-control" name="referencia2" id="referencia2" style="text-transform:capitalize">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -351,7 +351,7 @@
                                                                     <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonocelular" id="contacto_telefonocelular">
                                                                 </div>
                                                                 <div class="col-xs-4">
-                                                                    <input type="text" class="form-control" name="referencia3" id="referencia3">
+                                                                    <input type="text" class="form-control" name="referencia3" id="referencia3" style="text-transform:capitalize">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -364,7 +364,7 @@
                                                                     <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefono_otro" id="contacto_telefono_otro">
                                                                 </div>
                                                                 <div class="col-xs-4">
-                                                                    <input type="text" class="form-control" name="referencia4" id="referencia4">
+                                                                    <input type="text" class="form-control" name="referencia4" id="referencia4" style="text-transform:capitalize">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -743,16 +743,14 @@
                     var excepcion = error.exception;
                     if(excepcion===true)
                     {
-                        var error_server = error.error_server;
-                        var error_code   = error.error_code;
                         var error_message_user = error.error_message_user;
                         swal({
-                            title:'Error: '+error_code+'. SQLSTATE: '+error_server,
+                            title:'Error de excepcion',
                             html: error_message_user,
                             type: "error",
                             allowOutsideClick: false,
                             confirmButtonColor: '#d33',
-                            confirmButtonText: "Corregir"
+                            confirmButtonText: "Reintentar"
                         });
                     }
                     else

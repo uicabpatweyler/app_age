@@ -15,13 +15,13 @@ class CreateAlumnosTable extends Migration
     {
         Schema::create('alumnos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('alumno_primernombre',120);
-            $table->string('alumno_segundonombre',120)->nullable();
-            $table->string('alumno_apellidopaterno',120);
-            $table->string('alumno_apellidomaterno',120)->nullable();
+            $table->string('alumno_primernombre',60);
+            $table->string('alumno_segundonombre',60)->nullable();
+            $table->string('alumno_apellidopaterno',60);
+            $table->string('alumno_apellidomaterno',60)->nullable();
             $table->string('alumno_curp',20);
             $table->date('alumno_fechanacimiento');
-            $table->char('alumno_genero',10);
+            $table->char('alumno_genero',1);
             $table->boolean('alumno_status')->default(true);
             $table->timestamps();
         });
