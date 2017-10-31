@@ -23,6 +23,7 @@ class CreateAlumnosTable extends Migration
             $table->date('alumno_fechanacimiento');
             $table->char('alumno_genero',1);
             $table->boolean('alumno_status')->default(true);
+            
             $table->timestamps();
         });
     }

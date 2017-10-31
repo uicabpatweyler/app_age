@@ -158,9 +158,8 @@ return [
         'alumno_primernombre'    => 'Primer nombre del alumno',
         'alumno_apellidopaterno' => 'Apellido Paterno del alumno',
 
-        'direccion_calle'          => 'Dirección del alumno',
-        'direccion_numerointerior' => 'Número interior de la dirección',
-        'direccion_referencias'    => 'Referencias de la dirección',
+        'nombre_vialidad'          => 'Nombre de vialidad de la dirección',
+        'direccion_numeroexterior' => 'Número exterior de la dirección',
         'direccion_localidad'      => 'Localidad de la dirección',
         'direccion_colonia'        => 'Colonia de la dirección',
         'direccion_codigopostal'   => 'Código postal de la dirección',

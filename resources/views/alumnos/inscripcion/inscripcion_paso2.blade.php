@@ -24,9 +24,10 @@
 
                 <form action="" role="form" method="post" id="form_hojadeinscripcion" name="form_hojadeinscripcion">
                     {{csrf_field()}}
-                    <input type="hidden" name="nombre_estado" id="nombre_estado">
-                    <input type="hidden" name="nombre_delegacion" id="nombre_delegacion">
                     <input type="hidden" name="fecha_nacimiento" id="fecha_nacimiento">
+                    <input type="hidden" name="entidad_federativa" id="entidad_federativa">
+                    <input type="hidden" name="delegacion_municipio" id="delegacion_municipio">
+
                     <input type="hidden" name="ciclo_id" id="ciclo_id" value="{{$ciclo->id}}">
 
                     <!-- Inicia: Datos Personales del alumno -->
@@ -57,7 +58,7 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="escuela_id">Escuela</label>
+                                        <label for="escuela_id">Escuela (*)</label>
                                         <div class="row">
                                             <div class="col-xs-12 myerror">
                                                 <select class="form-control" name="escuela_id" id="escuela_id" style="width: 100%;" required>
@@ -92,7 +93,7 @@
                                         <label for="alumno_primernombre">Nombre</label>
                                         <div class="row">
                                             <div class="col-xs-6 myerror">
-                                                <input type="text" class="form-control" placeholder="Primer Nombre" id="alumno_primernombre" name="alumno_primernombre" style="text-transform:capitalize" required minlength="2">
+                                                <input type="text" class="form-control" placeholder="Primer Nombre (*)" id="alumno_primernombre" name="alumno_primernombre" style="text-transform:capitalize" required minlength="2">
                                             </div>
                                             <div class="col-xs-6">
                                                 <input type="text" class="form-control" placeholder="Segundo Nombre" id="alumno_segundonombre" name="alumno_segundonombre" style="text-transform:capitalize">
@@ -106,7 +107,7 @@
                                         <label for="alumno_apellidopaterno">Apellidos</label>
                                         <div class="row">
                                             <div class="col-xs-6 myerror">
-                                                <input type="text" class="form-control" placeholder="Apellido Paterno" id="alumno_apellidopaterno" name="alumno_apellidopaterno" required minlength="2" style="text-transform:capitalize">
+                                                <input type="text" class="form-control" placeholder="Apellido Paterno (*)" id="alumno_apellidopaterno" name="alumno_apellidopaterno" required minlength="2" style="text-transform:capitalize">
                                             </div>
                                             <div class="col-xs-6">
                                                 <input type="text" class="form-control" placeholder="Apellido Materno" id="alumno_apellidomaterno" name="alumno_apellidomaterno" style="text-transform:capitalize">
@@ -150,14 +151,17 @@
                                         <label for="">Edad</label>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" id="alumno_edad" name="alumno_edad" readonly>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="alumno_edad" name="alumno_edad" readonly>
+                                                    <span class="input-group-addon">años</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label for="alumno_genero">Sexo</label>
+                                        <label for="alumno_genero">Sexo (*)</label>
                                         <div class="row">
                                             <div class="col-xs-12 myerror">
                                                 <select name="alumno_genero" id="alumno_genero" class="form-control" style="width: 100%;" required>
@@ -186,45 +190,93 @@
                                         <div class="tab-content">
 
                                             <div class="tab-pane active" id="tab_1">
+                                                
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="">Tipo de Vialidad</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <select name="tipo_vialidad" id="tipo_vialidad" class="form-control" style="width: 100%;">
+                                                                        <option value="" selected>(Valor Opcional)</option>
+                                                                        <option value="Ampliación">Ampliación</option>
+                                                                        <option value="Andador">Andador</option>
+                                                                        <option value="Avenida">Avenida</option>
+                                                                        <option value="Boulevard">Boulevard</option>
+                                                                        <option value="Calle">Calle</option>
+                                                                        <option value="Callejón">Callejón</option>
+                                                                        <option value="Calzada">Calzada</option>
+                                                                        <option value="Cerrada">Cerrada</option>
+                                                                        <option value="Circuito">Circuito</option>
+                                                                        <option value="Circunvalación">Circunvalación</option>
+                                                                        <option value="Continuación">Continuación</option>
+                                                                        <option value="Corredor">Corredor</option>
+                                                                        <option value="Diagonal">Diagonal</option>
+                                                                        <option value="Eje Vial">Eje Vial</option>
+                                                                        <option value="Pasaje">Pasaje</option>
+                                                                        <option value="Peatonal">Peatonal</option>
+                                                                        <option value="Periférico">Periférico</option>
+                                                                        <option value="Privada">Privada</option>
+                                                                        <option value="Prolongación">Prolongación</option>
+                                                                        <option value="Retorno">Retorno</option>
+                                                                        <option value="Viaducto">Viaducto</option>
+                                                                  </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="form-group">
+                                                            <label for="nombre_vialidad">Nombre de vialidad (*)</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" placeholder="Nombre de Vialidad" id="nombre_vialidad" name="nombre_vialidad" style="text-transform:capitalize" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <label for="numero_exterior">Num. Ext. (*)</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" placeholder="Num. Ext." id="numero_exterior" name="numero_exterior" style="text-transform:capitalize" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <label for="">Num. Int.</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <input type="text" class="form-control" placeholder="Num. Int." id="numero_interior" style="text-transform:capitalize" name="numero_interior">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                                 <!-- Fila para la direccion -->
                                                 <div class="row">
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label for="direccion_calle">Dirección</label>
+                                                            <label for="entre_calles">Entre Calles</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" placeholder="Calle/Avenida" id="direccion_calle" name="direccion_calle" style="text-transform:capitalize" required>
+                                                                    <input type="text" class="form-control" placeholder="Entre Calles" id="entre_calles" name="entre_calles" style="text-transform:capitalize">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-2">
+
+
+                                                    <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label for="direccion_numerointerior">&nbsp;</label>
+                                                            <label for="referencias_adicionales">Referencias Adicionales</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" placeholder="Num. Int." id="direccion_numerointerior" name="direccion_numerointerior" style="text-transform:capitalize" required>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <label for="">&nbsp;</label>
-                                                            <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <input type="text" class="form-control" placeholder="Num. Ext." id="direccion_numeroexterior" style="text-transform:capitalize" name="direccion_numeroexterior">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group">
-                                                            <label for="direccion_referencias">&nbsp;</label>
-                                                            <div class="row">
-                                                                <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" placeholder="Cruzamientos/Esquina/Entre Calles" id="direccion_referencias" name="direccion_referencias" style="text-transform:capitalize" required>
+                                                                    <input type="text" class="form-control" placeholder="Referencias Adicionales" id="referencias_adicionales" name="referencias_adicionales" style="text-transform:capitalize">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -235,10 +287,10 @@
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label for="direccion_estado">Estado</label>
+                                                            <label for="direccion_estado">Estado (*)</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <select name="direccion_estado" id="direccion_estado" class="form-control" style="width: 100%;" required>
+                                                                    <select name="direccion_estado" id="direccion_estado" class="form-control" style="width: 100%;">
                                                                         <option value="" selected>[Elegir estado]</option>
                                                                         @foreach($estados as $estado)
                                                                             <option value="{{$estado->id}}">{{$estado->estado_nombre}}</option>
@@ -250,7 +302,7 @@
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label for="direccion_delegacion">Deleg/Munic.</label>
+                                                            <label for="direccion_delegacion">Deleg/Munic. (*)</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
                                                                     <select name="direccion_delegacion" id="direccion_delegacion" class="form-control" style="width: 100%;" required>
@@ -262,7 +314,7 @@
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label for="direccion_colonia">Colonia</label>
+                                                            <label for="direccion_colonia">Colonia (*)</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
                                                                     <select name="direccion_colonia" id="direccion_colonia" class="form-control" style="width: 100%;" required>
@@ -278,30 +330,40 @@
                                                 <div class="row">
                                                     <div class="col-sm-3">
                                                         <div class="form-group">
-                                                            <label for="direccion_localidad">Localidad</label>
+                                                            <label for="nombre_localidad">Localidad (*)</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" name="direccion_localidad" id="direccion_localidad" style="text-transform:capitalize" required>
+                                                                    <input type="text" class="form-control" name="nombre_localidad" id="nombre_localidad" style="text-transform:capitalize" required>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-5">
+                                                    <div class="col-sm-3">
                                                         <div class="form-group">
-                                                            <label for="direccion_colonia_2">Detalles de la Colonia</label>
+                                                            <label for="tipo_asentamiento">Tipo Asentamiento(*)</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" name="direccion_colonia_2" id="direccion_colonia_2" required>
+                                                                    <input type="text" class="form-control" name="tipo_asentamiento" id="tipo_asentamiento" style="text-transform:capitalize" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="nombre_asentamiento">Nombre Asentamiento(*)</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" name="nombre_asentamiento" id="nombre_asentamiento" style="text-transform:capitalize" required>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <div class="form-group">
-                                                            <label for="direccion_codigopostal">C.P.</label>
+                                                            <label for="codigo_postal">C.P.(*)</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" placeholder="00000" name="direccion_codigopostal" id="direccion_codigopostal" required>
+                                                                    <input type="text" class="form-control" placeholder="00000" name="codigo_postal" id="codigo_postal" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -319,7 +381,7 @@
                                                             <label for="">Teléfono de casa</label>
                                                             <div class="row">
                                                                 <div class="col-xs-8">
-                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonocasa" id="contacto_telefonocasa">
+                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_casa" id="telefono_casa">
                                                                 </div>
                                                                 <div class="col-xs-4">
                                                                     <input type="text" class="form-control" name="referencia1" id="referencia1" style="text-transform:capitalize">
@@ -332,7 +394,7 @@
                                                             <label for="">Telefono tutor</label>
                                                             <div class="row">
                                                                 <div class="col-xs-8">
-                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonotutor" id="contacto_telefonotutor">
+                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_tutor" id="telefono_tutor">
                                                                 </div>
                                                                 <div class="col-xs-4">
                                                                     <input type="text" class="form-control" name="referencia2" id="referencia2" style="text-transform:capitalize">
@@ -348,7 +410,7 @@
                                                             <label for="">Celular</label>
                                                             <div class="row">
                                                                 <div class="col-xs-8">
-                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefonocelular" id="contacto_telefonocelular">
+                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_celular" id="telefono_celular">
                                                                 </div>
                                                                 <div class="col-xs-4">
                                                                     <input type="text" class="form-control" name="referencia3" id="referencia3" style="text-transform:capitalize">
@@ -361,7 +423,7 @@
                                                             <label for="">Otro</label>
                                                             <div class="row">
                                                                 <div class="col-xs-8">
-                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="contacto_telefono_otro" id="contacto_telefono_otro">
+                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_otro" id="telefono_otro">
                                                                 </div>
                                                                 <div class="col-xs-4">
                                                                     <input type="text" class="form-control" name="referencia4" id="referencia4" style="text-transform:capitalize">
@@ -382,7 +444,7 @@
                                                             <label for="">Escuela:</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12">
-                                                                    <input type="text" class="form-control" placeholder="Escuela" name="contacto_nombre_escuela" id="contacto_nombre_escuela" style="text-transform:capitalize">
+                                                                    <input type="text" class="form-control" placeholder="Escuela" name="alumno_escuela" id="alumno_escuela" style="text-transform:capitalize">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -393,7 +455,7 @@
                                                             <label for="">Lugar de trabajo:</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12">
-                                                                    <input type="text" class="form-control" placeholder="Lugar de Trabajo" name="contacto_lugartrabajo" id="contacto_lugartrabajo" style="text-transform:capitalize">
+                                                                    <input type="text" class="form-control" placeholder="Lugar de Trabajo" name="alumno_lugartrabajo" id="alumno_lugartrabajo" style="text-transform:capitalize">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -438,7 +500,7 @@
                                                             <label for="encuesta_pregunta1">¿Cómo te enteraste de la escuela?</label>
                                                             <div class="row">
                                                                 <div class="col-xs-6 myerror">
-                                                                    <select name="encuesta_pregunta1" id="encuesta_pregunta1" class="form-control" style="width: 100%;" required>
+                                                                    <select name="encuesta_pregunta1" id="encuesta_pregunta1" class="form-control" style="width: 100%;">
                                                                         <option value="" selected>[Elegir]</option>
                                                                         <option value="Radio">Radio</option>
                                                                         <option value="Periodico">Periodico</option>
@@ -454,7 +516,7 @@
                                                             <label for="encuesta_pregunta2">¿Por qué quieres estudiar inglés?</label>
                                                             <div class="row">
                                                                 <div class="col-xs-6 myerror">
-                                                                    <select name="encuesta_pregunta2" id="encuesta_pregunta2" class="form-control" style="width: 100%;" required>
+                                                                    <select name="encuesta_pregunta2" id="encuesta_pregunta2" class="form-control" style="width: 100%;">
                                                                         <option value="" selected>[Elegir]</option>
                                                                         <option value="Escuela">Escuela</option>
                                                                         <option value="Empleo">Empleo</option>
@@ -501,6 +563,7 @@
 
         //https://momentjs.com/docs/
         //https://github.com/uxsolutions/bootstrap-datepicker
+        //https://momentjs.com/docs/#/displaying/difference/
 
         var curp = "{{$curp}}";
         var curp_split = curp.split(" ");
@@ -508,7 +571,6 @@
         moment.locale('es');
 
         $("#alumno_fechanacimiento").val(moment(fecha_nac, "YYMMDD").format('DD-MMMM-YYYY'));
-        //https://momentjs.com/docs/#/displaying/difference/
 
         //La fecha de nacimiento
         var a = moment(fecha_nac, "YYMMDD");
@@ -517,7 +579,7 @@
         var b = moment();
 
         //Diferencia de años entre la fecha actual y la fecha de nacimiento
-        $("#alumno_edad").val(b.diff(a, 'years')+' años');
+        $("#alumno_edad").val(b.diff(a, 'years'));
 
 
         $('#escuela_id').select2({
@@ -528,6 +590,11 @@
         $('#alumno_genero').select2({
             allowClear: true,
             placeholder: '[Elegir]'
+        });
+
+        $('#tipo_vialidad').select2({
+            allowClear: true,
+            placeholder: '(Valor Opcional)'
         });
 
         $('#direccion_estado').select2({
@@ -555,10 +622,10 @@
             placeholder: '[Elegir]'
         });
 
-        $("#contacto_telefonocasa").inputmask("(999)-999-9999");
-        $("#contacto_telefonotutor").inputmask("(999)-999-9999");
-        $("#contacto_telefonocelular").inputmask("(999)-999-9999");
-        $("#contacto_telefono_otro").inputmask("(999)-999-9999");
+        $("#telefono_casa").inputmask("(999)-999-9999");
+        $("#telefono_tutor").inputmask("(999)-999-9999");
+        $("#telefono_celular").inputmask("(999)-999-9999");
+        $("#telefono_otro").inputmask("(999)-999-9999");
         //email mask
         $("#alumno_email").inputmask({
             mask: "*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]",
@@ -579,9 +646,10 @@
         //Desactivamos los campos que forman parte de la colonia y el codigo postal
         $("#direccion_delegacion").attr('disabled','-1');
         $("#direccion_colonia").attr('disabled','-1');
-        $("#direccion_localidad").attr('disabled','-1');
-        $("#direccion_codigopostal").attr('disabled','-1')
-        $("#direccion_colonia_2").attr('disabled','-1')
+        $("#nombre_localidad").attr('disabled','-1');
+        $("#tipo_asentamiento").attr('disabled','-1');
+        $("#nombre_asentamiento").attr('disabled','-1');
+        $("#codigo_postal").attr('disabled','-1');
 
         //Funcion para llenar los select con los datos devueltos mediante AJAX
         $.fn.populateSelect = function (values) {
@@ -664,39 +732,124 @@
             }
             else
             {
-                $("#direccion_localidad").removeAttr('disabled');
-                $("#direccion_colonia_2").removeAttr('disabled');
-                $("#direccion_codigopostal").removeAttr('disabled');
+                $("#nombre_localidad").removeAttr('disabled');
+                $("#tipo_asentamiento").removeAttr('disabled');
+                $("#nombre_asentamiento").removeAttr('disabled');
+                $("#codigo_postal").removeAttr('disabled');
 
                 $("#direccion_localidad").empty().change();
-                $("#direccion_colonia_2").empty().change();
-                $("#direccion_codigopostal").empty().change();
+                $("#tipo_asentamiento").empty().change();
+                $("#nombre_asentamiento").empty().change();
+                $("#codigo_postal").empty().change();
 
                 $.getJSON('../detalle_colonia/'+colonia_id, null, function (data) {
-                    $("#direccion_localidad").val(data.cp_ciudad);
-                    $("#direccion_colonia_2").val(data.cp_asentamiento+' ( '+data.cp_tipoasentamiento+' )');
-                    $("#direccion_codigopostal").val(data.cp_codigo);
+                    $("#nombre_localidad").val(data.cp_ciudad);
+                    $("#tipo_asentamiento").val(data.cp_tipoasentamiento);
+                    $("#nombre_asentamiento").val(data.cp_asentamiento);
+                    $("#codigo_postal").val(data.cp_codigo);
                 });
 
             }
         });
 
+        //https://jqueryvalidation.org/
+        //https://jqueryvalidation.org/files/demo/
+        //https://jqueryvalidation.org/files/demo/bootstrap/index.html
 
-        jQuery.validator.setDefaults({
-            submitHandler: function(form) {
+        $("#form_hojadeinscripcion").validate({
+            errorElement: "span",
+            errorPlacement: function(error, element) {
 
-                //Obtenemos el nombre del estado seleccionado
-                var estado = $("#direccion_estado option:selected").html();
-                //Obtenemos el nombre de la delegacion seleccionada
-                var delegacion = $("#direccion_delegacion option:selected").html();
-                //Obtenemos la fecha de nacimiento en el formato correcto para mysql y la guardamos
-                $("#fecha_nacimiento").val(moment(fecha_nac, "YYMMDD").format('YYYY-MM-DD'));
-                //Guardamos el nombre del estado
-                $("#nombre_estado").val(estado);
-                //Guardamos el nombre de la delegacion
-                $("#nombre_delegacion").val(delegacion);
-                //El formulario cumple con las reglas de validacion
-                //form.submit();
+                $( element )
+                        .closest( "form" )
+                        .find( "label[for='" + element.attr( "id" ) + "']" )
+                        .append( error );
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".myerror" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".myerror" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+            rules:{
+                escuela_id               : { required: true },
+                alumno_primernombre      : { required: true },
+                alumno_apellidopaterno   : { required: true },
+                alumno_genero            : { required: true },
+                nombre_vialidad          : { required: true },
+                numero_exterior          : { required: true },
+                tipo_asentamiento        : { required: true },
+                nombre_asentamiento      : { required: true },
+                codigo_postal            : { required: true },
+                nombre_localidad         : { required: true },
+                direccion_estado         : { required: true },
+                direccion_delegacion     : { required: true },
+                direccion_colonia        : { required: true }
+            },
+            messages :{
+                escuela_id : {
+                    required: " requerido"
+
+                },
+                alumno_primernombre : {
+                    required: " (Incorrecto)",
+                    minlength: " (Incorrecto)"
+
+                },
+                alumno_apellidopaterno : {
+                    required: " (Incorrecto)",
+                    minlength: " (Incorrecto)"
+
+                },
+                alumno_genero :{
+                    required: "(Incorrecto)"
+                },
+                nombre_vialidad:{
+                    required: " requerido"
+                },
+                numero_exterior : {
+                    required: " requerido"
+                },
+                tipo_asentamiento : {
+                    required: " requerido"
+                },
+                nombre_asentamiento : {
+                    required: " requerido"
+                },
+                codigo_postal : {
+                    required: " requerido"
+                },
+                nombre_localidad    : {
+                    required: " requerido"
+                },
+                direccion_estado  : {
+                    required: " requerido"
+                },
+                direccion_delegacion : {
+                    required: " requerido"
+                },
+                direccion_colonia : {
+                    required: " requerido"
+                }
+            },
+            invalidHandler: function(event, validator) {
+                // 'this' refers to the form
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                    var message = 'Los campos marcados con (*) son obligatorios.';
+                    swal({
+                        title:"Error:",
+                        text: message,
+                        type: "error",
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: "Corregir"
+                    });
+
+                }
+            },
+            submitHandler: function() {
+
                 swal({
                     title: '¿Desea guardar los datos de inscripción?',
                     text: "",
@@ -708,11 +861,23 @@
                     cancelButtonText: 'No',
                     confirmButtonText: 'Si'
                 }).then(function () {
+                    //Obtenemos la fecha de nacimiento en el formato correcto yyyy-mm-dd
+                    $("#fecha_nacimiento").val(moment(fecha_nac, "YYMMDD").format('YYYY-MM-DD'));
+                    //Obtenemos el estado seleccionado del select correspondiente
+                    var entidad_federativa = $("#direccion_estado option:selected").html();
+                    //Lo guardamos en el input correspondiente
+                    $("#entidad_federativa").val(entidad_federativa);
+                    //Obtenemos la delegacion y/o municipio del select correspondiente
+                    var delegacion_municipio = $("#direccion_delegacion option:selected").html();
+                    //Lo guardamos en el input correspondiente
+                    $("#delegacion_municipio").val(delegacion_municipio);
+
+                    //Llamamos a la funcion AJAX para enviar el formulario
                     ajaxSubmit();
                 })
             }
-        });
 
+        });
 
         function ajaxSubmit(){
             $.ajax({
@@ -721,9 +886,6 @@
                 data: $("#form_hojadeinscripcion").serialize(),
                 dataType : 'json',
                 success: function(data){
-                    var id_ciclo    = '{{$ciclo->id}}';
-                    var id_alumno   = data.id_alumno;
-                    var id_registro = data.id_registro;
                     swal({
                         title:"",
                         text: data.message,
@@ -731,7 +893,7 @@
                         allowOutsideClick: false,
                         confirmButtonText: 'Continuar'
                     }).then(function(){
-                        window.location = '../inscripcion_paso3/'+id_ciclo+'/'+id_alumno+'/'+id_registro;
+                        window.location = "{{route('inscripcion_paso1')}}";
                     });
                 },
                 error: function(xhr,status, response ){
@@ -743,10 +905,12 @@
                     var excepcion = error.exception;
                     if(excepcion===true)
                     {
-                        var error_message_user = error.error_message_user;
+                        var message_user = error.message_user;
+                        var error_numeric_code = error.error_numeric_code;
+                        var message_error = error.message_error;
                         swal({
-                            title:'Error de excepcion',
-                            html: error_message_user,
+                            title: (error_numeric_code != 0 )?'Codigo de Error: '+error_numeric_code : 'Error de Excepción',
+                            html: (error_numeric_code != 0 )? message_error : message_user,
                             type: "error",
                             allowOutsideClick: false,
                             confirmButtonColor: '#d33',
@@ -775,102 +939,6 @@
                 }
             });
         }
-
-        //https://jqueryvalidation.org/
-        //https://jqueryvalidation.org/files/demo/
-        //https://jqueryvalidation.org/files/demo/bootstrap/index.html
-
-        $("#form_hojadeinscripcion").validate({
-            errorElement: "span",
-            errorPlacement: function(error, element) {
-
-                $( element )
-                    .closest( "form" )
-                    .find( "label[for='" + element.attr( "id" ) + "']" )
-                    .append( error );
-            },
-            highlight: function ( element, errorClass, validClass ) {
-                $( element ).parents( ".myerror" ).addClass( "has-error" ).removeClass( "has-success" );
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $( element ).parents( ".myerror" ).addClass( "has-success" ).removeClass( "has-error" );
-            },
-            rules:{
-                alumno_primernombre      : { required: true },
-                alumno_apellidopaterno   : { required: true },
-                alumno_genero            : { required: true },
-                direccion_calle          : { required: true },
-                direccion_numerointerior : { required: true },
-                direccion_referencias    : { required: true },
-                direccion_estado         : { required: true },
-                direccion_delegacion     : { required: true },
-                direccion_colonia        : { required: true },
-                direccion_localidad      : { required: true },
-                direccion_codigopostal   : { required: true },
-                escuela_id               : { required: true}
-
-            },
-            messages :{
-                escuela_id : {
-                    required: " (*)"
-
-                },
-                alumno_primernombre : {
-                    required: " (*)",
-                    minlength: " (Incorrecto)"
-
-                },
-                alumno_apellidopaterno : {
-                    required: " (*)",
-                    minlength: " (Incorrecto)"
-
-                },
-                alumno_genero :{
-                    required: " (*)"
-                },
-                direccion_calle:{
-                    required: " (*)"
-                },
-                direccion_numerointerior : {
-                    required: " (*)"
-                },
-                direccion_referencias : {
-                    required: " (*)"
-                },
-                direccion_estado : {
-                    required: " (*)"
-                },
-                direccion_delegacion : {
-                    required: " (*)"
-                },
-                direccion_colonia    : {
-                    required: " (*)"
-                },
-                direccion_localidad  : {
-                    required: " (*)"
-                },
-                direccion_codigopostal : {
-                    required: " (*)"
-                }
-            },
-            invalidHandler: function(event, validator) {
-                // 'this' refers to the form
-                var errors = validator.numberOfInvalids();
-                if (errors) {
-                    var message = 'Los campos marcados con (*) son obligatorios.';
-                    swal({
-                        title:"Error:",
-                        text: message,
-                        type: "error",
-                        allowOutsideClick: false,
-                        confirmButtonColor: '#d33',
-                        confirmButtonText: "Corregir"
-                    });
-
-                }
-            }
-
-        });
 
     });
 </script>
