@@ -30,67 +30,51 @@ class InscripcionController extends Controller
         $this->middleware('auth');
     }
 
-    public function verificarApellidos(Request $request)
-    {
-        //dd($request->get('ap'));
-        /*$apellido_paterno = trim($request->get('ap'));
-        $apellido_materno = trim($request->get('am'));*/
-        $apellido_paterno = 'uicab';
-        $apellido_materno = '';
-
-        $resultados = DB::table('datos_inscripcion')
-                      ->select('datos_inscripcion.ciclo_id',
-                               'datos_inscripcion.alumno_id',
-                               'datos_inscripcion.direccion_id',
-                               'ciclos.ciclo_anioinicial',
-                               'ciclos.ciclo_aniofinal',
-                               'alumnos.alumno_apellidopaterno',
-                               'alumnos.alumno_apellidomaterno',
-                               'alumnos.alumno_primernombre',
-                               'alumnos.alumno_segundonombre')
-                      ->join('ciclos', 'datos_inscripcion.ciclo_id', '=', 'ciclos.id')
-                      ->join('alumnos', 'datos_inscripcion.alumno_id', '=', 'alumnos.id')
-                      ->where('alumnos.alumno_apellidopaterno', 'like', '%'.$apellido_paterno.'%')
-                      ->where('alumnos.alumno_apellidomaterno', 'like', '%'.$apellido_materno.'%')
-                      ->get();
-
-        return dd($resultados);
-
-        /*if($resultados->count()===0){
-            return view('alumnos.inscripcion.verificar_apellidos');
-        }
-        else{
-            return view('alumnos.inscripcion.verificar_apellidos',compact('resultados'));
-        }*/
-
-    }
-
-    public function inscripcion_paso1(Request $request)
+    /**
+     * Alumnos. Nueva Inscripcion.
+     *
+     * Verificar la CURP introducida para evitar datos duplicados en la entidad ALUMNOS
+     * Si la CURP ya existe en la entidad ALUMNOS se le notifica al usuario
+     * Si la CURP no existe se muestra el formulario para los datos de un nuevo alumno
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     *
+     */
+    public function index(Request $request)
     {
         if($request->get('alumno_curp')===null)
         {
             return view('alumnos.inscripcion.inscripcion_paso1');
         }
         else{
+
+            /*Verificar la CURP introducida para evitar datos duplicados en la entidad ALUMNOS*/
             $alumnos = Alumno::where('alumno_curp', $request->get('alumno_curp'))->get();
 
+            /*No se encontro al menos 1 coincidencia en la entidad ALUMNOS*/
             if($alumnos->count()===0){
 
                 $estados = Estado::select('id','estado_nombre')
-                           ->orderBy('estado_nombre', 'asc')
-                           ->get();
+                    ->orderBy('estado_nombre', 'asc')
+                    ->get();
 
                 $ciclo = $this->cicloEscolarPredeterminado();
 
                 $escuelas = Escuela::where('escuela_status', true)
-                            ->get();
+                    ->get();
 
                 $curp = $request->get('curp');
                 $alumno_curp = $request->get('alumno_curp');
 
+                /*Se muestra el formulario para agregar los datos de un nuevo alumno en la entidad ALUMNOS*/
                 return view('alumnos.inscripcion.inscripcion_paso2', compact('curp','alumno_curp','estados','escuelas', 'ciclo'));
             }
+
+            /*Se encontro al menos 1 coincidencia en la entidad ALUMNOS*/
             else{
+
+                /*Se redirige al usuario al formulario de inicio notificandole que la CURP introducida ya existe*/
                 $verificarCurp = $alumnos->count();
                 return view('alumnos.inscripcion.inscripcion_paso1', compact('verificarCurp','alumnos'));
             }
@@ -98,46 +82,209 @@ class InscripcionController extends Controller
     }
 
     /**
-     * Paso 3 de una nueva inscripcion. Agregar los datos del tutor del alumno en cuestion.
-     * ID del ciclo actual de trabajo
-     * ID del alumno recien creado de la entidad ALUMNOS
-     * ID del registro recien creado de los datos personales del alumno de la entidad ALUMNOS_DATOSPERSONALES
+     * Crea un nuevo registro en las siguientes entidades: ALUMNOS, DATOS_INSCRIPCION y DIRECCIONES
      *
-     * @param int $id_alumno
-     * @param int $id_registro
-     * @param int $id_ciclo
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    // public function inscripcion_paso3($id_ciclo,$id_alumno, $id_direccion)
-    public function inscripcion_paso3()
+    public function store(Request $request)
     {
-        //Datos del ciclo escolar
-        //$ciclo = Ciclo::where('id', $id_ciclo)->first();
 
-        //El alumno al cual se asignara el tutor
-        //$alumno = Alumno::where('id', $id_alumno)->first();
+        $validation = Validator::make($request->all(),[
 
-        //Datos de la direccion recien creada del alumno que se esta registrando para usar en la direccion del tutor
-        //$direccion = Direccion::where('id', $id_direccion)->first();
+            /*Tabla: ALUMNOS*/
+            'alumno_primernombre'    => 'required|min:2|max:30',
+            'alumno_apellidopaterno' => 'required|min:2|max:30',
+            'alumno_curp'            => 'required|min:2|max:30',
+            'alumno_fechanacimiento' => 'required',
+            'alumno_genero'          => 'required|min:1|max:1',
 
-        //$estados = Estado::select('id','estado_nombre')
-        //           ->orderBy('estado_nombre', 'asc')
-        //           ->get();
+            /*Tabla: DIRECCIONES */
+            'nombre_vialidad'        => 'required',
+            'numero_exterior'        => 'required',
+            'tipo_asentamiento'      => 'required',
+            'nombre_asentamiento'    => 'required',
+            'codigo_postal'          => 'required',
+            'nombre_localidad'       => 'required',
+            'delegacion_municipio'   => 'required',
+            'entidad_federativa'     => 'required',
 
-        //return view('alumnos.inscripcion');
-        //return dd($ciclo, $alumno, $alumno_datospersonales);
-        //return view('alumnos.inscripcion.inscripcion_paso3', compact('ciclo', 'alumno', 'direccion','estados'));
-        return view('alumnos.inscripcion.inscripcion_paso3');
+            /*Tabla: DATOS_INSCRIPCION */
+            'alumno_edad'            => 'required'
+        ]);
+
+        if($validation->passes())
+        {
+            try{
+                //Iniciamos la transaccion para la insercion de los datos de inscripción
+                $resultado = DB::transaction(function () use ($request)  {
+
+                    $alumno = new Alumno();
+
+                    $now = Carbon::now('America/Mexico_City Time Zone');
+
+                    $alumno->alumno_primernombre    = mb_strtolower($request->get('alumno_primernombre'),'UTF-8');
+                    $alumno->alumno_segundonombre   = mb_strtolower($request->get('alumno_segundonombre'),'UTF-8');
+                    $alumno->alumno_apellidopaterno = mb_strtolower($request->get('alumno_apellidopaterno'),'UTF-8');
+                    $alumno->alumno_apellidomaterno = mb_strtolower($request->get('alumno_apellidomaterno'),'UTF-8');
+                    $alumno->alumno_curp            = $request->get('alumno_curp');
+                    $alumno->alumno_fechanacimiento = $request->get('fecha_nacimiento');//yyyy-mm-dd
+                    $alumno->alumno_genero          = $request->get('alumno_genero');
+                    $alumno->alumno_status          = true;
+                    $alumno->created_at             = $now;
+                    $alumno->updated_at             = $now;
+
+                    $alumno->save();
+
+                    //Obtenemos el ultimo id insertado para usarlo en la tabla DATOS_INSCRIPCION
+                    $id_alumno = $alumno->id;
+
+                    $direccion = new Direccion();
+
+                    $direccion->tipo_vialidad        = ($request->get('tipo_vialidad')===null) ? '' : $request->get('tipo_vialidad');
+                    $direccion->nombre_vialidad      = mb_strtolower($request->get('nombre_vialidad'),'UTF-8');
+                    $direccion->numero_exterior      = mb_strtolower($request->get('numero_exterior'),'UTF-8');
+                    $direccion->numero_interior      = ($request->get('numero_interior')===null) ? '' : mb_strtolower($request->get('numero_interior'),'UTF-8');
+                    $direccion->tipo_asentamiento    = mb_strtolower($request->get('tipo_asentamiento'),'UTF-8');
+                    $direccion->nombre_asentamiento  = mb_strtolower($request->get('nombre_asentamiento'),'UTF-8');
+                    $direccion->codigo_postal        = $request->get('codigo_postal');
+                    $direccion->nombre_localidad     = mb_strtolower($request->get('nombre_localidad'),'UTF-8');
+                    $direccion->delegacion_municipio = $request->get('delegacion_municipio');
+                    $direccion->entidad_federativa   = $request->get('entidad_federativa');
+                    $direccion->pais                 = 'México';
+                    $direccion->entre_calles         = ($request->get('entre_calles')===null) ? '' : mb_strtolower($request->get('entre_calles'),'UTF-8');
+                    $direccion->referencias_adicionales = ($request->get('referencias_adicionales')===null) ? '' : mb_strtolower($request->get('referencias_adicionales'),'UTF-8');
+                    $direccion->created_at = $now;
+                    $direccion->updated_at = $now;
+
+                    $direccion->save();
+
+                    //Obtenemos el ultimo id insertado para usarlo en la tabla DATOS_INSCRIPCION
+                    $id_direccion = $direccion->id;
+
+                    $datosDeInscripcion = new DatosDeInscripcion();
+
+                    $datosDeInscripcion->escuela_id       = $request->get('escuela_id');
+                    $datosDeInscripcion->ciclo_id         = $request->get('ciclo_id');
+                    $datosDeInscripcion->alumno_id        = $id_alumno;
+                    $datosDeInscripcion->direccion_id     = $id_direccion;
+                    $datosDeInscripcion->alumno_edad      = $request->get('alumno_edad');
+                    $datosDeInscripcion->telefono_casa    = $request->get('telefono_casa');
+                    $datosDeInscripcion->referencia1      = ($request->get('referencia1')===null) ? '' : mb_strtolower($request->get('referencia1'),'UTF-8');
+                    $datosDeInscripcion->telefono_tutor   = $request->get('telefono_tutor');
+                    $datosDeInscripcion->referencia2      = ($request->get('referencia2')===null) ? '' : mb_strtolower($request->get('referencia2'),'UTF-8');
+                    $datosDeInscripcion->telefono_celular = $request->get('telefono_celular');
+                    $datosDeInscripcion->referencia3      = ($request->get('referencia3')===null) ? '' : mb_strtolower($request->get('referencia3'),'UTF-8');
+                    $datosDeInscripcion->telefono_otro    = $request->get('telefono_otro');
+                    $datosDeInscripcion->referencia4      = ($request->get('referencia4')===null) ? '' : mb_strtolower($request->get('referencia4'),'UTF-8');
+                    $datosDeInscripcion->alumno_escuela   = ($request->get('alumno_escuela')===null) ? '' : mb_strtolower($request->get('alumno_escuela'),'UTF-8');
+                    $datosDeInscripcion->alumno_ultimogrado = ($request->get('alumno_ultimogrado')===null) ? '' : mb_strtolower($request->get('alumno_ultimogrado'),'UTF-8');
+                    $datosDeInscripcion->alumno_lugartrabajo = ($request->get('alumno_lugartrabajo')===null) ? '' : mb_strtolower($request->get('alumno_lugartrabajo'),'UTF-8');
+                    $datosDeInscripcion->alumno_email = $request->get('alumno_email');
+                    $datosDeInscripcion->encuesta_pregunta1 = $request->get('encuesta_pregunta1');
+                    $datosDeInscripcion->encuesta_pregunta2 = $request->get('encuesta_pregunta2');
+                    $datosDeInscripcion->created_at = $now;
+                    $datosDeInscripcion->updated_at = $now;
+
+
+                    $datosDeInscripcion->save();
+
+                    return response()->json([
+                        'success'   => true,
+                        'id_alumno' => $id_alumno,
+                        'id_ciclo'  => $request->get('ciclo_id'),
+                        'id_direccion' => $id_direccion,
+                        'id_datos_inscripcion' => $datosDeInscripcion->id,
+                        'message'              => 'Los datos del alumno se han guardado correctamente. ¿Desea agregar los datos del tutor? '
+                    ], 200);
+
+                });
+
+                return $resultado->getContent();
+            }
+            catch (Exception $e){
+                /*
+                 * //https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html
+                 *
+                 * For error checking, use error codes, not error messages. Error messages do not change often,
+                 * but it is possible. Also if the database administrator changes the language setting,
+                 * that affects the language of error messages.
+                 *
+                 * $e->getCode() or  $e->errorInfo[0]
+                 */
+
+                if($e->getCode()!=0)
+                {
+                    return response()->json([
+                        'exception'          => true,
+                        'success'            => false,
+                        'error_numeric_code' => $e->errorInfo[0],
+                        'sqlstate_value'     => $e->errorInfo[1],
+                        'message_error'      => $e->errorInfo[2],
+                        'message_details'    => $e->getMessage(),
+                        'message_user'       => '(1) Error al guardar los datos de inscripción.'
+
+                    ],422);
+                }
+                else{
+                    return response()->json([
+                        'exception'          => true,
+                        'success'            => false,
+                        'error_numeric_code' => 0,
+                        'sqlstate_value'     => 0,
+                        'message_error'      => '',
+                        'message_details'    => $e->getMessage(),
+                        'message_user'       => '(2) Error al guardar los datos de inscripción.'
+
+                    ],422);
+                }
+
+
+            } //catch exception
+        }
+
+        $errors = $validation->errors();
+        $errors =  json_decode($errors);
+
+        return response()->json([
+            'exception' => false,
+            'success'   => false,
+            'message'   => $errors
+        ], 422);
+
     }
 
     /**
-     * Display a listing of the resource.
+     * Mostrar el formulario para agregar los datos del tutor del alumno del cual se realiza la inscripcion
      *
+     * ID del alumno recien creado de la entidad ALUMNOS
+     * ID del ciclo actual de trabajo
+     * ID de la direccion recien creada de la entidad DIRECCIONES
+     *
+     * @param int $id_alumno
+     * @param int $id_ciclo
+     * @param int $id_direccion
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function show($id_alumno,$id_ciclo, $id_direccion)
     {
-        //
-    }
+        //Datos del ciclo escolar
+        $ciclo = Ciclo::where('id', $id_ciclo)->first();
+
+        //El alumno al cual se asignara el tutor
+        $alumno = Alumno::where('id', $id_alumno)->first();
+
+        //Datos de la direccion recien creada del alumno que se esta registrando para usar en la direccion del tutor
+        $direccion = Direccion::where('id', $id_direccion)->first();
+
+        $estados = Estado::select('id','estado_nombre')
+            ->orderBy('estado_nombre', 'asc')
+            ->get();
+    
+        return view('alumnos.inscripcion.inscripcion_paso3',compact('ciclo','alumno','estados','direccion'));
+    }   
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -245,197 +392,8 @@ class InscripcionController extends Controller
         ], 422);
 
     }
-    /*public function guardarDatosDeInscripcion(Request $request){
-        return dd($request->all());
-    }*/
-
-    public function guardarDatosDeInscripcion(Request $request)
-    {
-
-        $validation = Validator::make($request->all(),[
-
-            /*Tabla: ALUMNOS*/
-            'alumno_primernombre'    => 'required|min:2|max:30',
-            'alumno_apellidopaterno' => 'required|min:2|max:30',
-            'alumno_curp'            => 'required|min:2|max:30',
-            'alumno_fechanacimiento' => 'required',
-            'alumno_genero'          => 'required|min:1|max:1',
-
-            /*Tabla: DIRECCIONES */
-            'nombre_vialidad'        => 'required',
-            'numero_exterior'        => 'required',
-            'tipo_asentamiento'      => 'required',
-            'nombre_asentamiento'    => 'required',
-            'codigo_postal'          => 'required',
-            'nombre_localidad'       => 'required',
-            'delegacion_municipio'   => 'required',
-            'entidad_federativa'     => 'required',
-
-            /*Tabla: DATOS_INSCRIPCION */
-            'alumno_edad'            => 'required'
-        ]);
-
-        if($validation->passes())
-        {
-            try{
-                //Iniciamos la transaccion para la insercion de los datos de inscripción
-                $resultado = DB::transaction(function () use ($request)  {
-
-                    $alumno = new Alumno();
-
-                    $now = Carbon::now('America/Mexico_City Time Zone');
-
-                    $alumno->alumno_primernombre    = mb_strtolower($request->get('alumno_primernombre'),'UTF-8');
-                    $alumno->alumno_segundonombre   = mb_strtolower($request->get('alumno_segundonombre'),'UTF-8');
-                    $alumno->alumno_apellidopaterno = mb_strtolower($request->get('alumno_apellidopaterno'),'UTF-8');
-                    $alumno->alumno_apellidomaterno = mb_strtolower($request->get('alumno_apellidomaterno'),'UTF-8');
-                    $alumno->alumno_curp            = $request->get('alumno_curp');
-                    $alumno->alumno_fechanacimiento = $request->get('fecha_nacimiento');//yyyy-mm-dd
-                    $alumno->alumno_genero          = $request->get('alumno_genero');
-                    $alumno->alumno_status          = true;
-                    $alumno->created_at             = $now;
-                    $alumno->updated_at             = $now;
-
-                    $alumno->save();
-
-                    //Obtenemos el ultimo id insertado para usarlo en la tabla DATOS_INSCRIPCION
-                    $id_alumno = $alumno->id;
-
-                    $direccion = new Direccion();
-
-                    $direccion->tipo_vialidad        = ($request->get('tipo_vialidad')===null) ? '' : $request->get('tipo_vialidad');
-                    $direccion->nombre_vialidad      = mb_strtolower($request->get('nombre_vialidad'),'UTF-8');
-                    $direccion->numero_exterior      = mb_strtolower($request->get('numero_exterior'),'UTF-8');
-                    $direccion->numero_interior      = ($request->get('numero_interior')===null) ? '' : mb_strtolower($request->get('numero_interior'),'UTF-8');
-                    $direccion->tipo_asentamiento    = mb_strtolower($request->get('tipo_asentamiento'),'UTF-8');
-                    $direccion->nombre_asentamiento  = mb_strtolower($request->get('nombre_asentamiento'),'UTF-8');
-                    $direccion->codigo_postal        = $request->get('codigo_postal');
-                    $direccion->nombre_localidad     = mb_strtolower($request->get('nombre_localidad'),'UTF-8');
-                    $direccion->delegacion_municipio = $request->get('delegacion_municipio');
-                    $direccion->entidad_federativa   = $request->get('entidad_federativa');
-                    $direccion->pais                 = 'México';
-                    $direccion->entre_calles         = ($request->get('entre_calles')===null) ? '' : mb_strtolower($request->get('entre_calles'),'UTF-8');
-                    $direccion->referencias_adicionales = ($request->get('referencias_adicionales')===null) ? '' : mb_strtolower($request->get('referencias_adicionales'),'UTF-8');
-                    $direccion->created_at = $now;
-                    $direccion->updated_at = $now;
-
-                    $direccion->save();
-
-                    //Obtenemos el ultimo id insertado para usarlo en la tabla DATOS_INSCRIPCION
-                    $id_direccion = $direccion->id;
-
-                    $datosDeInscripcion = new DatosDeInscripcion();
-
-                    $datosDeInscripcion->escuela_id       = $request->get('escuela_id');
-                    $datosDeInscripcion->ciclo_id         = $request->get('ciclo_id');
-                    $datosDeInscripcion->alumno_id        = $id_alumno;
-                    $datosDeInscripcion->direccion_id     = $id_direccion;
-                    $datosDeInscripcion->alumno_edad      = $request->get('alumno_edad');
-                    $datosDeInscripcion->telefono_casa    = $request->get('telefono_casa');
-                    $datosDeInscripcion->referencia1      = ($request->get('referencia1')===null) ? '' : mb_strtolower($request->get('referencia1'),'UTF-8');
-                    $datosDeInscripcion->telefono_tutor   = $request->get('telefono_tutor');
-                    $datosDeInscripcion->referencia2      = ($request->get('referencia2')===null) ? '' : mb_strtolower($request->get('referencia2'),'UTF-8');
-                    $datosDeInscripcion->telefono_celular = $request->get('telefono_celular');
-                    $datosDeInscripcion->referencia3      = ($request->get('referencia3')===null) ? '' : mb_strtolower($request->get('referencia3'),'UTF-8');
-                    $datosDeInscripcion->telefono_otro    = $request->get('telefono_otro');
-                    $datosDeInscripcion->referencia4      = ($request->get('referencia4')===null) ? '' : mb_strtolower($request->get('referencia4'),'UTF-8');
-                    $datosDeInscripcion->alumno_escuela   = ($request->get('alumno_escuela')===null) ? '' : mb_strtolower($request->get('alumno_escuela'),'UTF-8');
-                    $datosDeInscripcion->alumno_ultimogrado = ($request->get('alumno_ultimogrado')===null) ? '' : mb_strtolower($request->get('alumno_ultimogrado'),'UTF-8');
-                    $datosDeInscripcion->alumno_lugartrabajo = ($request->get('alumno_lugartrabajo')===null) ? '' : mb_strtolower($request->get('alumno_lugartrabajo'),'UTF-8');
-                    $datosDeInscripcion->alumno_email = $request->get('alumno_email');
-                    $datosDeInscripcion->encuesta_pregunta1 = $request->get('encuesta_pregunta1');
-                    $datosDeInscripcion->encuesta_pregunta2 = $request->get('encuesta_pregunta2');
-                    $datosDeInscripcion->created_at = $now;
-                    $datosDeInscripcion->updated_at = $now;
 
 
-                    $datosDeInscripcion->save();
-
-                    return response()->json([
-                        'success'   => true,
-                        'id_alumno' => $id_alumno,
-                        'id_direccion' => $id_direccion,
-                        'id_datos_inscripcion' => $datosDeInscripcion->id,
-                        'message'              => 'Los datos del alumno se han guardado correctamente. ¿Desea agregar los datos del tutor? '
-                    ], 200);
-
-                });
-
-                return $resultado->getContent();
-            }
-            catch (Exception $e){
-                /*
-                 * //https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html
-                 *
-                 * For error checking, use error codes, not error messages. Error messages do not change often,
-                 * but it is possible. Also if the database administrator changes the language setting, 
-                 * that affects the language of error messages.
-                 * 
-                 * $e->getCode() or  $e->errorInfo[0]
-                 */
-
-                if($e->getCode()!=0)
-                {
-                    return response()->json([
-                        'exception'          => true,
-                        'success'            => false,
-                        'error_numeric_code' => $e->errorInfo[0],
-                        'sqlstate_value'     => $e->errorInfo[1],
-                        'message_error'      => $e->errorInfo[2],
-                        'message_details'    => $e->getMessage(),
-                        'message_user'       => '(1) Error al guardar los datos de inscripción.'
-
-                    ],422);
-                }
-                else{
-                    return response()->json([
-                        'exception'          => true,
-                        'success'            => false,
-                        'error_numeric_code' => 0,
-                        'sqlstate_value'     => 0,
-                        'message_error'      => '',
-                        'message_details'    => $e->getMessage(),
-                        'message_user'       => '(2) Error al guardar los datos de inscripción.'
-
-                    ],422);
-                }
-
-
-            } //catch exception
-        }
-
-        $errors = $validation->errors();
-        $errors =  json_decode($errors);
-
-        return response()->json([
-            'exception' => false,
-            'success'   => false,
-            'message'   => $errors
-        ], 422);
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -479,13 +437,6 @@ class InscripcionController extends Controller
             ->first();
 
         return $ciclo;
-    }
-
-    public function verificaCurpAlumno($curp)
-    {
-        $verificarCurp = Alumno::where('alumno_curp', $curp)->count();
-
-        return $verificarCurp;
     }
 
     public function delegacionesPorEstado($id_estado)

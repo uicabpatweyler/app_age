@@ -19,22 +19,19 @@ Route::get('/',     'HomeController@index')->name('home');
 //Route::get('/', function () { return view('mainHome'); });
 
 /*
- * Alumnos: Inscripcion
+ * Alumnos: Nueva Inscripcion
  */
-Route::get('verificar_apellidos',                                    'Alumno\InscripcionController@verificarApellidos')->name('verificar_apellidos');
-Route::get('inscripcion_paso1',                                      'Alumno\InscripcionController@inscripcion_paso1')->name('inscripcion_paso1');
-//El paso 2 de la inscripcion muestra el formulario para guardar los datos del alumno. La funcion inscripcion_paso1 valida
-//los datos necesarios y requeridos y decide si continua paso 2, es por esa razon que no se muestra como una ruta
-Route::get('inscripcion_paso3',                                      'Alumno\InscripcionController@inscripcion_paso3')->name('inscripcion_paso3');
 
-Route::post('guardar_hoja_inscripcion',                              'Alumno\InscripcionController@guardarDatosDeInscripcion')->name('guardar_hoja_inscripcion');
+Route::get('nueva_inscripcion',   'Alumno\InscripcionController@index')->name('nueva_inscripcion');
+Route::post('guardar_inscripcion', 'Alumno\InscripcionController@store')->name('guardar_inscripcion');
+Route::get('datos_tutor/{id_alumno}/{id_ciclo}/{id_direccion}','Alumno\InscripcionController@show')->name('datos_tutor');
+
+
 Route::post('guardar_datos_tutor',                                   'Alumno\InscripcionController@guardarDatosTutor')->name('guardar_datos_tutor');
 
 Route::get('delegaciones_por_estado/{id_estado}',                    'Alumno\InscripcionController@delegacionesPorEstado')->name('delegaciones_por_estado');
 Route::get('colonias_por_delegacion/{id_estado}/{id_delegacion}',    'Alumno\InscripcionController@coloniasPorDelegacion')->name('colonias_por_delegacion');
 Route::get('detalle_colonia/{id_colonia}',                           'Alumno\InscripcionController@detalleColonia')->name('detalle_colonia');
-
-
 
 
 /*

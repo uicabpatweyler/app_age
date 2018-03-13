@@ -36,7 +36,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Alumnos <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{route('inscripcion_paso1')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Nueva Inscripción</a></li>
+                                    <li><a href="{{route('nueva_inscripcion')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Nueva Inscripción</a></li>
                                     <li class="divider"></li>
                                     <li><a href="#"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Re-Inscripcion</a></li>
                                     <li class="divider"></li>

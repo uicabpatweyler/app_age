@@ -26,7 +26,7 @@
                         <!-- /.box-header -->
 
                         <!-- form start -->
-                        <form class="form-horizontal" method="get" action="{{route('inscripcion_paso1')}}" id="form_verificarcurp" name="form_verificarcurp">
+                        <form class="form-horizontal" method="get" action="{{route('nueva_inscripcion')}}" id="form_verificarcurp" name="form_verificarcurp">
 
                             <input type="hidden" name="alumno_curp" id="alumno_curp">
 
@@ -46,7 +46,7 @@
 
                             <div class="box-footer">
                                 @if( isset($alumnos) and isset($verificarCurp) )
-                                    <a class="btn btn-social btn-danger" href="{{route('inscripcion_paso1')}}">
+                                    <a class="btn btn-social btn-danger" href="{{route('nueva_inscripcion')}}">
                                         <i class="fa fa-ban fa-lg" aria-hidden="true"></i> Cancelar
                                     </a>
                                 @endif

@@ -43,7 +43,7 @@
                                 <button type="submit" class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Guardar" style="margin-right: 5px;">
                                     <i class="fa fa-floppy-o fa-lg"></i></button>
 
-                                <a class="btn btn-danger btn-sm pull-right" href="{{route('inscripcion_paso1')}}" data-toggle="tooltip" title="Cancelar" style="margin-right: 5px;">
+                                <a class="btn btn-danger btn-sm pull-right" href="{{route('nueva_inscripcion')}}" data-toggle="tooltip" title="Cancelar" style="margin-right: 5px;">
                                     <i class="fa fa-ban fa-lg" aria-hidden="true"></i></a>
 
                             </div>
@@ -882,7 +882,7 @@
         function ajaxSubmit(){
             $.ajax({
                 type:"POST",
-                url:"{{route('guardar_hoja_inscripcion')}}",
+                url:"{{route('guardar_inscripcion')}}",
                 data: $("#form_hojadeinscripcion").serialize(),
                 dataType : 'json',
                 success: function(data){
@@ -893,7 +893,7 @@
                         allowOutsideClick: false,
                         confirmButtonText: 'Continuar'
                     }).then(function(){
-                        window.location = "{{route('inscripcion_paso1')}}";
+                        window.location.replace("datos_tutor/"+data.id_alumno+"/"+data.id_ciclo+"/"+data.id_direccion);
                     });
                 },
                 error: function(xhr,status, response ){
