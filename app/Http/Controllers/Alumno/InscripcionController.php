@@ -11,6 +11,7 @@ use App\Models\Delegacion;
 use App\Models\Direccion;
 use App\Models\Escuela;
 use App\Models\Estado;
+use App\Models\Tutor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -294,6 +295,96 @@ class InscripcionController extends Controller
     public function create()
     {
         //
+    }
+
+    public function storeDatosTutor(Request $request){
+
+        $validation = Validator::make($request->all(),[
+            'tutor_nombre'           => 'required|min:2|max:60',
+            'tutor_apellidopaterno'  => 'required|min:2|max:60',
+        ]);
+
+        if($validation->passes()){
+
+            try
+            {
+                //Iniciamos la transaccion para la insercion de los datos del tutor
+                $resultado = DB::transaction(function () use ($request)  {
+
+                    $tutor = new Tutor();
+
+                    $now = Carbon::now('America/Mexico_City Time Zone');
+
+                    $tutor->tutor_nombre = mb_strtolower($request->get('tutor_nombre'),'UTF-8');
+                    $tutor->tutor_apellidopaterno = mb_strtolower($request->get('tutor_apellidopaterno'),'UTF-8');
+                    $tutor->tutor_apellidomaterno = ($request->get('tutor_apellidomaterno')===null) ? '' : mb_strtolower($request->get('tutor_apellidomaterno'),'UTF-8');
+                    $tutor->tutor_email = ($request->get('tutor_email')===null) ? '' : $request->get('tutor_email');
+                    $tutor->tutor_status = true;
+                    $tutor->created_at   = $now;
+                    $tutor->updated_at   = $now;
+
+                    $tutor->save();
+
+                    return response()->json([
+                        'success'   => true,
+                        'message'   => 'Los datos del tutor se han guardado correctamente.'
+                    ], 200);
+                });
+
+                return $resultado->getContent();
+
+            }
+            catch (Exception $e){
+                /*
+                 * //https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html
+                 *
+                 * For error checking, use error codes, not error messages. Error messages do not change often,
+                 * but it is possible. Also if the database administrator changes the language setting,
+                 * that affects the language of error messages.
+                 *
+                 * $e->getCode() or  $e->errorInfo[0]
+                 */
+
+                if($e->getCode()!=0)
+                {
+                    return response()->json([
+                        'exception'          => true,
+                        'success'            => false,
+                        'error_numeric_code' => $e->errorInfo[0],
+                        'sqlstate_value'     => $e->errorInfo[1],
+                        'message_error'      => $e->errorInfo[2],
+                        'message_details'    => $e->getMessage(),
+                        'message_user'       => '(1) Error al guardar los datos del tutor.'
+
+                    ],422);
+                }
+                else{
+                    return response()->json([
+                        'exception'          => true,
+                        'success'            => false,
+                        'error_numeric_code' => 0,
+                        'sqlstate_value'     => 0,
+                        'message_error'      => '',
+                        'message_details'    => $e->getMessage(),
+                        'message_user'       => '(2) Error al guardar los datos del tutor.'
+
+                    ],422);
+                }
+
+
+            } //catch exception
+
+
+
+        }
+        $errors = $validation->errors();
+        $errors =  json_decode($errors);
+
+        return response()->json([
+            'exception' => false,
+            'success'   => false,
+            'message'   => $errors
+        ], 422);
     }
 
     public function guardarDatosTutor(Request $request)

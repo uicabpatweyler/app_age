@@ -22,12 +22,10 @@ Route::get('/',     'HomeController@index')->name('home');
  * Alumnos: Nueva Inscripcion
  */
 
-Route::get('nueva_inscripcion',   'Alumno\InscripcionController@index')->name('nueva_inscripcion');
+Route::get('nueva_inscripcion',    'Alumno\InscripcionController@index')->name('nueva_inscripcion');
 Route::post('guardar_inscripcion', 'Alumno\InscripcionController@store')->name('guardar_inscripcion');
+Route::post('guardar_datos_tutor', 'Alumno\InscripcionController@storeDatosTutor')->name('guardar_datos_tutor');
 Route::get('datos_tutor/{id_alumno}/{id_ciclo}/{id_direccion}','Alumno\InscripcionController@show')->name('datos_tutor');
-
-
-Route::post('guardar_datos_tutor',                                   'Alumno\InscripcionController@guardarDatosTutor')->name('guardar_datos_tutor');
 
 Route::get('delegaciones_por_estado/{id_estado}',                    'Alumno\InscripcionController@delegacionesPorEstado')->name('delegaciones_por_estado');
 Route::get('colonias_por_delegacion/{id_estado}/{id_delegacion}',    'Alumno\InscripcionController@coloniasPorDelegacion')->name('colonias_por_delegacion');
