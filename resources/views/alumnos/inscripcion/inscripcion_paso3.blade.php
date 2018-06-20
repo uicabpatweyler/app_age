@@ -23,7 +23,11 @@
             <div class="col-md-12">
                 <form action="" role="form" method="post" id="form_datosdeltutor" name="form_datosdeltutor">
                     {{csrf_field()}}
-                    <input type="hidden" name="id_dirección" id="id_direccion" value="{{$direccion->id}}">
+                    <input type="hidden" name="id_ciclo" id="id_ciclo" value="{{$ciclo->id}}">
+                    <input type="hidden" name="id_alumno" id="id_alumno" value="{{$alumno->id}}">
+                    <input type="hidden" name="direccion_id" id="direccion_id" value="{{$direccion->id}}">
+                    <input type="hidden" name="flag_edit" id="flag_edit" value="false">
+                    <input type="hidden" name="flag_new" id="flag_new" value="false">
                     
                     <div class="box box-success">
                         <!-- box-header -->

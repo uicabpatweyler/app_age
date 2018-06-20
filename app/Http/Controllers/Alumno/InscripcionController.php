@@ -297,6 +297,14 @@ class InscripcionController extends Controller
         //
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * Esta función se encarga de almacenar los datos del tutor en la tabla TUTORES
+     * Se pueden presentar tres casos:
+     * A) Que la direccion del TUTOR sea la misma que la del ALUMNO (flag_edit=false AND flag_new=false)
+     */
     public function storeDatosTutor(Request $request){
 
         $validation = Validator::make($request->all(),[
@@ -306,75 +314,80 @@ class InscripcionController extends Controller
 
         if($validation->passes()){
 
-            try
-            {
-                //Iniciamos la transaccion para la insercion de los datos del tutor
-                $resultado = DB::transaction(function () use ($request)  {
+            if($request->get('flag_edit')==='false' and $request->get('flag_new')==='false'){
 
-                    $tutor = new Tutor();
-
-                    $now = Carbon::now('America/Mexico_City Time Zone');
-
-                    $tutor->tutor_nombre = mb_strtolower($request->get('tutor_nombre'),'UTF-8');
-                    $tutor->tutor_apellidopaterno = mb_strtolower($request->get('tutor_apellidopaterno'),'UTF-8');
-                    $tutor->tutor_apellidomaterno = ($request->get('tutor_apellidomaterno')===null) ? '' : mb_strtolower($request->get('tutor_apellidomaterno'),'UTF-8');
-                    $tutor->tutor_email = ($request->get('tutor_email')===null) ? '' : $request->get('tutor_email');
-                    $tutor->tutor_status = true;
-                    $tutor->created_at   = $now;
-                    $tutor->updated_at   = $now;
-
-                    $tutor->save();
-
-                    return response()->json([
-                        'success'   => true,
-                        'message'   => 'Los datos del tutor se han guardado correctamente.'
-                    ], 200);
-                });
-
-                return $resultado->getContent();
-
-            }
-            catch (Exception $e){
-                /*
-                 * //https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html
-                 *
-                 * For error checking, use error codes, not error messages. Error messages do not change often,
-                 * but it is possible. Also if the database administrator changes the language setting,
-                 * that affects the language of error messages.
-                 *
-                 * $e->getCode() or  $e->errorInfo[0]
-                 */
-
-                if($e->getCode()!=0)
+                try
                 {
-                    return response()->json([
-                        'exception'          => true,
-                        'success'            => false,
-                        'error_numeric_code' => $e->errorInfo[0],
-                        'sqlstate_value'     => $e->errorInfo[1],
-                        'message_error'      => $e->errorInfo[2],
-                        'message_details'    => $e->getMessage(),
-                        'message_user'       => '(1) Error al guardar los datos del tutor.'
+                    //Iniciamos la transaccion para la insercion de los datos del tutor
+                    $resultado = DB::transaction(function () use ($request)  {
 
-                    ],422);
+                        $tutor = new Tutor();
+
+                        $now = Carbon::now('America/Mexico_City Time Zone');
+
+                        $tutor->ciclo_id = $request->get('id_ciclo');
+                        $tutor->alumno_id = $request->get('id_alumno');
+                        $tutor->direccion_id = $request->get('direccion_id');
+                        $tutor->tutor_nombre = mb_strtolower($request->get('tutor_nombre'),'UTF-8');
+                        $tutor->tutor_apellidopaterno = mb_strtolower($request->get('tutor_apellidopaterno'),'UTF-8');
+                        $tutor->tutor_apellidomaterno = ($request->get('tutor_apellidomaterno')===null) ? '' : mb_strtolower($request->get('tutor_apellidomaterno'),'UTF-8');
+                        $tutor->tutor_email = ($request->get('tutor_email')===null) ? '' : $request->get('tutor_email');
+                        $tutor->tutor_status = true;
+                        $tutor->created_at   = $now;
+                        $tutor->updated_at   = $now;
+
+                        $tutor->save();
+
+                        return response()->json([
+                            'success'   => true,
+                            'message'   => 'Los datos del tutor se han guardado correctamente.'
+                        ], 200);
+                    });
+
+                    return $resultado->getContent();
+
                 }
-                else{
-                    return response()->json([
-                        'exception'          => true,
-                        'success'            => false,
-                        'error_numeric_code' => 0,
-                        'sqlstate_value'     => 0,
-                        'message_error'      => '',
-                        'message_details'    => $e->getMessage(),
-                        'message_user'       => '(2) Error al guardar los datos del tutor.'
+                catch (Exception $e){
+                    /*
+                     * //https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html
+                     *
+                     * For error checking, use error codes, not error messages. Error messages do not change often,
+                     * but it is possible. Also if the database administrator changes the language setting,
+                     * that affects the language of error messages.
+                     *
+                     * $e->getCode() or  $e->errorInfo[0]
+                     */
 
-                    ],422);
-                }
+                    if($e->getCode()!=0)
+                    {
+                        return response()->json([
+                            'exception'          => true,
+                            'success'            => false,
+                            'error_numeric_code' => $e->errorInfo[0],
+                            'sqlstate_value'     => $e->errorInfo[1],
+                            'message_error'      => $e->errorInfo[2],
+                            'message_details'    => $e->getMessage(),
+                            'message_user'       => '(1) Error al guardar los datos del tutor.'
+
+                        ],422);
+                    }
+                    else{
+                        return response()->json([
+                            'exception'          => true,
+                            'success'            => false,
+                            'error_numeric_code' => 0,
+                            'sqlstate_value'     => 0,
+                            'message_error'      => '',
+                            'message_details'    => $e->getMessage(),
+                            'message_user'       => '(2) Error al guardar los datos del tutor.'
+
+                        ],422);
+                    }
 
 
-            } //catch exception
+                } //catch exception
 
-
+            } //Caso 1 (A)
 
         }
         $errors = $validation->errors();
@@ -385,6 +398,13 @@ class InscripcionController extends Controller
             'success'   => false,
             'message'   => $errors
         ], 422);
+
+
+
+    }
+
+    public function storeDatosTutor_Caso_1(Request $request){
+
     }
 
     public function guardarDatosTutor(Request $request)
