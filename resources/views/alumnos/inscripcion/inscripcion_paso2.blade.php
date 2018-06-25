@@ -165,7 +165,7 @@
                                         <div class="row">
                                             <div class="col-xs-12 myerror">
                                                 <select name="alumno_genero" id="alumno_genero" class="form-control" style="width: 100%;" required>
-                                                    <option value="" selected>[Elegir]</option>
+                                                    <option value="" selected>[Elija una opción]</option>
                                                     <option value="H">Hombre</option>
                                                     <option value="M">Mujer</option>
                                                 </select>
