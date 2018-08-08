@@ -40,4 +40,10 @@ class Ciclo extends Model
     public function CuotasDeColegiatura(){
         return $this->hasMany(CuotaColegiatura::class);
     }
+
+    //Relacion 070818_1225 : Lado 1
+    //Un CICLO se utiliza UNA o MUCHAS veces en la entidad DATOS_INSCRIPCION_ALUMNO
+    public function DatosDeInscripcionDelAlumno(){
+        return $this->hasMany(DatosInscripcionAlumno::class);
+    }
 }

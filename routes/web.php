@@ -22,15 +22,37 @@ Route::get('/',     'HomeController@index')->name('home');
  * Alumnos: Nueva Inscripcion
  */
 
-Route::get('nueva_inscripcion',    'Alumno\InscripcionController@index')->name('nueva_inscripcion');
-Route::post('guardar_inscripcion', 'Alumno\InscripcionController@store')->name('guardar_inscripcion');
+Route::get('nueva_inscripcion',    'Alumno\InscripcionController@index')->name('nueva_inscripcion'); //eliminar
+Route::post('guardar_inscripcion', 'Alumno\InscripcionController@store')->name('guardar_inscripcion');//eliminar
 Route::post('guardar_datos_tutor', 'Alumno\InscripcionController@storeDatosTutor')->name('guardar_datos_tutor');
 Route::get('datos_tutor/{id_alumno}/{id_ciclo}/{id_direccion}','Alumno\InscripcionController@show')->name('datos_tutor');
 
-Route::get('delegaciones_por_estado/{id_estado}',                    'Alumno\InscripcionController@delegacionesPorEstado')->name('delegaciones_por_estado');
-Route::get('colonias_por_delegacion/{id_estado}/{id_delegacion}',    'Alumno\InscripcionController@coloniasPorDelegacion')->name('colonias_por_delegacion');
-Route::get('detalle_colonia/{id_colonia}',                           'Alumno\InscripcionController@detalleColonia')->name('detalle_colonia');
+Route::get('delegaciones_por_estado/{id_estado}',                    'EdosDelegCPController@delegacionesPorEstado')->name('delegaciones_por_estado');
+Route::get('colonias_por_delegacion/{id_estado}/{id_delegacion}',    'EdosDelegCPController@coloniasPorDelegacion')->name('colonias_por_delegacion');
+Route::get('detalle_colonia/{id_colonia}',                           'EdosDelegCPController@detalleColonia')->name('detalle_colonia');
 
+Route::get('nuevo_alumno_index',                      'AlumnoController@index')->name('nuevo_alumno_index');
+Route::get('nuevo_alumno_create/{curp}',              'AlumnoController@create')->name('nuevo_alumno_create');
+Route::post('nuevo_alumno_store',                     'AlumnoController@store')->name('nuevo_alumno_store');
+Route::get('alumno_parentesco/{id_alumno}/{ap}/{am}/{ciclo}/{escuela}', 'AlumnoController@auxiliar1')->name('alumno_parentesco');
+route::get('test/{id_alumno}/{ap}/{am}',              'AlumnoController@test');
+Route::post('verificar_curp_alumno',                  'AlumnoController@verificarCurpDelAlumno')->name('verificar_curp_alumno');
+
+Route::get('nuevo_alumno_datospersonales/{id_alumno}/{id_ciclo}/{id_escuela}', 'AlumnoDatosPersonalesController@create')->name('nuevo_alumno_datospersonales');
+Route::get('nuevo_alumno_delegaciones/{id_estado}',                            'AlumnoDatosPersonalesController@delegaciones')->name('nuevo_alumno_delegaciones');
+Route::get('nuevo_alumno_colonias/{id_estado}/{id_delegacion}',                'AlumnoDatosPersonalesController@colonias')->name('nuevo_alumno_colonias');
+Route::get('nuevo_alumno_detalles_colonia/{id_colonia}',                       'AlumnoDatosPersonalesController@detallesDeLaColonia')->name('nuevo_alumno_detalles_colonia');
+Route::post('nuevo_alumno_datospersonales_store',                              'AlumnoDatosPersonalesController@store')->name('nuevo_alumno_datospersonales_store');
+Route::post('nuevo_alumno_datospersonales_store2',                              'AlumnoDatosPersonalesController@store2')->name('nuevo_alumno_datospersonales_store2');
+Route::get('utilizar_datos_personales_alumno/{id_datospersonales}/{id_alumno}/{id_ciclo}/{id_escuela}', 'AlumnoDatosPersonalesController@utilizarDatosPersonales')->name('utilizar_datos_personales_alumno');
+
+Route::get('nuevo_tutor_create',                             'TutorController@create')->name('nuevo_tutor_create');
+Route::post('nuevo_tutor_store',                             'TutorController@store')->name('nuevo_tutor_store');
+Route::get('nuevo_tutor_elegirdireccion/{tutor_id}',         'TutorController@datosInscripcionAlumno')->name('nuevo_tutor_elegirdireccion');
+Route::get('verificar_datosTutor/{nombre}/{ap}/{am}/{flag}', 'TutorController@verificaNombreApellidosTutor');
+
+Route::get('nuevo_tutor_datospersonales/{tutor_id}/{ciclo_id}/{dp}', 'TutorDatosPersonalesController@create')->name('nuevo_tutor_datospersonales');
+Route::post('nuevo_tutor_datospersonales_store', 'TutorDatosPersonalesController@store')->name('nuevo_tutor_datospersonales_store');
 
 /*
  * Configuración | Empresa

@@ -9,6 +9,7 @@ use App\Models\CodigoPostal;
 use App\Models\DatosDeInscripcion;
 use App\Models\Delegacion;
 use App\Models\Direccion;
+use App\Models\DireccionTutor;
 use App\Models\Escuela;
 use App\Models\Estado;
 use App\Models\Tutor;
@@ -278,11 +279,17 @@ class InscripcionController extends Controller
         //Datos de la direccion recien creada del alumno que se esta registrando para usar en la direccion del tutor
         $direccion = Direccion::where('id', $id_direccion)->first();
 
+        //Obtenemos el registro de la tabla DATOS_INSCRIPCION mediante el id_alumno, id_ciclo, id_direccion
+        $datos_inscripcion = DatosDeInscripcion::where('ciclo_id', $id_ciclo)
+                             ->where('alumno_id', $id_alumno)
+                             ->where('direccion_id', $id_direccion)
+                             ->first();
+
         $estados = Estado::select('id','estado_nombre')
             ->orderBy('estado_nombre', 'asc')
             ->get();
     
-        return view('alumnos.inscripcion.inscripcion_paso3',compact('ciclo','alumno','estados','direccion'));
+        return view('alumnos.inscripcion.inscripcion_paso3',compact('ciclo','alumno','estados','direccion','datos_inscripcion'));
     }   
 
 
@@ -310,11 +317,19 @@ class InscripcionController extends Controller
         $validation = Validator::make($request->all(),[
             'tutor_nombre'           => 'required|min:2|max:60',
             'tutor_apellidopaterno'  => 'required|min:2|max:60',
+
+            /*Tabla: DIRECCIONES_TUTOR */
+            'nombre_vialidad'        => 'required',
+            'numero_exterior'        => 'required',
+            'tipo_asentamiento'      => 'required',
+            'nombre_asentamiento'    => 'required',
+            'codigo_postal'          => 'required',
+            'nombre_localidad'       => 'required',
+            'delegacion_municipio'   => 'required',
+            'entidad_federativa'     => 'required',
         ]);
 
         if($validation->passes()){
-
-            if($request->get('flag_edit')==='false' and $request->get('flag_new')==='false'){
 
                 try
                 {
@@ -325,9 +340,6 @@ class InscripcionController extends Controller
 
                         $now = Carbon::now('America/Mexico_City Time Zone');
 
-                        $tutor->ciclo_id = $request->get('id_ciclo');
-                        $tutor->alumno_id = $request->get('id_alumno');
-                        $tutor->direccion_id = $request->get('direccion_id');
                         $tutor->tutor_nombre = mb_strtolower($request->get('tutor_nombre'),'UTF-8');
                         $tutor->tutor_apellidopaterno = mb_strtolower($request->get('tutor_apellidopaterno'),'UTF-8');
                         $tutor->tutor_apellidomaterno = ($request->get('tutor_apellidomaterno')===null) ? '' : mb_strtolower($request->get('tutor_apellidomaterno'),'UTF-8');
@@ -337,6 +349,38 @@ class InscripcionController extends Controller
                         $tutor->updated_at   = $now;
 
                         $tutor->save();
+
+                        $id_tutor = $tutor->id;
+
+                        $direccion = new DireccionTutor();
+
+                        $direccion->ciclo_id             = $request->get('id_ciclo');
+                        $direccion->tutor_id             = $id_tutor;
+                        $direccion->tipo_vialidad        = ($request->get('tipo_vialidad')===null) ? '' : $request->get('tipo_vialidad');
+                        $direccion->nombre_vialidad      = mb_strtolower($request->get('nombre_vialidad'),'UTF-8');
+                        $direccion->numero_exterior      = mb_strtolower($request->get('numero_exterior'),'UTF-8');
+                        $direccion->numero_interior      = ($request->get('numero_interior')===null) ? '' : mb_strtolower($request->get('numero_interior'),'UTF-8');
+                        $direccion->tipo_asentamiento    = mb_strtolower($request->get('tipo_asentamiento'),'UTF-8');
+                        $direccion->nombre_asentamiento  = mb_strtolower($request->get('nombre_asentamiento'),'UTF-8');
+                        $direccion->codigo_postal        = $request->get('codigo_postal');
+                        $direccion->nombre_localidad     = mb_strtolower($request->get('nombre_localidad'),'UTF-8');
+                        $direccion->delegacion_municipio = $request->get('delegacion_municipio');
+                        $direccion->entidad_federativa   = $request->get('entidad_federativa');
+                        $direccion->pais                 = 'México';
+                        $direccion->entre_calles         = ($request->get('entre_calles')===null) ? '' : mb_strtolower($request->get('entre_calles'),'UTF-8');
+                        $direccion->referencias_adicionales = ($request->get('referencias_adicionales')===null) ? '' : mb_strtolower($request->get('referencias_adicionales'),'UTF-8');
+                        $direccion->telefono_casa    = $request->get('telefono_casa');
+                        $direccion->referencia1      = ($request->get('referencia1')===null) ? '' : mb_strtolower($request->get('referencia1'),'UTF-8');
+                        $direccion->telefono_trabajo   = $request->get('telefono_trabajo');
+                        $direccion->referencia2      = ($request->get('referencia2')===null) ? '' : mb_strtolower($request->get('referencia2'),'UTF-8');
+                        $direccion->telefono_celular = $request->get('telefono_celular');
+                        $direccion->referencia3      = ($request->get('referencia3')===null) ? '' : mb_strtolower($request->get('referencia3'),'UTF-8');
+                        $direccion->telefono_otro    = $request->get('telefono_otro');
+                        $direccion->referencia4      = ($request->get('referencia4')===null) ? '' : mb_strtolower($request->get('referencia4'),'UTF-8');
+                        $direccion->created_at = $now;
+                        $direccion->updated_at = $now;
+
+                        $direccion->save();
 
                         return response()->json([
                             'success'   => true,
@@ -387,7 +431,6 @@ class InscripcionController extends Controller
 
                 } //catch exception
 
-            } //Caso 1 (A)
 
         }
         $errors = $validation->errors();

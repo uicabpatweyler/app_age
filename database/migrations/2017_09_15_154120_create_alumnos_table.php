@@ -19,7 +19,7 @@ class CreateAlumnosTable extends Migration
             $table->string('alumno_segundonombre',60)->nullable();
             $table->string('alumno_apellidopaterno',60);
             $table->string('alumno_apellidomaterno',60)->nullable();
-            $table->string('alumno_curp',20);
+            $table->string('alumno_curp',25);
             $table->date('alumno_fechanacimiento');
             $table->char('alumno_genero',1);
             $table->boolean('alumno_status')->default(true);

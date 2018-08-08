@@ -26,8 +26,8 @@
                     <input type="hidden" name="id_ciclo" id="id_ciclo" value="{{$ciclo->id}}">
                     <input type="hidden" name="id_alumno" id="id_alumno" value="{{$alumno->id}}">
                     <input type="hidden" name="direccion_id" id="direccion_id" value="{{$direccion->id}}">
-                    <input type="hidden" name="flag_edit" id="flag_edit" value="false">
-                    <input type="hidden" name="flag_new" id="flag_new" value="false">
+                    <input type="hidden" name="entidad_federativa" id="entidad_federativa" value="{{$direccion->entidad_federativa}}">
+                    <input type="hidden" name="delegacion_municipio" id="delegacion_municipio" value="{{$direccion->delegacion_municipio}}">
                     
                     <div class="box box-success">
                         <!-- box-header -->
@@ -136,18 +136,6 @@
                                         <!-- Tab panes -->
                                         <div class="tab-content">
                                             <div role="tabpanel" class="tab-pane active" id="tab_1">
-
-                                                <div class="row">
-                                                    <div class="box-tools pull-right">
-                                                        <button type="button" class="btn btn-danger btn-xs"  id="boox_tool_cancel" data-toggle="tooltip" title="Cancelar" disabled ><i class="fa fa-undo" aria-hidden="true"></i></button>
-                                                        <button type="button" class="btn btn-success btn-xs" id="boox_tool_editar_direccion" data-toggle="tooltip" title="Editar dirección"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                                        <button type="button" class="btn btn-primary btn-xs" id="boox_tool_save_update" data-toggle="tooltip" title="Guardar/Actualizar" disabled><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-                                                        <button type="button" class="btn btn-warning btn-xs" id="boox_tool_nueva_direccion" data-toggle="tooltip" title="Nueva dirección" style="margin-right: 10px;"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
-                                                    </div>
-                                                </div>
-
-
-
                                                 <!-- Inicia fila: tipo de vialidad, nombre de vialidad, num. ext. y num int. -->
                                                 <div class="row">
                                                     <div class="col-sm-3">
@@ -155,7 +143,7 @@
                                                             <label for="">Tipo de Vialidad</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12">
-                                                                    <select name="tipo_vialidad" id="tipo_vialidad" class="form-control" style="width: 100%;" disabled>
+                                                                    <select name="tipo_vialidad" id="tipo_vialidad" class="form-control" style="width: 100%;">
                                                                         <option value="" selected>(Valor Opcional)</option>
                                                                         <option value="Ampliación" {{($direccion->tipo_vialidad)=== "Ampliación" ? "selected" : ""}}>Ampliación</option>
                                                                         <option value="Andador" {{($direccion->tipo_vialidad)=== "Andador" ? "selected" : ""}}>Andador</option>
@@ -189,7 +177,7 @@
                                                             <label for="nombre_vialidad">Nombre de vialidad</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" value="{{$direccion->nombre_vialidad}}" placeholder="Nombre de Vialidad (*)" id="nombre_vialidad" name="nombre_vialidad" style="text-transform:capitalize" required disabled>
+                                                                    <input type="text" class="form-control" value="{{$direccion->nombre_vialidad}}" placeholder="Nombre de Vialidad (*)" id="nombre_vialidad" name="nombre_vialidad" style="text-transform:capitalize" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -200,7 +188,7 @@
                                                             <label for="numero_exterior">Num. Ext.</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" value="{{$direccion->numero_exterior}}" placeholder="Num. Ext. (*)" id="numero_exterior" name="numero_exterior" style="text-transform:capitalize" required disabled>
+                                                                    <input type="text" class="form-control" value="{{$direccion->numero_exterior}}" placeholder="Num. Ext. (*)" id="numero_exterior" name="numero_exterior" style="text-transform:capitalize" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -211,7 +199,7 @@
                                                             <label for="">Num. Int.</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12">
-                                                                    <input type="text" class="form-control" value="{{$direccion->numero_interior}}" placeholder="Num. Int." id="numero_interior" style="text-transform:capitalize" name="numero_interior" disabled>
+                                                                    <input type="text" class="form-control" value="{{$direccion->numero_interior}}" placeholder="Num. Int." id="numero_interior" style="text-transform:capitalize" name="numero_interior">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -228,7 +216,7 @@
                                                             <label for="entre_calles">Entre Calles</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" value="{{$direccion->entre_calles}}" placeholder="Entre Calles" id="entre_calles" name="entre_calles" style="text-transform:capitalize" disabled>
+                                                                    <input type="text" class="form-control" value="{{$direccion->entre_calles}}" placeholder="Entre Calles" id="entre_calles" name="entre_calles" style="text-transform:capitalize">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -239,7 +227,7 @@
                                                             <label for="referencias_adicionales">Referencias Adicionales</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" value="{{$direccion->referencias_adicionales}}" placeholder="Referencias Adicionales" id="referencias_adicionales" name="referencias_adicionales" style="text-transform:capitalize" disabled>
+                                                                    <input type="text" class="form-control" value="{{$direccion->referencias_adicionales}}" placeholder="Referencias Adicionales" id="referencias_adicionales" name="referencias_adicionales" style="text-transform:capitalize">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -253,10 +241,10 @@
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label for="entidad_federativa">Estado (*)</label>
+                                                            <label for="direccion_estado">Estado (*)</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <select name="entidad_federativa" id="entidad_federativa" class="form-control" style="width: 100%;" disabled>
+                                                                    <select name="direccion_estado" id="direccion_estado" class="form-control" style="width: 100%;">
                                                                         <option value="" selected>[Elegir estado]</option>
                                                                         @foreach($estados as $estado)
 <option value="{{$estado->id}}">{{$estado->estado_nombre}}</option>
@@ -269,10 +257,10 @@
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label for="delegacion_municipio">Deleg/Munic. (*)</label>
+                                                            <label for="direccion_delegacion">Deleg/Munic. (*)</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <select name="delegacion_municipio" id="delegacion_municipio" class="form-control" style="width: 100%;" required disabled>
+                                                                    <select name="direccion_delegacion" id="direccion_delegacion" class="form-control" style="width: 100%;" required disabled>
                                                                         <option value="" selected>[Elegir Deleg/Munic.]</option>
                                                                     </select>
                                                                 </div>
@@ -282,10 +270,10 @@
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label for="select_colonia">Colonia (*)</label>
+                                                            <label for="direccion_colonia">Colonia (*)</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <select name="select_colonia" id="select_colonia" class="form-control" style="width: 100%;" required disabled>
+                                                                    <select name="direccion_colonia" id="direccion_colonia" class="form-control" style="width: 100%;" required disabled>
                                                                         <option value="" selected>[Elegir Colonia]</option>
                                                                     </select>
                                                                 </div>
@@ -304,7 +292,7 @@
                                                             <label for="nombre_localidad">Localidad (*)</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" value="{{$direccion->nombre_localidad}}" name="nombre_localidad" id="nombre_localidad" style="text-transform:capitalize" required disabled>
+                                                                    <input type="text" class="form-control" value="{{$direccion->nombre_localidad}}" name="nombre_localidad" id="nombre_localidad" style="text-transform:capitalize" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -314,7 +302,7 @@
                                                             <label for="tipo_asentamiento">Tipo Asentamiento(*)</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" value="{{$direccion->tipo_asentamiento}}" name="tipo_asentamiento" id="tipo_asentamiento" style="text-transform:capitalize" required disabled>
+                                                                    <input type="text" class="form-control" value="{{$direccion->tipo_asentamiento}}" name="tipo_asentamiento" id="tipo_asentamiento" style="text-transform:capitalize" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -324,7 +312,7 @@
                                                             <label for="nombre_asentamiento">Nombre Asentamiento(*)</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" value="{{$direccion->nombre_asentamiento}}" name="nombre_asentamiento" id="nombre_asentamiento" style="text-transform:capitalize" required disabled>
+                                                                    <input type="text" class="form-control" value="{{$direccion->nombre_asentamiento}}" name="nombre_asentamiento" id="nombre_asentamiento" style="text-transform:capitalize" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -334,7 +322,7 @@
                                                             <label for="codigo_postal">C.P.(*)</label>
                                                             <div class="row">
                                                                 <div class="col-xs-12 myerror">
-                                                                    <input type="text" class="form-control" value="{{$direccion->codigo_postal}}" placeholder="00000" name="codigo_postal" id="codigo_postal" required disabled>
+                                                                    <input type="text" class="form-control" value="{{$direccion->codigo_postal}}" placeholder="00000" name="codigo_postal" id="codigo_postal" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -344,8 +332,265 @@
                                                 <!-- Termina fila: Localidad, Tipo de Asentamiento, Nombre de Asentamiento y Colonia -->
                                                 
                                             </div>
-                                            <div role="tabpanel" class="tab-pane" id="tab_2">Telefonos del cliente</div>
-                                            <div role="tabpanel" class="tab-pane" id="tab_3">Lugar de trabajo</div>
+
+                                            <!-- Inicia TabPanel Telefonos del Tutor -->
+                                            <div role="tabpanel" class="tab-pane" id="tab_2">
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="">Teléfono de casa</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-8">
+                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_casa" id="telefono_casa" value="{{$datos_inscripcion->telefono_casa}}">
+                                                                </div>
+                                                                <div class="col-xs-4">
+                                                                    <input type="text" class="form-control" name="referencia1" id="referencia1" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="">Telefono del trabajo</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-8">
+                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_trabajo" id="telefono_trabajo">
+                                                                </div>
+                                                                <div class="col-xs-4">
+                                                                    <input type="text" class="form-control" name="referencia2" id="referencia2" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="">Celular</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-8">
+                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_celular" id="telefono_celular">
+                                                                </div>
+                                                                <div class="col-xs-4">
+                                                                    <input type="text" class="form-control" name="referencia3" id="referencia3" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="">Otro</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-8">
+                                                                    <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_otro" id="telefono_otro">
+                                                                </div>
+                                                                <div class="col-xs-4">
+                                                                    <input type="text" class="form-control" name="referencia4" id="referencia4" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <!-- Termina TabPanel Telefonos del Tutor -->
+
+                                            <!-- Inicia TabPanel Lugar de Trabajo del Tutor -->
+                                            <div role="tabpanel" class="tab-pane" id="tab_3">
+
+                                                <div class="row">
+                                                    <div class="col-sm-8">
+                                                        <div class="form-group">
+                                                            <label for="">Nombre del lugar del trabajo</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" name="lugar_trabajo_tutor" id="lugar_trabajo_tutor" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="">Tipo de Vialidad</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <select name="tipo_vialidad_trabajo" id="tipo_vialidad_trabajo" class="form-control" style="width: 100%;">
+                                                                        <option value="" selected>(Valor Opcional)</option>
+                                                                        <option value="Ampliación">Ampliación</option>
+                                                                        <option value="Andador">Andador</option>
+                                                                        <option value="Avenida">Avenida</option>
+                                                                        <option value="Boulevard">Boulevard</option>
+                                                                        <option value="Calle">Calle</option>
+                                                                        <option value="Callejón">Callejón</option>
+                                                                        <option value="Calzada">Calzada</option>
+                                                                        <option value="Cerrada">Cerrada</option>
+                                                                        <option value="Circuito">Circuito</option>
+                                                                        <option value="Circunvalación">Circunvalación</option>
+                                                                        <option value="Continuación">Continuación</option>
+                                                                        <option value="Corredor">Corredor</option>
+                                                                        <option value="Diagonal">Diagonal</option>
+                                                                        <option value="Eje Vial">Eje Vial</option>
+                                                                        <option value="Pasaje">Pasaje</option>
+                                                                        <option value="Peatonal">Peatonal</option>
+                                                                        <option value="Periférico">Periférico</option>
+                                                                        <option value="Privada">Privada</option>
+                                                                        <option value="Prolongación">Prolongación</option>
+                                                                        <option value="Retorno">Retorno</option>
+                                                                        <option value="Viaducto">Viaducto</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="form-group">
+                                                            <label for="nombre_vialidad_trabajo">Nombre de vialidad</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" placeholder="Nombre de Vialidad" id="nombre_vialidad_trabajo" name="nombre_vialidad_trabajo" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <label for="numero_exterior_trabajo">Num. Ext.</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" placeholder="Num. Ext." id="numero_exterior_trabajo" name="numero_exterior_trabajo" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <label for="">Num. Int.</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <input type="text" class="form-control" placeholder="Num. Int." id="numero_interior_trabajo" style="text-transform:capitalize" name="numero_interior_trabajo">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="entre_calles_trabajo">Entre Calles</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" placeholder="Entre Calles" id="entre_calles_trabajo" name="entre_calles_trabajo" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="referencias_adicionales_trabajo">Referencias Adicionales</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" placeholder="Referencias Adicionales" id="referencias_adicionales_trabajo" name="referencias_adicionales_trabajo" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="direccion_estado_trabajo">Estado (*)</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <select name="direccion_estado_trabajo" id="direccion_estado_trabajo" class="form-control" style="width: 100%;">
+                                                                        <option value="" selected>[Elegir estado]</option>
+                                                                        @foreach($estados as $estado)
+                                                                            <option value="{{$estado->id}}">{{$estado->estado_nombre}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="direccion_delegacion_trabajo">Deleg/Munic. (*)</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <select name="direccion_delegacion_trabajo" id="direccion_delegacion_trabajo" class="form-control" style="width: 100%;" required disabled>
+                                                                        <option value="" selected>[Elegir Deleg/Munic.]</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="direccion_colonia_trabajo">Colonia (*)</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <select name="direccion_colonia_trabajo" id="direccion_colonia_trabajo" class="form-control" style="width: 100%;" required disabled>
+                                                                        <option value="" selected>[Elegir Colonia]</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="nombre_localidad_trabajo">Localidad</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" name="nombre_localidad_trabajo" id="nombre_localidad_trabajo" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="tipo_asentamiento_trabajo">Tipo Asentamiento</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" name="tipo_asentamiento_trabajo" id="tipo_asentamiento_trabajo" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="nombre_asentamiento_trabajo">Nombre Asentamiento</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" name="nombre_asentamiento_trabajo" id="nombre_asentamiento_trabajo" style="text-transform:capitalize">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <label for="codigo_postal_trabajo">C.P.</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 myerror">
+                                                                    <input type="text" class="form-control" placeholder="00000" name="codigo_postal_trabajo" id="codigo_postal_trabajo">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <!-- Termina TabPanel Lugar de Trabajo del Tutor -->
                                         </div>
                                     </div>
                                 </div>
@@ -379,155 +624,48 @@
             placeholder: '(Valor Opcional)'
         });
 
-        $('#entidad_federativa').select2({
+        $('#tipo_vialidad_trabajo').select2({
+            allowClear: true,
+            placeholder: '(Valor Opcional)'
+        });
+
+        $('#direccion_estado').select2({
             allowClear: true,
             placeholder: '[Elegir estado]'
         });
 
-        $('#delegacion_municipio').select2({
+        $('#direccion_estado_trabajo').select2({
+            allowClear: true,
+            placeholder: '[Elegir estado]'
+        });
+
+        $('#direccion_delegacion').select2({
             allowClear: true,
             placeholder: '[Elegir Deleg/Munic.]'
         });
 
-        $('#select_colonia').select2({
+        $('#direccion_delegacion_trabajo').select2({
+            allowClear: true,
+            placeholder: '[Elegir Deleg/Munic.]'
+        });
+
+        $('#direccion_colonia').select2({
             allowClear: true,
             placeholder: '[Elegir Colonia]'
         });
 
-        var arregloControles = [
-            '#tipo_vialidad',
-            '#nombre_vialidad',
-            '#numero_exterior',
-            '#numero_interior',
-            '#nombre_localidad',
-            '#tipo_asentamiento',
-            '#nombre_asentamiento',
-            '#codigo_postal',
-            '#entre_calles',
-            '#referencias_adicionales',
-            '#entidad_federativa'
-        ];
-
-        /*
-        * El usuario presiona el boton para Editar los datos de la direccion
-        */
-        $('#boox_tool_editar_direccion').click(function () {
-
-            swal({
-                title: 'Atención',
-                text: '¿Desea editar la dirección actual?',
-                type: 'warning',
-                showCancelButton: true,
-                allowOutsideClick: false,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'No',
-                confirmButtonText: 'Si'
-            }).then(function () {
-
-                flag_edit = true;
-
-                //1: Activamos los controles para editar la dirección actual
-                enableDisableAddress(false);
-
-                //2: Activamos el boton de Cancelar
-                $('#boox_tool_cancel').prop('disabled', false);
-
-                //3: Desactivamos el boton de Editar y Nueva Dirección
-                $('#boox_tool_editar_direccion').prop('disabled', true);
-                $('#boox_tool_nueva_direccion').prop('disabled', true);
-                //Activamos el boton para guardar los cambios
-                $('#boox_tool_save_update').prop('disabled', false);
-
-                console.log(flag_edit);
-
-            }).catch(swal.noop);
-
-
+        $('#direccion_colonia_trabajo').select2({
+            allowClear: true,
+            placeholder: '[Elegir Colonia]'
         });
 
-        /*
-         * El usuario presiona el boton Cancelar
-         */
-        $('#boox_tool_cancel').click(function () {
-
-            if(flag_edit===true){
-                swal({
-                    title: 'Atención',
-                    text: '¿Desea cancelar la edición de la dirección actual?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    allowOutsideClick: false,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    cancelButtonText: 'No',
-                    confirmButtonText: 'Si'
-                }).then(function () {
-
-                    flag_edit = false;
-
-                    //1: Limpiamos y asignamos los valores originales a los input correspondientes
-                    test();
-
-                    //2: Desactivamos los controles para editar la dirección actual
-                    enableDisableAddress(true);
-
-                    //Limpiamos los select de Delegacion y Colonia
-                    $('#delegacion_municipio').empty().change();
-                    //$('#select_colonia').empty().change();
-
-                    //Desactivamos los select de Delegacion y Colonia
-                    $('#delegacion_municipio').prop('disabled', true);
-                    //$('#select_colonia').prop('disabled', true);
-
-                    //3: Desactivamos el boton de Cancelar y el de Guardar/Actualizar
-                    $('#boox_tool_cancel').prop('disabled', true);
-                    $('#boox_tool_save_update').prop('disabled', true);
-
-                    //4: Activamos los botones de Editar y Nueva Dirección
-                    $('#boox_tool_editar_direccion').prop('disabled', false);
-                    $('#boox_tool_nueva_direccion').prop('disabled', false);
-
-                    console.log(flag_edit);
-
-                }).catch(swal.noop);
-
-            }
-
-        });
-
-        function test(){
-
-            //https://select2.org/programmatic-control/add-select-clear-items
-            $('#tipo_vialidad').val('{{$direccion->tipo_vialidad}}'); //Seleccionar la opcion con la que se cargo el formulario
-            $('#tipo_vialidad').trigger('change'); // Notify any JS components that the value changed
-
-            $('#entidad_federativa').val(null).trigger('change');
-
-            $('#nombre_vialidad').val('{{$direccion->nombre_vialidad}}');
-            $('#numero_exterior').val('{{$direccion->numero_exterior}}');
-            $('#numero_interior').val('{{$direccion->numero_interior}}');
-            $('#entre_calles').val('{{$direccion->entre_calles}}');
-            $('#referencias_adicionales').val('{{$direccion->referencias_adicionales}}');
-            $('#nombre_localidad').val('{{$direccion->nombre_localidad}}');
-            $('#tipo_asentamiento').val('{{$direccion->tipo_asentamiento}}');
-            $('#nombre_asentamiento').val('{{$direccion->nombre_asentamiento}}');
-            $('#codigo_postal').val('{{$direccion->codigo_postal}}');
-        }
-
-        /*
-        * Funcion para activar o desactivar los controles del formulario de la sección de
-        * la direccion del tutor (la direccion es la misma que se registra al momento de inscribir a
-        * un nuevo alumno.
-        */
-        function enableDisableAddress(value){
-            $.each(arregloControles, function(ind,elem){
-                $(elem).prop('disabled', value);
-            });
-        }
+        $("#telefono_casa").inputmask("(999)-999-9999");
+        $("#telefono_trabajo").inputmask("(999)-999-9999");
+        $("#telefono_celular").inputmask("(999)-999-9999");
+        $("#telefono_otro").inputmask("(999)-999-9999");
 
         //El usuaro selecciona un estado
-        $('#entidad_federativa').change(function () {
+        $('#direccion_estado').change(function () {
 
             var estado_id = $(this).val();
             //El usuario no selecciono algun elemento
@@ -538,29 +676,34 @@
             //El usuario elimina la seleccion del select
             else if(estado_id==="")
             {
-                //Eliminamos el contenido de los select correspondientes
-                $('#delegacion_municipio').empty().change();
-                $('#select_colonia').empty().change();
+                //Eliminamos el contenido de los input text correspondientes
+                $('#direccion_delegacion').empty().change();
+                $('#direccion_colonia').empty().change();
             }
             else
             {
-                //El usuario selecciono un elemento valido
-                $("#delegacion_municipio").removeAttr('disabled');
-                $('#delegacion_municipio').empty().change();
-                $('#select_colonia').empty().change();
+                //Obtenemos el estado seleccionado del select correspondiente
+                var entidad_federativa = $("#direccion_estado option:selected").html();
+                //Lo guardamos en el input correspondiente
+                $("#entidad_federativa").val(entidad_federativa);
+
+                ///El usuario selecciono un elemento valido
+                $("#direccion_delegacion").removeAttr('disabled');
+                $('#direccion_delegacion').empty().change();
+                $('#direccion_colonia').empty().change();
 
                 //Consulta AJAX mediante el id del estado seleccionado
                 $.getJSON('../../../../delegaciones_por_estado/'+estado_id, null, function (values) {
-                    $('#delegacion_municipio').populateSelect(values);
+                    $('#direccion_delegacion').populateSelect(values);
                 });
             }
 
         });
 
         //El usuario selecciona una delegacion
-        $('#delegacion_municipio').change(function () {
+        $('#direccion_delegacion').change(function () {
             //El id del elemento seleccionado
-            var estado_id = $("#entidad_federativa").val();
+            var estado_id = $("#direccion_estado").val();
             var delegacion_id = $(this).val();
 
             if(delegacion_id===null)
@@ -569,7 +712,7 @@
             }
             else if(delegacion_id === "" )
             {
-                $('#select_colonia').empty().change();
+                $('#direccion_colonia').empty().change();
             }
             else if(estado_id==="")
             {
@@ -577,11 +720,45 @@
             }
             else
             {
-                $("#select_colonia").removeAttr('disabled');
+                //Obtenemos la delegacion y/o municipio del select correspondiente
+                var delegacion_municipio = $("#direccion_delegacion option:selected").html();
+                //Lo guardamos en el input correspondiente
+                $("#delegacion_municipio").val(delegacion_municipio);
+
+                $("#direccion_colonia").removeAttr('disabled');
 
                 $.getJSON('../../../../colonias_por_delegacion/'+estado_id+'/'+delegacion_id, null, function (values) {
-                    $('#select_colonia').populateSelect(values);
+                    $('#direccion_colonia').populateSelect(values);
                 });
+            }
+        });
+
+        $('#direccion_colonia').change(function () {
+            var colonia_id = $(this).val();
+
+            if(colonia_id===null || colonia_id==="")
+            {
+
+            }
+            else
+            {
+                $("#nombre_localidad").removeAttr('disabled');
+                $("#tipo_asentamiento").removeAttr('disabled');
+                $("#nombre_asentamiento").removeAttr('disabled');
+                $("#codigo_postal").removeAttr('disabled');
+
+                $("#direccion_localidad").empty().change();
+                $("#tipo_asentamiento").empty().change();
+                $("#nombre_asentamiento").empty().change();
+                $("#codigo_postal").empty().change();
+
+                $.getJSON('../../../detalle_colonia/'+colonia_id, null, function (data) {
+                    $("#nombre_localidad").val(data.cp_ciudad);
+                    $("#tipo_asentamiento").val(data.cp_tipoasentamiento);
+                    $("#nombre_asentamiento").val(data.cp_asentamiento);
+                    $("#codigo_postal").val(data.cp_codigo);
+                });
+
             }
         });
 
@@ -613,7 +790,17 @@
             },
             rules: {
                 tutor_nombre          : { required: true },
-                tutor_apellidopaterno : { required: true}
+                tutor_apellidopaterno : { required: true},
+                nombre_vialidad       : { required: true },
+                numero_exterior       : { required: true },
+                delegacion_municipio  : { required: true },
+                entidad_federativa    : { required: true },
+                direccion_delegacion  : { required: true },
+                direccion_colonia     : { required: true },
+                nombre_localidad      : { required: true },
+                tipo_asentamiento     : { required: true },
+                nombre_asentamiento   : { required: true },
+                codigo_postal         : { required: true }
             },
             messages : {
                 tutor_nombre : {
@@ -625,6 +812,30 @@
                     required: " (Incorrecto)",
                     minlength: " (Incorrecto)"
 
+                },
+                nombre_vialidad:{
+                    required: " requerido"
+                },
+                numero_exterior : {
+                    required: " requerido"
+                },
+                direccion_delegacion : {
+                    required: " requerido"
+                },
+                direccion_colonia : {
+                    required: " requerido"
+                },
+                nombre_localidad    : {
+                    required: " requerido"
+                },
+                tipo_asentamiento : {
+                    required: " requerido"
+                },
+                nombre_asentamiento : {
+                    required: " requerido"
+                },
+                codigo_postal : {
+                    required: " requerido"
                 }
             },
             invalidHandler: function(event, validator) {
