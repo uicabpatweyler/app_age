@@ -30,15 +30,6 @@ class CreateAlumnosDatospersonalesTable extends Migration
             $table->string('pais',20);
             $table->string('entre_calles')->nullable();
             $table->string('referencias_adicionales')->nullable();
-
-            $table->string('telefono_casa',30)->nullable();
-            $table->string('referencia1',30)->nullable();
-            $table->string('telefono_tutor',30)->nullable();
-            $table->string('referencia2',30)->nullable();
-            $table->string('telefono_celular',30)->nullable();
-            $table->string('referencia3',30)->nullable();
-            $table->string('telefono_otro',30)->nullable();
-            $table->string('referencia4',30)->nullable();
            
 
             $table->timestamps();

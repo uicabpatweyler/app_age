@@ -44,7 +44,7 @@ Route::get('nuevo_alumno_colonias/{id_estado}/{id_delegacion}',                '
 Route::get('nuevo_alumno_detalles_colonia/{id_colonia}',                       'AlumnoDatosPersonalesController@detallesDeLaColonia')->name('nuevo_alumno_detalles_colonia');
 Route::post('nuevo_alumno_datospersonales_store',                              'AlumnoDatosPersonalesController@store')->name('nuevo_alumno_datospersonales_store');
 Route::post('nuevo_alumno_datospersonales_store2',                              'AlumnoDatosPersonalesController@store2')->name('nuevo_alumno_datospersonales_store2');
-Route::get('utilizar_datos_personales_alumno/{id_datospersonales}/{id_alumno}/{id_ciclo}/{id_escuela}', 'AlumnoDatosPersonalesController@utilizarDatosPersonales')->name('utilizar_datos_personales_alumno');
+Route::get('utilizar_datos_personales_alumno/{id_datospersonales}/{id_alumno_a}/{id_alumno_b}/{id_ciclo}/{id_escuela}', 'AlumnoDatosPersonalesController@utilizarDatosPersonales')->name('utilizar_datos_personales_alumno');
 
 Route::get('nuevo_tutor_create',                             'TutorController@create')->name('nuevo_tutor_create');
 Route::post('nuevo_tutor_store',                             'TutorController@store')->name('nuevo_tutor_store');

@@ -92,6 +92,7 @@ class AlumnoController extends Controller
 
 
         return view('alumnos.lista_alumnos_parentesco', compact('alumnos', 'nuevo_alumno'))->with(['id_ciclo' => $id_ciclo, 'id_alumno' => $id_alumno, 'id_escuela' => $id_escuela]);
+        //return dd($alumnos);
     }
 
     /*

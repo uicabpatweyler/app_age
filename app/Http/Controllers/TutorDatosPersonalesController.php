@@ -108,6 +108,14 @@ class TutorDatosPersonalesController extends Controller
                     $tutor->telefono_otro        = $request->get('telefono_otro');
                     $tutor->referencia4          = mb_strtolower($request->get('referencia4'),'UTF-8');
 
+                    $tutor->tutor_lugartrabajo                = $request->get('tutor_lugartrabajo');
+                    $tutor->tutor_direccion_lugartrabajo      = $request->get('tutor_direccion_lugartrabajo');
+                    $tutor->colonia_direccion_lugartrabajo    = $request->get('colonia_direccion_lugartrabajo');
+                    $tutor->cp_direccion_lugartrabajo         = $request->get('cp_direccion_lugartrabajo');
+                    $tutor->estado_direccion_lugartrabajo     = $request->get('estado_direccion_lugartrabajo');
+                    $tutor->delegacion_direccion_lugartrabajo = $request->get('delegacion_direccion_lugartrabajo');
+                    $tutor->localidad_direccion_lugartrabajo  = $request->get('localidad_direccion_lugartrabajo');
+
 
                     $tutor->created_at = $now;
                     $tutor->updated_at = $now;

@@ -74,6 +74,15 @@ class AlumnoDatosPersonalesController extends Controller
                     $datos_inscripcion->alumno_id          = $request->get('alumno_id');
                     $datos_inscripcion->datospersonales_id = $request->get('datospersonales_id');
 
+                    $datos_inscripcion->telefono_casa        = $request->get('telefono_casa');
+                    $datos_inscripcion->referencia1          = mb_strtolower($request->get('referencia1'),'UTF-8');
+                    $datos_inscripcion->telefono_tutor       = $request->get('telefono_tutor');
+                    $datos_inscripcion->referencia2          = mb_strtolower($request->get('referencia2'),'UTF-8');
+                    $datos_inscripcion->telefono_celular     = $request->get('telefono_celular');
+                    $datos_inscripcion->referencia3          = mb_strtolower($request->get('referencia3'),'UTF-8');
+                    $datos_inscripcion->telefono_otro        = $request->get('telefono_otro');
+                    $datos_inscripcion->referencia4          = mb_strtolower($request->get('referencia4'),'UTF-8');
+
                     $datos_inscripcion->alumno_escuela       = mb_strtolower($request->get('alumno_escuela'),'UTF-8');
                     $datos_inscripcion->alumno_ultimogrado   = mb_strtolower($request->get('alumno_ultimogrado'),'UTF-8');
                     $datos_inscripcion->alumno_lugartrabajo  = mb_strtolower($request->get('alumno_lugartrabajo'),'UTF-8');
@@ -192,15 +201,6 @@ class AlumnoDatosPersonalesController extends Controller
                     $alumno->entre_calles         = mb_strtolower($request->get('entre_calles'),'UTF-8');
                     $alumno->referencias_adicionales = mb_strtolower($request->get('referencias_adicionales'),'UTF-8');
 
-                    $alumno->telefono_casa        = $request->get('telefono_casa');
-                    $alumno->referencia1          = mb_strtolower($request->get('referencia1'),'UTF-8');
-                    $alumno->telefono_tutor       = $request->get('telefono_tutor');
-                    $alumno->referencia2          = mb_strtolower($request->get('referencia2'),'UTF-8');
-                    $alumno->telefono_celular     = $request->get('telefono_celular');
-                    $alumno->referencia3          = mb_strtolower($request->get('referencia3'),'UTF-8');
-                    $alumno->telefono_otro        = $request->get('telefono_otro');
-                    $alumno->referencia4          = mb_strtolower($request->get('referencia4'),'UTF-8');
-
 
                     $alumno->created_at = $now;
                     $alumno->updated_at = $now;
@@ -213,8 +213,17 @@ class AlumnoDatosPersonalesController extends Controller
 
                     $datos_inscripcion->escuela_id = $request->get('escuela_id');
                     $datos_inscripcion->ciclo_id = $request->get('ciclo_id');
-                    $datos_inscripcion->alumno_id = $request->get('alumno_id');;
+                    $datos_inscripcion->alumno_id = $request->get('alumno_id');
                     $datos_inscripcion->datospersonales_id = $datospersonales_id;
+
+                    $datos_inscripcion->telefono_casa        = $request->get('telefono_casa');
+                    $datos_inscripcion->referencia1          = mb_strtolower($request->get('referencia1'),'UTF-8');
+                    $datos_inscripcion->telefono_tutor       = $request->get('telefono_tutor');
+                    $datos_inscripcion->referencia2          = mb_strtolower($request->get('referencia2'),'UTF-8');
+                    $datos_inscripcion->telefono_celular     = $request->get('telefono_celular');
+                    $datos_inscripcion->referencia3          = mb_strtolower($request->get('referencia3'),'UTF-8');
+                    $datos_inscripcion->telefono_otro        = $request->get('telefono_otro');
+                    $datos_inscripcion->referencia4          = mb_strtolower($request->get('referencia4'),'UTF-8');
 
                     $datos_inscripcion->alumno_escuela       = mb_strtolower($request->get('alumno_escuela'),'UTF-8');
                     $datos_inscripcion->alumno_ultimogrado   = mb_strtolower($request->get('alumno_ultimogrado'),'UTF-8');
@@ -333,15 +342,20 @@ class AlumnoDatosPersonalesController extends Controller
         //
     }
 
-    public function utilizarDatosPersonales($id_datos_personales_alumno, $id_alumno, $id_ciclo, $id_escuela){
+    public function utilizarDatosPersonales($id_datos_personales_alumno, $id_alumno_a, $id_alumno_b,$id_ciclo, $id_escuela){
         $datosPersonales = AlumnoDatosPersonales::where('id',$id_datos_personales_alumno)->first();
-        $alumno = Alumno::where('id', $id_alumno)->first();
+        $datosInscripcion = DatosInscripcionAlumno::where('escuela_id', $id_escuela)
+                            ->where('ciclo_id', $id_ciclo)
+                            ->where('alumno_id', $id_alumno_b)
+                            ->where('datospersonales_id', $id_datos_personales_alumno)
+                            ->first();
+        $alumno = Alumno::where('id', $id_alumno_a)->first();
         $ciclo  = Ciclo::where('id', $id_ciclo)->first();
         $escuela = Escuela::where('id', $id_escuela)->first();
 
-        return view('alumnos.nuevo_alumno_utilizardatos',compact('datosPersonales','alumno', 'ciclo', 'escuela'));
+        return view('alumnos.nuevo_alumno_utilizardatos',compact('datosPersonales', 'datosInscripcion','alumno', 'ciclo', 'escuela'));
 
-        //return dd($datosPersonales);
+        //return dd($datosInscripcion);
     }
 
     public function delegaciones($id_estado)

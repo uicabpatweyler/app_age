@@ -275,10 +275,10 @@
                                                                 <label for="">Teléfono de casa</label>
                                                                 <div class="row">
                                                                     <div class="col-xs-8">
-                                                                        <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_casa" id="telefono_casa" value="{{$datosPersonales->telefono_casa}}">
+                                                                        <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_casa" id="telefono_casa" value="{{$datosInscripcion->telefono_casa}}">
                                                                     </div>
                                                                     <div class="col-xs-4">
-                                                                        <input type="text" class="form-control" name="referencia1" id="referencia1" style="text-transform:capitalize" value="{{$datosPersonales->referencia1}}">
+                                                                        <input type="text" class="form-control" name="referencia1" id="referencia1" style="text-transform:capitalize" value="{{$datosInscripcion->referencia1}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -288,10 +288,10 @@
                                                                 <label for="">Telefono tutor</label>
                                                                 <div class="row">
                                                                     <div class="col-xs-8">
-                                                                        <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_tutor" id="telefono_tutor" value="{{$datosPersonales->telefono_tutor}}">
+                                                                        <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_tutor" id="telefono_tutor" value="{{$datosInscripcion->telefono_tutor}}">
                                                                     </div>
                                                                     <div class="col-xs-4">
-                                                                        <input type="text" class="form-control" name="referencia2" id="referencia2" style="text-transform:capitalize" value="{{$datosPersonales->referencia2}}">
+                                                                        <input type="text" class="form-control" name="referencia2" id="referencia2" style="text-transform:capitalize" value="{{$datosInscripcion->referencia2}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -304,10 +304,10 @@
                                                                 <label for="">Celular</label>
                                                                 <div class="row">
                                                                     <div class="col-xs-8">
-                                                                        <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_celular" id="telefono_celular" value="{{$datosPersonales->telefono_celular}}">
+                                                                        <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_celular" id="telefono_celular" value="">
                                                                     </div>
                                                                     <div class="col-xs-4">
-                                                                        <input type="text" class="form-control" name="referencia3" id="referencia3" style="text-transform:capitalize" value="{{$datosPersonales->referencia3}}">
+                                                                        <input type="text" class="form-control" name="referencia3" id="referencia3" style="text-transform:capitalize" value="">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -317,10 +317,10 @@
                                                                 <label for="">Otro</label>
                                                                 <div class="row">
                                                                     <div class="col-xs-8">
-                                                                        <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_otro" id="telefono_otro" value="{{$datosPersonales->telefono_otro}}">
+                                                                        <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_otro" id="telefono_otro" value="{{$datosInscripcion->telefono_otro}}">
                                                                     </div>
                                                                     <div class="col-xs-4">
-                                                                        <input type="text" class="form-control" name="referencia4" id="referencia4" style="text-transform:capitalize" value="{{$datosPersonales->referencia4}}">
+                                                                        <input type="text" class="form-control" name="referencia4" id="referencia4" style="text-transform:capitalize" value="{{$datosInscripcion->referencia4}}">
                                                                     </div>
                                                                 </div>
                                                             </div>

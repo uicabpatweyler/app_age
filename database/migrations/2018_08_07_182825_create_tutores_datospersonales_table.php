@@ -41,6 +41,14 @@ class CreateTutoresDatospersonalesTable extends Migration
             $table->string('telefono_otro',30)->nullable();
             $table->string('referencia4',30)->nullable();
 
+            $table->string('tutor_lugartrabajo')->nullable();
+            $table->string('tutor_direccion_lugartrabajo')->nullable();
+            $table->string('colonia_direccion_lugartrabajo',120)->nullable();
+            $table->string('cp_direccion_lugartrabajo',5)->nullable();
+            $table->string('estado_direccion_lugartrabajo',40)->nullable();
+            $table->string('delegacion_direccion_lugartrabajo',40)->nullable();
+            $table->string('localidad_direccion_lugartrabajo',40)->nullable();
+
             $table->timestamps();
 
             $table->foreign('ciclo_id')->references('id')->on('ciclos');

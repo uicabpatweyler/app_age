@@ -279,10 +279,10 @@
                                                                 <label for="">Teléfono de casa</label>
                                                                 <div class="row">
                                                                     <div class="col-xs-8">
-                                                                        <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_casa" id="telefono_casa" value="{{$dp->telefono_casa}}">
+                                                                        <input type="text" class="form-control" placeholder="(983)-123-45678" name="telefono_casa" id="telefono_casa" value="">
                                                                     </div>
                                                                     <div class="col-xs-4">
-                                                                        <input type="text" class="form-control" name="referencia1" id="referencia1" style="text-transform:capitalize" value="{{$dp->referencia1}}">
+                                                                        <input type="text" class="form-control" name="referencia1" id="referencia1" style="text-transform:capitalize" value="">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -333,11 +333,90 @@
                                                 </div>
                                                 <!-- /.tab-pane Telefonos -->
 
+                                                <!-- tab-pane Lugar de Trabajo -->
                                                 <div class="tab-pane" id="tab_3">
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <div class="form-group">
+                                                                <label for="tutor_lugartrabajo">Nombre del lugar de trabajo</label>
+                                                                <div class="row">
+                                                                    <div class="col-xs-12 myerror">
+                                                                        <input type="text" class="form-control" placeholder="Nombre del lugar de trabajo" id="tutor_lugartrabajo" name="tutor_lugartrabajo" style="text-transform:capitalize">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <div class="form-group">
+                                                                <label for="tutor_direccion_lugartrabajo">Dirección del lugar de trabajo</label>
+                                                                <div class="row">
+                                                                    <div class="col-xs-12 myerror">
+                                                                        <input type="text" class="form-control" placeholder="Dirección del lugar de trabajo" id="tutor_direccion_lugartrabajo" name="tutor_direccion_lugartrabajo" style="text-transform:capitalize">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="colonia_direccion_lugartrabajo">Colonia del lugar de trabajo</label>
+                                                                <div class="row">
+                                                                    <div class="col-xs-12 myerror">
+                                                                        <input type="text" class="form-control" placeholder="Colonia del lugar de trabajo" id="colonia_direccion_lugartrabajo" name="colonia_direccion_lugartrabajo" style="text-transform:capitalize">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="cp_direccion_lugartrabajo">Código Postal</label>
+                                                                <div class="row">
+                                                                    <div class="col-xs-12 myerror">
+                                                                        <input type="text" class="form-control" placeholder="Código Postal" id="cp_direccion_lugartrabajo" name="cp_direccion_lugartrabajo" style="text-transform:capitalize">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="estado_direccion_lugartrabajo">Estado</label>
+                                                                <div class="row">
+                                                                    <div class="col-xs-12 myerror">
+                                                                        <input type="text" class="form-control" placeholder="" id="estado_direccion_lugartrabajo" name="estado_direccion_lugartrabajo" style="text-transform:capitalize" value="Quintana Roo">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="delegacion_direccion_lugartrabajo">Delegación/Municipio</label>
+                                                                <div class="row">
+                                                                    <div class="col-xs-12 myerror">
+                                                                        <input type="text" class="form-control" placeholder="" id="delegacion_direccion_lugartrabajo" name="delegacion_direccion_lugartrabajo" style="text-transform:capitalize" value="Othón P. Blanco">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="localidad_direccion_lugartrabajo">Ciudad/Localidad</label>
+                                                                <div class="row">
+                                                                    <div class="col-xs-12 myerror">
+                                                                        <input type="text" class="form-control" placeholder="" id="localidad_direccion_lugartrabajo" name="localidad_direccion_lugartrabajo" style="text-transform:capitalize" value="Chetumal">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <!-- /.tab-pane Educación y Trabajo -->
+                                                <!-- /.tab-pane Lugar de Trabajo -->
 
 
 

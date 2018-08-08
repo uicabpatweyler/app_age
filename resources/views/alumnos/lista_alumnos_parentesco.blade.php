@@ -48,7 +48,7 @@
                                         <td>{{ucwords($alumno->alumno_primernombre)}} {{ucwords($alumno->alumno_segundonombre)}} </td>
                                         <td>{{$alumno->ciclo_anioinicial}}-{{$alumno->ciclo_aniofinal}}</td>
                                         <td>
-                                            <a class="btn btn-xs btn-success" href="{{route('utilizar_datos_personales_alumno', ['id_datospersonales' => $alumno->datospersonales_id, 'id_alumno'=>$id_alumno, 'id_ciclo'=>$id_ciclo,'id_escuela'=>$id_escuela])}}" title="">
+                                            <a class="btn btn-xs btn-success" href="{{route('utilizar_datos_personales_alumno', ['id_datospersonales' => $alumno->datospersonales_id, 'id_alumno_a'=>$id_alumno, 'id_alumno_b'=>$alumno->alumno_id, 'id_ciclo'=>$id_ciclo,'id_escuela'=>$id_escuela])}}" title="">
                                                 <i class="fa fa-recycle" aria-hidden="true"></i> Utilizar información de este alumno</a>
                                         </td>
                                 </tr>

@@ -21,6 +21,15 @@ class CreateDatosInscripcionAlumnoTable extends Migration
             $table->integer('alumno_id')->unsigned();
             $table->integer('datospersonales_id')->unsigned();
 
+            $table->string('telefono_casa',30)->nullable();
+            $table->string('referencia1',30)->nullable();
+            $table->string('telefono_tutor',30)->nullable();
+            $table->string('referencia2',30)->nullable();
+            $table->string('telefono_celular',30)->nullable();
+            $table->string('referencia3',30)->nullable();
+            $table->string('telefono_otro',30)->nullable();
+            $table->string('referencia4',30)->nullable();
+
             $table->string('alumno_escuela',120)->nullable();
             $table->string('alumno_ultimogrado',120)->nullable();
             $table->string('alumno_lugartrabajo')->nullable();
