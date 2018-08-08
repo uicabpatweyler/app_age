@@ -40,19 +40,7 @@
                                     <li class="divider"></li>
                                     <li><a href="{{route('nuevo_tutor_create')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Agregar Nuevo Tutor</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="{{route('nueva_inscripcion')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Nueva Inscripción</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Re-Inscripcion</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Datos del Alumno</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Asignación de Grupo</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Cambio de Grupo</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Baja de Alumno</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Recuperar Alumno</a></li>
+                                    <li><a href="{{route('asignar_tutor_elegirtutor')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Asignar Tutor - Alumno</a></li>
                                     <li class="divider"></li>
 
                                 </ul>

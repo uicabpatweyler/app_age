@@ -1,6 +1,6 @@
 @extends('templates.app_age')
 
-@section('title', 'Página inicial del proyecto')
+@section('title', 'Inicio - Principal')
 
 @section('content')
 

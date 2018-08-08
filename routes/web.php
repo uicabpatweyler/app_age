@@ -24,8 +24,8 @@ Route::get('/',     'HomeController@index')->name('home');
 
 Route::get('nueva_inscripcion',    'Alumno\InscripcionController@index')->name('nueva_inscripcion'); //eliminar
 Route::post('guardar_inscripcion', 'Alumno\InscripcionController@store')->name('guardar_inscripcion');//eliminar
-Route::post('guardar_datos_tutor', 'Alumno\InscripcionController@storeDatosTutor')->name('guardar_datos_tutor');
-Route::get('datos_tutor/{id_alumno}/{id_ciclo}/{id_direccion}','Alumno\InscripcionController@show')->name('datos_tutor');
+Route::post('guardar_datos_tutor', 'Alumno\InscripcionController@storeDatosTutor')->name('guardar_datos_tutor');//eliminar
+Route::get('datos_tutor/{id_alumno}/{id_ciclo}/{id_direccion}','Alumno\InscripcionController@show')->name('datos_tutor'); //eliminar
 
 Route::get('delegaciones_por_estado/{id_estado}',                    'EdosDelegCPController@delegacionesPorEstado')->name('delegaciones_por_estado');
 Route::get('colonias_por_delegacion/{id_estado}/{id_delegacion}',    'EdosDelegCPController@coloniasPorDelegacion')->name('colonias_por_delegacion');
@@ -53,6 +53,10 @@ Route::get('verificar_datosTutor/{nombre}/{ap}/{am}/{flag}', 'TutorController@ve
 
 Route::get('nuevo_tutor_datospersonales/{tutor_id}/{ciclo_id}/{dp}', 'TutorDatosPersonalesController@create')->name('nuevo_tutor_datospersonales');
 Route::post('nuevo_tutor_datospersonales_store', 'TutorDatosPersonalesController@store')->name('nuevo_tutor_datospersonales_store');
+
+Route::get('asignar_tutor_elegirtutor', 'TutorAlumnoController@index')->name('asignar_tutor_elegirtutor');
+Route::get('asignar_tutor_elegiralumno/{tutor_id}/{ciclo_id}', 'TutorAlumnoController@create')->name('asignar_tutor_elegiralumno');
+Route::post('asignar_tutor_alumno_store', 'TutorAlumnoController@store')->name('asignar_tutor_alumno_store');
 
 /*
  * Configuración | Empresa

@@ -575,7 +575,7 @@
                             allowOutsideClick: false,
                             confirmButtonText: 'Continuar'
                         }).then(function(){
-                            window.location.replace("{{route('nuevo_tutor_create')}}");
+                            window.location.replace("{{route('asignar_tutor_elegirtutor')}}");
                         });
                     },
                     error: function(xhr,status, response ){

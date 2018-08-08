@@ -39,4 +39,10 @@ class DatosInscripcionAlumno extends Model
     public function CicloDatosInscripcionAlumno(){
         return $this->belongsTo(Ciclo::class, 'ciclo_id', 'id');
     }
+
+    //Relacion 080818_0155: Lado M
+    //El campo 'escuela_id' es la FK que hace referencia al campo 'id' de la tabla ESCUELAS
+    public function EscuelaDatosInscripcionAlumno(){
+        return $this->belongsTo(Escuela::class, 'escuela_id','id');
+    }
 }

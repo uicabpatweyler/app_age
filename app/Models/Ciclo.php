@@ -46,4 +46,10 @@ class Ciclo extends Model
     public function DatosDeInscripcionDelAlumno(){
         return $this->hasMany(DatosInscripcionAlumno::class);
     }
+    
+    //Relacion 080818_1227: Lado 1
+    //Un CICLO se utiliza UNA o MUCHAS veces en la entidad TUTORES_DATOSPERSONALES
+    public function TutoresDatosPersonales(){
+        return $this->hasMany(TutorDatosPersonales::class);
+    }
 }

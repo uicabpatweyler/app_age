@@ -12,4 +12,10 @@ class Tutor extends Model
      * @var string
      */
     protected $table = 'tutores';
+
+    //Relacion 080818_1232: Lado 1
+    //Un TUTOR se utiliza UNA o MUCHAS veces en la entidad TUTORES_DATOSPERSONALES
+    public function TutoresDatosPersonales(){
+        return $this->hasMany(TutorDatosPersonales::class);
+    }
 }

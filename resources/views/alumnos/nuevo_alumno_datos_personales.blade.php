@@ -769,7 +769,7 @@
                         allowOutsideClick: false,
                         confirmButtonText: 'Continuar'
                     }).then(function(){
-                        window.location.replace("{{route('nuevo_alumno_index')}}");
+                        window.location.replace("{{route('nuevo_tutor_create')}}");
                     });
                 },
                 error: function(xhr,status, response ){

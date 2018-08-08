@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DireccionTutor extends Model
+class TutorAlumno extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'direcciones_tutor';
+    protected $table = 'tutores_alumnos';
 }
