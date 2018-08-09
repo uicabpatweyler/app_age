@@ -214,6 +214,7 @@
                     var info = error.message;
                     //Verificar si el mensaje proviene de una Excepcion al guardar los datos
                     var excepcion = error.exception;
+
                     if(excepcion===true)
                     {
                         var message_user = error.message_user;
@@ -226,6 +227,17 @@
                             allowOutsideClick: false,
                             confirmButtonColor: '#d33',
                             confirmButtonText: "Reintentar"
+                        }).catch(swal.noop);
+                    }
+                    else if(error.integridad===true){
+                        console.log(error.message);
+                        swal({
+                            title: 'Error de duplicación',
+                            html: error.message,
+                            type: "error",
+                            allowOutsideClick: false,
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: "Verificar"
                         }).catch(swal.noop);
                     }
                     else

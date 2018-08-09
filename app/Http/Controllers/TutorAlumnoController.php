@@ -74,6 +74,40 @@ class TutorAlumnoController extends Controller
         return view('alumnos.asignar_tutor_elegiralumno', compact('escuelas', 'ciclo','dias'))->with(['tutor_id'=>$tutor_id,'nombre_tutor'=>$nombre_tutor]);
     }
 
+    //Verifica que no se duplique una misma asignacion de TUTOR-ALUMNO
+    public function verificaTutorAlumno($escuela,$ciclo,$tutor,$alumno){
+
+        $resultado = TutorAlumno::where('escuela_id', $escuela)
+                     ->where('ciclo_id', $ciclo)
+                     ->where('tutor_id', $tutor)
+                     ->where('alumno_id', $alumno)
+                     ->first();
+
+        if($resultado!=null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    //Verifica si el alumno elegido ya existe en la entidad TUTORES_ALUMNOS
+    //Si existe significa que el alumno ya cuenta con un TUTOR ASIGNADO para el CICLO en cuestion
+    //en una determinada escuela
+    public function verificaAlumno($escuela,$ciclo,$alumno){
+        $resultado = TutorAlumno::where('escuela_id', $escuela)
+            ->where('ciclo_id', $ciclo)
+            ->where('alumno_id', $alumno)
+            ->first();
+
+        if($resultado!=null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -93,6 +127,26 @@ class TutorAlumnoController extends Controller
         ]);
 
         if($validation->passes()){
+
+            $test1 = $this->verificaTutorAlumno($request->get('escuela_id'),$request->get('ciclo_id'),$request->get('tutor_id'),$request->get('alumno_id'));
+            $test2 = $this->verificaAlumno($request->get('escuela_id'),$request->get('ciclo_id'),$request->get('alumno_id'));
+
+            if($test1){
+                return response()->json([
+                    'success'   => false,
+                    'integridad' => true,
+                    'message'   => "La asignacion de Tutor-Alumno que desea realizar ya existe."
+                ], 422);
+            }
+
+            if($test2){
+                return response()->json([
+                    'success'   => false,
+                    'integridad' => true,
+                    'message'   => "El alumno elegido ya cuenta con un tutor asignado."
+                ], 422);
+            }
+
             try
             {
                 $resultado = DB::transaction(function () use ($request) {
