@@ -34,7 +34,7 @@
                                 <button class="btn btn-primary btn-sm pull-right" id="btn_guardar" data-toggle="tooltip" title="Guardar" style="margin-right: 5px;" disabled>
                                     <i class="fa fa-floppy-o fa-lg"></i></button>
 
-                                <a class="btn btn-danger btn-sm pull-right" href="" data-toggle="tooltip" title="Cancelar" style="margin-right: 5px;">
+                                <a class="btn btn-danger btn-sm pull-right" href="{{route('grupo_alumno_elegiralumno')}}" data-toggle="tooltip" title="Cancelar" style="margin-right: 5px;">
                                     <i class="fa fa-ban fa-lg" aria-hidden="true"></i></a>
 
                             </div>
@@ -48,6 +48,7 @@
                                 <input type="hidden" name="ciclo_id" id="ciclo_id" value="{{$ciclo_id}}">
                                 <input type="hidden" name="alumno_id" id="alumno_id" value="{{$alumno_id}}">
                                 <input type="hidden" name="grupo_id" id="grupo_id" value="">
+                                <input type="hidden" name="clasifgrupo_id" id="clasifgrupo_id" value="">
                                 <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
 
                                 <div class="row">
@@ -124,6 +125,7 @@
                                 <th style="width: 25%; text-align: center">Nivel</th>
                                 <th style="width: 25%; text-align: center">Nombre</th>
                                 <th style="width: 20%; text-align: center">Alumnos</th>
+                                <th style="display: none"></th>
 
                             </tr>
                             </thead>
@@ -137,6 +139,7 @@
                                     <td align="center">{{$grupo->ClasificacionGrupo->clasificacion_nombre}}</td>
                                     <td align="center">{{$grupo->grupo_nombre}}</td>
                                     <td></td>
+                                    <td style="display: none">{{$grupo->clasificacion_id}}</td>
 
                                 </tr>
                             @endforeach
@@ -179,6 +182,7 @@
                 $('#grupo_id').val(data[1])
                 $('#nombre_nivel').val(data[3]);
                 $('#nombre_grupo').val(data[4]);
+                $('#clasifgrupo_id').val(data[6]);
 
                 $("#btn_guardar").removeAttr('disabled');
 

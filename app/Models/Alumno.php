@@ -21,6 +21,10 @@ class Alumno extends Model
         return $this->hasMany(DatosInscripcionAlumno::class);
     }
 
+    //Relacion 100818_1209
+    public function GrupoAlumno(){
+        return $this->hasMany(GrupoAlumno::class);
+    }
 
 
 }

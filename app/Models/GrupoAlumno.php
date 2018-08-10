@@ -13,4 +13,29 @@ class GrupoAlumno extends Model
      * @var string
      */
     protected $table = 'grupos_alumnos';
+
+    //Relacion 100818_1205
+    public function EscuelaGrupoAlumno(){
+        return $this->belongsTo(Escuela::class, 'escuela_id', 'id');
+    }
+
+    //Relacion 100818_1207
+    public function CicloGrupoAlumno(){
+        return $this->belongsTo(Ciclo::class, 'ciclo_id', 'id');
+    }
+
+    //Relacion 100818_1209
+    public function AlumnoGrupoAlumno(){
+        return $this->belongsTo(Alumno::class, 'alumno_id', 'id');
+    }
+
+    //Relacion 100818_1214
+    public function GrupoDeGrupoAlumno(){
+        return $this->belongsTo(Grupo::class,'grupo_id','id');
+    }
+
+    //Relacion 100818_0103
+    public function ClasifGrupoAlumno(){
+        return $this->belongsTo(Clasificacion::class,'clasifgrupo_id','id');
+    }
 }

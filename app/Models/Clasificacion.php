@@ -29,4 +29,9 @@ class Clasificacion extends Model
     public function Grupos(){
         return $this->hasMany(Grupo::class);
     }
+
+    //Relacion 100818_0103
+    public function GrupoAlumno(){
+        return $this->hasMany(GrupoAlumno::class);
+    }
 }

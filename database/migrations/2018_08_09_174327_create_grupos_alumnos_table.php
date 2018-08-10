@@ -19,6 +19,7 @@ class CreateGruposAlumnosTable extends Migration
             $table->integer('ciclo_id')->unsigned();
             $table->integer('alumno_id')->unsigned();
             $table->integer('grupo_id')->unsigned();
+            $table->integer('clasifgrupo_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->boolean('pago_inscripcion')->default(false);
             $table->boolean('alumno_status')->default(true);
@@ -30,6 +31,7 @@ class CreateGruposAlumnosTable extends Migration
             $table->foreign('ciclo_id')->references('id')->on('ciclos');
             $table->foreign('alumno_id')->references('id')->on('alumnos');
             $table->foreign('grupo_id')->references('id')->on('grupos');
+            $table->foreign('clasifgrupo_id')->references('id')->on('clasificaciones');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

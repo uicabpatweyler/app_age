@@ -62,6 +62,8 @@ Route::get('grupo_alumno_elegiralumno', 'GrupoAlumnoController@index')->name('gr
 Route::get('grupo_alumno_elegirgrupo/{escuela}/{ciclo}/{alumno}', 'GrupoAlumnoController@create')->name('grupo_alumno_elegirgrupo');
 Route::post('grupo_alumno_store','GrupoAlumnoController@store')->name('grupo_alumno_store');
 
+Route::get('pago_inscripcion_create/{id_inscripcion}','PagoCuotaInscripcionController@create')->name('pago_inscripcion_create');
+
 /*
  * Configuración | Empresa
  */

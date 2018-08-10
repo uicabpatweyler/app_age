@@ -51,4 +51,8 @@ class Grupo extends Model
         return $this->belongsTo(Escuela::class, 'escuela_id', 'id');
     }
 
+    //Relacion 100818_1214
+    public function GrupoAlumno(){
+        return $this->hasMany(GrupoAlumno::class);
+    }
 }

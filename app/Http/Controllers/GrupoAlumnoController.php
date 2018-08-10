@@ -118,6 +118,7 @@ class GrupoAlumnoController extends Controller
             'ciclo_id'    => 'required',
             'alumno_id'   => 'required',
             'grupo_id'    => 'required',
+            'clasifgrupo_id' => 'required',
             'user_id'     => 'required'
         ]);
 
@@ -154,6 +155,7 @@ class GrupoAlumnoController extends Controller
                     $grupo_alumno->ciclo_id         = $request->get('ciclo_id');
                     $grupo_alumno->alumno_id        = $request->get('alumno_id');
                     $grupo_alumno->grupo_id         = $request->get('grupo_id');
+                    $grupo_alumno->clasifgrupo_id   = $request->get('clasifgrupo_id');
                     $grupo_alumno->user_id          = $request->get('user_id');
                     $grupo_alumno->pago_inscripcion = false;
                     $grupo_alumno->alumno_status    = true;

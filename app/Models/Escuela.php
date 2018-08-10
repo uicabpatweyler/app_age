@@ -67,6 +67,10 @@ class Escuela extends Model
         return $this->hasMany(DatosInscripcionAlumno::class);
     }
 
+    //Relacion 100818_1205
+    public function GruposAlumnos(){
+        return $this->hasMany(GrupoAlumno::class);
+    }
 
 
 }
