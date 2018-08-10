@@ -60,6 +60,7 @@
                                                 <span class="sr-only">40% Complete (success)</span>
                                             </div>
                                         </div>
+                                    </td>
                                     <td>
                                         <a class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar" href="#">
                                             <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Eliminar</a>

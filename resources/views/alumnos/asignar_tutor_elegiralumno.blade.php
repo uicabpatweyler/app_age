@@ -204,7 +204,7 @@
                         allowOutsideClick: false,
                         confirmButtonText: 'Continuar'
                     }).then(function(){
-                        window.location.replace("{{route('asignar_tutor_elegirtutor')}}");
+                        window.location.replace("{{route('grupo_alumno_elegiralumno')}}");
                     }).catch(swal.noop);
                 },
                 error: function(xhr,status, response ){

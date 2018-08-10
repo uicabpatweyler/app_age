@@ -58,6 +58,10 @@ Route::get('asignar_tutor_elegirtutor', 'TutorAlumnoController@index')->name('as
 Route::get('asignar_tutor_elegiralumno/{tutor_id}/{ciclo_id}', 'TutorAlumnoController@create')->name('asignar_tutor_elegiralumno');
 Route::post('asignar_tutor_alumno_store', 'TutorAlumnoController@store')->name('asignar_tutor_alumno_store');
 
+Route::get('grupo_alumno_elegiralumno', 'GrupoAlumnoController@index')->name('grupo_alumno_elegiralumno');
+Route::get('grupo_alumno_elegirgrupo/{escuela}/{ciclo}/{alumno}', 'GrupoAlumnoController@create')->name('grupo_alumno_elegirgrupo');
+Route::post('grupo_alumno_store','GrupoAlumnoController@store')->name('grupo_alumno_store');
+
 /*
  * Configuración | Empresa
  */

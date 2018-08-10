@@ -42,6 +42,8 @@
                                     <li class="divider"></li>
                                     <li><a href="{{route('asignar_tutor_elegirtutor')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Asignar Tutor - Alumno</a></li>
                                     <li class="divider"></li>
+                                    <li><a href="{{route('grupo_alumno_elegiralumno')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Asignar Grupo - Alumno</a></li>
+                                    <li class="divider"></li>
 
                                 </ul>
                             </li>
