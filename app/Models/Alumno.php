@@ -14,6 +14,16 @@ class Alumno extends Model
      */
     protected $table = 'alumnos';
 
+    //Eloquent: Mutators
+    protected $dates = [
+        'created_at'
+    ];
+
+    public function getCreatedAtAttribute($date)
+    {
+        return new Date($date);
+    }
+
     //Relacion 070818_1105 1:M. Lado 1
     //Una fila de la tabla ALUMNOS se utiliza UNA o MUCHAs veces
     // en la entidad DATOS_INSCRIPCIONALUMNO
@@ -24,6 +34,11 @@ class Alumno extends Model
     //Relacion 100818_1209
     public function GrupoAlumno(){
         return $this->hasMany(GrupoAlumno::class);
+    }
+
+    //Relacion 100818_0949. 1.M. Lado 1
+    public function PagosDeInscripcion(){
+        return $this->hasMany(PagoInscripcion::class);
     }
 
 

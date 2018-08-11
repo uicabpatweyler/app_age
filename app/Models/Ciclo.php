@@ -57,4 +57,9 @@ class Ciclo extends Model
     public function GruposAlumnos(){
         return $this->hasMany(GrupoAlumno::class);
     }
+
+    //Relacion 100818_1145. 1:M Lado 1
+    public function PagosDeInscripcion(){
+        return $this->hasMany(PagoInscripcion::class);
+    }
 }

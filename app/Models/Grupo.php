@@ -51,8 +51,13 @@ class Grupo extends Model
         return $this->belongsTo(Escuela::class, 'escuela_id', 'id');
     }
 
-    //Relacion 100818_1214
+    //Relacion 100818_1214. 1:M Lado 1
     public function GrupoAlumno(){
         return $this->hasMany(GrupoAlumno::class);
+    }
+
+    //Relacion 100818_0944. 1:M Lado 1
+    public function PagosDeInscripcion(){
+        return $this->hasMany(PagoInscripcion::class);
     }
 }

@@ -24,4 +24,24 @@ class PagoInscripcion extends Model
         return new Date($date);
     }
 
+    //Relacion 100818_0935 1:M. Lado M
+    public function ClasificacionPagoDeInscripcion(){
+        return $this->belongsTo(Clasificacion::class, 'clasifgrupo_id','id');
+    }
+
+    //Relacion 100818_0944. 1:M Lado M
+    public function GrupoPagoDeInscripcion(){
+        return $this->belongsTo(Grupo::class, 'grupo_id', 'id');
+    }
+
+    //Relacion 100818_0949. 1.M. Lado M
+    public function AlumnoPagoDeInscripcion(){
+        return $this->belongsTo(Alumno::class,'alumno_id','id');
+    }
+
+    //Relacion 100818_1145. 1:M Lado M
+    public function CicloPagoDeInscripcion(){
+        return $this->belongsTo(Ciclo::class,'ciclo_id','id');
+    }
+
 }

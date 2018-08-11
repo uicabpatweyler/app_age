@@ -34,4 +34,10 @@ class Clasificacion extends Model
     public function GrupoAlumno(){
         return $this->hasMany(GrupoAlumno::class);
     }
+
+    //Relacion 100818_0935 1:M. Lado 1
+    public function PagosDeInscripcion(){
+        return $this->hasMany(PagoInscripcion::class);
+    }
+
 }

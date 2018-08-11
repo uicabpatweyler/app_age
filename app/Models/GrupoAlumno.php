@@ -14,6 +14,16 @@ class GrupoAlumno extends Model
      */
     protected $table = 'grupos_alumnos';
 
+    //Eloquent: Mutators
+    protected $dates = [
+        'created_at'
+    ];
+
+    public function getCreatedAtAttribute($date)
+    {
+        return new Date($date);
+    }
+
     //Relacion 100818_1205
     public function EscuelaGrupoAlumno(){
         return $this->belongsTo(Escuela::class, 'escuela_id', 'id');

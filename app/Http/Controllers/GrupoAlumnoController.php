@@ -9,6 +9,7 @@ use App\Models\Escuela;
 use App\Models\Grupo;
 use App\Models\GrupoAlumno;
 
+use App\Models\TutorAlumno;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -93,6 +94,17 @@ class GrupoAlumnoController extends Controller
         $a = Alumno::where('id',$alumno)->first();
         $c = Ciclo::where('id',$ciclo)->first();
 
+        $tutorAlumno = TutorAlumno::where('escuela_id',$escuela)
+                       ->where('ciclo_id',$ciclo)
+                       ->where('alumno_id',$alumno)
+                       ->first();
+        if($tutorAlumno!=null){
+            $ta = true;
+        }
+        else{
+            $ta=false;
+        }
+
         $grupos = Grupo::where('ciclo_id', $ciclo)
             ->where('escuela_id', $escuela)
             ->where('grupo_status', true)
@@ -100,7 +112,7 @@ class GrupoAlumnoController extends Controller
             ->orderBy('grupo_nombre', 'asc')
             ->get();
 
-        return view('alumnos.grupo_alumno_elegirgrupo', compact('grupos','e','a','c'))->with(['escuela_id'=>$escuela, 'ciclo_id'=>$ciclo, 'alumno_id'=>$alumno]);
+        return view('alumnos.grupo_alumno_elegirgrupo', compact('grupos','e','a','c'))->with(['escuela_id'=>$escuela, 'ciclo_id'=>$ciclo, 'alumno_id'=>$alumno,'ta'=>$ta]);
     }
 
     /**

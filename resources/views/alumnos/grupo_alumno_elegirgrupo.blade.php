@@ -28,123 +28,139 @@
                     <div class="box">
                         <div class="box-header">
 
+                            @if($ta===true)
+                                <div class="box-tools pull-right">
 
-                            <div class="box-tools pull-right">
+                                    <button class="btn btn-primary btn-sm pull-right" id="btn_guardar" data-toggle="tooltip" title="Guardar" style="margin-right: 5px;" disabled>
+                                        <i class="fa fa-floppy-o fa-lg"></i></button>
 
-                                <button class="btn btn-primary btn-sm pull-right" id="btn_guardar" data-toggle="tooltip" title="Guardar" style="margin-right: 5px;" disabled>
-                                    <i class="fa fa-floppy-o fa-lg"></i></button>
+                                    <a class="btn btn-danger btn-sm pull-right" href="{{route('grupo_alumno_elegiralumno')}}" data-toggle="tooltip" title="Cancelar" style="margin-right: 5px;">
+                                        <i class="fa fa-ban fa-lg" aria-hidden="true"></i></a>
 
-                                <a class="btn btn-danger btn-sm pull-right" href="{{route('grupo_alumno_elegiralumno')}}" data-toggle="tooltip" title="Cancelar" style="margin-right: 5px;">
-                                    <i class="fa fa-ban fa-lg" aria-hidden="true"></i></a>
+                                </div>
+                            @endif
 
-                            </div>
 
                         </div>
 
                         <div class="box-body">
-                            <form action="" role="form" name="form_grupo_alumno" id="form_grupo_alumno">
-                                {{csrf_field()}}
-                                <input type="hidden" name="escuela_id" id="escuela_id" value="{{$escuela_id}}">
-                                <input type="hidden" name="ciclo_id" id="ciclo_id" value="{{$ciclo_id}}">
-                                <input type="hidden" name="alumno_id" id="alumno_id" value="{{$alumno_id}}">
-                                <input type="hidden" name="grupo_id" id="grupo_id" value="">
-                                <input type="hidden" name="clasifgrupo_id" id="clasifgrupo_id" value="">
-                                <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
-
-                                <div class="row">
-
-                                    <div class="col-sm-5">
-                                        <div class="form-group">
-                                            <label for="escuela_nombre">Escuela(*)</label>
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <input type="text" class="form-control" id="escuela_nombre" name="escuela_nombre" value="{{$e->escuela_nombre}}" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-5">
-                                        <div class="form-group">
-                                            <label for="nombre_alumno">Alumno (*)</label>
-                                            <div class="row">
-                                                <div class="col-xs-12 myerror">
-                                                    <input type="text" class="form-control" value="{{$a->alumno_primernombre}} {{$a->alumno_segundonombre}} {{$a->alumno_apellidopaterno}} {{$a->alumno_apellidomaterno}}" id="nombre_alumno" name="nombre_alumno" style="text-transform:capitalize" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="form-group">
-                                            <label for="ciclo_escolar">Ciclo(*)</label>
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <input type="text" class="form-control" id="ciclo_escolar" name="ciclo_escolar" value="{{$c->ciclo_anioinicial}}-{{$c->ciclo_aniofinal}}" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            @if($ta===false)
+                                <div class="alert alert-danger">
+                                    <h4><i class="icon fa fa-ban"></i> {{ucwords($a->alumno_primernombre) }} {{ucwords($a->alumno_segundonombre) }}
+                                        {{ucwords($a->alumno_apellidopaterno)}} {{ucwords($a->alumno_apellidomaterno)}}</h4>
+                                    <p>No cuenta con un tutor para este ciclo escolar. Elija un tutor, y luego realice la asignacion de grupo.
+                                    </p>
                                 </div>
-                                <div class="row">
+                            @endif
+                            @if($ta===true)
+                                    <form action="" role="form" name="form_grupo_alumno" id="form_grupo_alumno">
+                                        {{csrf_field()}}
+                                        <input type="hidden" name="escuela_id" id="escuela_id" value="{{$escuela_id}}">
+                                        <input type="hidden" name="ciclo_id" id="ciclo_id" value="{{$ciclo_id}}">
+                                        <input type="hidden" name="alumno_id" id="alumno_id" value="{{$alumno_id}}">
+                                        <input type="hidden" name="grupo_id" id="grupo_id" value="">
+                                        <input type="hidden" name="clasifgrupo_id" id="clasifgrupo_id" value="">
+                                        <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
 
+                                        <div class="row">
 
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="nombre_nivel">Nivel(*)</label>
-                                            <div class="row">
-                                                <div class="col-xs-12 myerror">
-                                                    <input type="text" class="form-control" value="" id="nombre_nivel" name="nombre_nivel" style="text-transform:capitalize" disabled>
+                                            <div class="col-sm-5">
+                                                <div class="form-group">
+                                                    <label for="escuela_nombre">Escuela(*)</label>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <input type="text" class="form-control" id="escuela_nombre" name="escuela_nombre" value="{{$e->escuela_nombre}}" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-5">
+                                                <div class="form-group">
+                                                    <label for="nombre_alumno">Alumno (*)</label>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 myerror">
+                                                            <input type="text" class="form-control" value="{{$a->alumno_primernombre}} {{$a->alumno_segundonombre}} {{$a->alumno_apellidopaterno}} {{$a->alumno_apellidomaterno}}" id="nombre_alumno" name="nombre_alumno" style="text-transform:capitalize" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <label for="ciclo_escolar">Ciclo(*)</label>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <input type="text" class="form-control" id="ciclo_escolar" name="ciclo_escolar" value="{{$c->ciclo_anioinicial}}-{{$c->ciclo_aniofinal}}" disabled>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="row">
 
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="nombre_grupo">Grupo(*)</label>
-                                            <div class="row">
-                                                <div class="col-xs-12 myerror">
-                                                    <input type="text" class="form-control" value="" id="nombre_grupo" name="nombre_grupo" style="text-transform:capitalize" disabled>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label for="nombre_nivel">Nivel(*)</label>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 myerror">
+                                                            <input type="text" class="form-control" value="" id="nombre_nivel" name="nombre_nivel" style="text-transform:capitalize" disabled>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label for="nombre_grupo">Grupo(*)</label>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 myerror">
+                                                            <input type="text" class="form-control" value="" id="nombre_grupo" name="nombre_grupo" style="text-transform:capitalize" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
                                         </div>
-                                    </div>
+                                    </form>
+                            @endif
 
-
-                                </div>
-                            </form>
                         </div>
 
-                        <table class="table table-striped" id="dt_listado_grupos">
-                            <thead>
-                            <tr>
-                                <th style="width: 10%; text-align: center">#</th>
-                                <th style="display: none">ID</th>
-                                <th style="width: 20%; text-align: center">Ciclo</th>
-                                <th style="width: 25%; text-align: center">Nivel</th>
-                                <th style="width: 25%; text-align: center">Nombre</th>
-                                <th style="width: 20%; text-align: center">Alumnos</th>
-                                <th style="display: none"></th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php $i=1 ?>
-                            @foreach($grupos as $grupo)
+                        @if($ta===true)
+                            <table class="table table-striped" id="dt_listado_grupos">
+                                <thead>
                                 <tr>
-                                    <td align="center"><strong>{{$i++}}</strong></td>
-                                    <td style="display: none">{{$grupo->id}}</td>
-                                    <td align="center">{{$grupo->CicloGrupo->ciclo_anioinicial}}-{{$grupo->CicloGrupo->ciclo_aniofinal}}</td>
-                                    <td align="center">{{$grupo->ClasificacionGrupo->clasificacion_nombre}}</td>
-                                    <td align="center">{{$grupo->grupo_nombre}}</td>
-                                    <td></td>
-                                    <td style="display: none">{{$grupo->clasificacion_id}}</td>
+                                    <th style="width: 10%; text-align: center">#</th>
+                                    <th style="display: none">ID</th>
+                                    <th style="width: 20%; text-align: center">Ciclo</th>
+                                    <th style="width: 25%; text-align: center">Nivel</th>
+                                    <th style="width: 25%; text-align: center">Nombre</th>
+                                    <th style="width: 20%; text-align: center">Alumnos</th>
+                                    <th style="display: none"></th>
 
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                <?php $i=1 ?>
+                                @foreach($grupos as $grupo)
+                                    <tr>
+                                        <td align="center"><strong>{{$i++}}</strong></td>
+                                        <td style="display: none">{{$grupo->id}}</td>
+                                        <td align="center">{{$grupo->CicloGrupo->ciclo_anioinicial}}-{{$grupo->CicloGrupo->ciclo_aniofinal}}</td>
+                                        <td align="center">{{$grupo->ClasificacionGrupo->clasificacion_nombre}}</td>
+                                        <td align="center">{{$grupo->grupo_nombre}}</td>
+                                        <td></td>
+                                        <td style="display: none">{{$grupo->clasificacion_id}}</td>
+
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+
 
                     </div>
 
@@ -160,6 +176,7 @@
 </div>
 <!-- /.content-wrapper -->
 @endsection
+@if($ta===true)
 @section('scripts')
     <script>
         $(document).ready(function(){
@@ -280,3 +297,4 @@
         });
     </script>
 @endsection
+@endif
