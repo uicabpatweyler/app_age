@@ -219,8 +219,7 @@
                             allowOutsideClick: false,
                             confirmButtonText: 'Continuar'
                         }).then(function(){
-                            //console.log(data.grupo_alumno_id);
-                            //window.location.replace("");
+                            window.location.replace("../../../../pago_inscripcion_create/"+data.grupo_alumno_id);
                         }).catch(swal.noop);
                     },
                     error: function(xhr,status, response ){

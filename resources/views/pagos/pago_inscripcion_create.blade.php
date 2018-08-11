@@ -57,7 +57,18 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <td style="width: 30%" class="bg-green color-palette">Recibo No.:</td>
-                                        <td style="width: 70%" class="text-center text-red"> <strong>001</strong> </td>
+                                        <td style="width: 70%" class="text-center text-red">
+                                            @if($num_recibo->serie!=null)
+                                                <strong>{{$num_recibo->serie}} - </strong>
+                                            @endif
+                                            @if($num_recibo->folio<10)
+                                                <strong>00{{$num_recibo->folio}}</strong>
+                                            @elseif($num_recibo->folio<100)
+                                                <strong>0{{$num_recibo->folio}}</strong>
+                                            @else
+                                                <strong>{{$num_recibo->folio}}</strong>
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td style="width: 30%" class="bg-green color-palette">Fecha :</td>
@@ -115,6 +126,52 @@
                                 </table>
                             </div>
                         </div>
+
+                        <br />
+
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <table class="table">
+
+                                    <tr>
+                                        <td style="width: 15%" class=""></td>
+                                        <td style="width: 60%" class="">
+                                            <button class="btn  btn-social btn-dropbox" id="btn_pagoinscripcion" data-toggle="tooltip" title="" style="margin-right: 5px;">
+                                                <i class="fa fa-usd" aria-hidden="true"></i> Pagar Inscripción</button>
+
+                                            <button class="btn  btn-social btn-facebook" id="btn_imprimir" data-toggle="tooltip" title="" style="margin-right: 5px;" disabled>
+                                                <i class="fa fa-print" aria-hidden="true"></i> Imprimir Recibo</button>
+
+                                            <button class="btn  btn-social btn-linkedin" id="btn_hojainscripcion" data-toggle="tooltip" title="" style="margin-right: 5px;" disabled>
+                                                <i class="fa fa-address-card-o" aria-hidden="true"></i> Hoja de Inscripción</button>
+
+                                        </td>
+                                        <td style="width: 10%" class=""></td>
+                                        <td style="width: 15%" class=""></td>
+                                    </tr>
+
+
+                                </table>
+                            </div>
+                        </div>
+
+                        <form action="post" role="form" name="form_pagoinscripcion" id="form_pagoinscripcion">
+                            {{csrf_field()}}
+                            <input type="hidden" name="escuela_id" id="escuela_id" value="{{$inscripcion->escuela_id}}">
+                            <input type="hidden" name="ciclo_id" id="ciclo_id" value="{{$inscripcion->ciclo_id}}">
+                            <input type="hidden" name="grupo_id" id="grupo_id" value="{{$inscripcion->grupo_id}}">
+                            <input type="hidden" name="alumno_id" id="alumno_id" value="{{$inscripcion->alumno_id}}">
+                            <input type="hidden" name="clasifgrupo_id" id="clasifgrupo_id" value="{{$inscripcion->clasifgrupo_id}}">
+                            <input type="hidden" name="inscripcion_id" id="inscripcion_id" value="{{$inscripcion->id}}">
+                            <input type="hidden" name="serie_recibo" id="serie_recibo" value="{{$num_recibo->serie}}">
+                            <input type="hidden" name="folio_recibo" id="folio_recibo" value="{{$num_recibo->folio}}">
+                            <input type="hidden" name="cantidad_concepto" id="cantidad_concepto" value="1">
+                            <input type="hidden" name="importe_cuota" id="importe_cuota" value="{{$cuota->cuotainscripcion_cuota}}">
+                            <input type="hidden" name="porcentaje_descuento" id="porcentaje_descuento" value="0">
+                            <input type="hidden" name="descuento_pesos" id="descuento_pesos" value="0">
+
+                        </form>
+
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -130,6 +187,95 @@
 <script>
 $(document).ready(function() {
 
+    var idPagoInscripcion = 0;
+
+    $( "#btn_pagoinscripcion" ).click(function() {
+        swal({
+            title: 'Pago de inscripción',
+            text: "Se procedera a realizar el pago correspondiente",
+            type: 'warning',
+            showCancelButton: true,
+            allowOutsideClick: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'No',
+            confirmButtonText: 'Si'
+        }).then(function () {
+            ajaxSubmit();
+        }).catch(swal.noop);
+
+        $("#btn_imprimir" ).click(function() {
+            window.open('../../pdf_ReciboInscripcion/'+idPagoInscripcion);
+            return false;
+        });
+
+        function ajaxSubmit(){
+            $.ajax({
+                type:"POST",
+                url:"{{route('pago_inscripcion_store')}}",
+                data: $("#form_pagoinscripcion").serialize(),
+                dataType : 'json',
+                success: function(data){
+                    swal({
+                        title:"",
+                        text: data.message,
+                        type: "success",
+                        allowOutsideClick: false,
+                        confirmButtonText: 'Continuar'
+                    }).then(function(){
+                        idPagoInscripcion = data.pago_inscripcion_id;
+                        $("#btn_imprimir").removeAttr('disabled');
+                        $("#btn_hojainscripcion").removeAttr('disabled');
+                        $('#btn_pagoinscripcion').attr("disabled", true);
+                        //window.location.replace("");
+                    }).catch(swal.noop);
+                },
+                error: function(xhr,status, response ){
+                    //Obtener el valor de los errores devueltos por el controlador
+                    var error = jQuery.parseJSON(xhr.responseText);
+                    //Obtener los mensajes de error
+                    var info = error.message;
+                    //Verificar si el mensaje proviene de una Excepcion al guardar los datos
+                    var excepcion = error.exception;
+
+                    if(excepcion===true)
+                    {
+                        var message_user = error.message_user;
+                        var error_numeric_code = error.error_numeric_code;
+                        var message_error = error.message_error;
+                        swal({
+                            title: (error_numeric_code != 0 )?'Codigo de Error: '+error_numeric_code : 'Error de Excepción',
+                            html: (error_numeric_code != 0 )? message_error : message_user,
+                            type: "error",
+                            allowOutsideClick: false,
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: "Reintentar"
+                        }).catch(swal.noop);
+                    }
+                    else
+                    {
+                        //Crear la lista de errores
+                        var errorsHtml = '<ul>';
+                        $.each(info, function (key,value) {
+                            errorsHtml += '<li>' + value[0] + '</li>';
+                        });
+                        errorsHtml += '</ul>';
+                        //Mostrar el y/o los errores devuelto(s) por el controlador
+                        swal({
+                            title:"Error:",
+                            html: errorsHtml,
+                            type: "error",
+                            allowOutsideClick: false,
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: "Corregir"
+                        }).catch(swal.noop);
+                    }
+
+                }
+            });
+        }
+
+    });
 });
 </script>
 @endsection
