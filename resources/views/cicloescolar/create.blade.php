@@ -75,7 +75,9 @@
             //https://limonte.github.io/sweetalert2/
             //https://laracasts.com/discuss/channels/general-discussion/showing-request-validation-errors-when-submitting-form-by-ajax
 
-            $('#boton_guardar').click(function(){
+            $('#boton_guardar').click(function(event){
+
+                event.preventDefault();
 
                 var anio_inicial = $("#ciclo_anioinicial").val();
                 var anio_final = $("#ciclo_aniofinal").val();
@@ -95,9 +97,12 @@
                         });
                     }
                     else{
+
+                        $('#boton_guardar').attr("disabled", true);
+
                         $.ajax({
                             type:"POST",
-                            url:"guardarciclo",
+                            url:"{{route('guardarciclo')}}",
                             data: $("#form_nuevociclo").serialize(),
                             dataType : 'json',
                             success: function(data){
@@ -108,15 +113,32 @@
                                     allowOutsideClick: false,
                                     confirmButtonText: 'Continuar'
                                 }).then(function(){
-                                    window.location = "{{ URL::route('ciclos')}}";
-                                });
+                                    window.location.replace("{{route('ciclos')}}");
+                                }).catch(swal.noop);
                             },
                             error: function(xhr,status, response ){
-                                    $(".ciclo_escolar").addClass("has-error");
-                                    //Obtener el valor de los errores devueltos por el controlador
-                                    var error = jQuery.parseJSON(xhr.responseText);
-                                    //Obtener los mensajes de error
-                                    var info = error.message;
+
+                                //Obtener el valor de los errores devueltos por el controlador
+                                var error = jQuery.parseJSON(xhr.responseText);
+                                //Obtener los mensajes de error
+                                var info = error.message;
+                                if(error.integridad===true){
+                                    console.log(error.message);
+                                    swal({
+                                        title: 'Error de duplicación',
+                                        html: error.message,
+                                        type: "error",
+                                        allowOutsideClick: false,
+                                        confirmButtonColor: '#d33',
+                                        confirmButtonText: "Verificar"
+                                    }).catch(swal.noop);
+
+                                    $("#boton_guardar").removeAttr('disabled');
+
+
+                                }
+                                else
+                                {
                                     //Crear la lista de errores
                                     var errorsHtml = '<ul>';
                                     $.each(info, function (key,value) {
@@ -131,7 +153,10 @@
                                         allowOutsideClick: false,
                                         confirmButtonColor: '#d33',
                                         confirmButtonText: "Corregir"
-                                    });
+                                    }).catch(swal.noop);
+
+                                    $("#boton_guardar").removeAttr('disabled');
+                                }
 
                             }
                         });
@@ -145,7 +170,11 @@
                         allowOutsideClick: false,
                         confirmButtonColor: '#d33',
                         confirmButtonText: "Corregir"
-                    });
+                    }).catch(swal.noop);
+
+                    $("#boton_guardar").removeAttr('disabled');
+
+
                 }
 
                 return false;

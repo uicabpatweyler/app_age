@@ -67,7 +67,7 @@
                                 <div class="form-group">
                                     <label for="clasificacion_nombre" class="col-sm-2 control-label"><p class="text-left">Clasificación:(*)</p></label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="clasificacion_nombre" name="clasificacion_nombre" placeholder="Clasificación">
+                                        <input type="text" class="form-control" id="clasificacion_nombre" name="clasificacion_nombre" placeholder="Clasificación" style="text-transform:capitalize">
                                     </div>
                                 </div>
 
@@ -172,6 +172,9 @@
             }
 
             function ajaxSubmit(){
+
+                $('#boton_enviar').attr("disabled", true);
+
                 $.ajax({
                     type:"POST",
                     url:"guardarclasificacion",
@@ -185,29 +188,49 @@
                             allowOutsideClick: false,
                             confirmButtonText: 'Continuar'
                         }).then(function(){
-                            window.location = "{{ route('clasificaciones') }}";
-                        });
+                            window.location.replace("{{route('clasificaciones')}}");
+                        }).catch(swal.noop);
                     },
                     error: function(xhr,status, response ){
+
                         //Obtener el valor de los errores devueltos por el controlador
                         var error = jQuery.parseJSON(xhr.responseText);
                         //Obtener los mensajes de error
                         var info = error.message;
-                        //Crear la lista de errores
-                        var errorsHtml = '<ul>';
-                        $.each(info, function (key,value) {
-                            errorsHtml += '<li>' + value[0] + '</li>';
-                        });
-                        errorsHtml += '</ul>';
-                        //Mostrar el y/o los errores devuelto(s) por el controlador
-                        swal({
-                            title:"Error:",
-                            html: errorsHtml,
-                            type: "error",
-                            allowOutsideClick: false,
-                            confirmButtonColor: '#d33',
-                            confirmButtonText: "Corregir"
-                        });
+                        if(error.integridad===true){
+                            console.log(error.message);
+                            swal({
+                                title: 'Error de duplicación',
+                                html: error.message,
+                                type: "error",
+                                allowOutsideClick: false,
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: "Verificar"
+                            }).catch(swal.noop);
+
+                            $("#boton_enviar").removeAttr('disabled');
+                        }
+                        else
+                        {
+                            //Crear la lista de errores
+                            var errorsHtml = '<ul>';
+                            $.each(info, function (key,value) {
+                                errorsHtml += '<li>' + value[0] + '</li>';
+                            });
+                            errorsHtml += '</ul>';
+                            //Mostrar el y/o los errores devuelto(s) por el controlador
+                            swal({
+                                title:"Error:",
+                                html: errorsHtml,
+                                type: "error",
+                                allowOutsideClick: false,
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: "Corregir"
+                            }).catch(swal.noop);
+
+                            $("#boton_enviar").removeAttr('disabled');
+                        }
+
                     }
                 });
             }

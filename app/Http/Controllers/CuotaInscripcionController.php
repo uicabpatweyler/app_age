@@ -133,7 +133,7 @@ class CuotaInscripcionController extends Controller
             $cuota = CuotaInscripcion::where('cuotainscripcion_status', true)
                      ->where('ciclo_id', $request->get('ciclo_id'))
                      ->where('escuela_id', $request->get('escuela_id'))
-                     ->where('cuotainscripcion_nombre', mb_strtoupper(trim($request->get('cuotainscripcion_nombre'))))
+                     ->where('cuotainscripcion_nombre', mb_convert_case(trim($request->get('cuotainscripcion_nombre')),MB_CASE_UPPER, "UTF-8"))
                      ->where('cuotainscripcion_cuota',$request->get('cuotainscripcion_cuota2'))
                      ->first();
 
@@ -154,7 +154,7 @@ class CuotaInscripcionController extends Controller
 
                 $cuotainscripcion->ciclo_id = $request->get('ciclo_id');
                 $cuotainscripcion->escuela_id = $request->get('escuela_id');
-                $cuotainscripcion->cuotainscripcion_nombre = mb_strtoupper(trim($request->get('cuotainscripcion_nombre')));
+                $cuotainscripcion->cuotainscripcion_nombre = mb_convert_case(trim($request->get('cuotainscripcion_nombre')),MB_CASE_UPPER, "UTF-8");
                 $cuotainscripcion->cuotainscripcion_cuota = $request->get('cuotainscripcion_cuota2');
                 $cuotainscripcion->cuotainscripcion_disponible = $cuotainscripcion_disponible;
                 $cuotainscripcion->cuotainscripcion_status = true;
@@ -295,7 +295,7 @@ class CuotaInscripcionController extends Controller
 
             $cuotainscripcion->ciclo_id = $request->get('ciclo_id');
             $cuotainscripcion->escuela_id = $request->get('escuela_id');
-            $cuotainscripcion->cuotainscripcion_nombre = mb_strtoupper(trim($request->get('cuotainscripcion_nombre')));
+            $cuotainscripcion->cuotainscripcion_nombre = mb_convert_case(trim($request->get('cuotainscripcion_nombre')),MB_CASE_UPPER, "UTF-8");
             $cuotainscripcion->cuotainscripcion_cuota = $request->get('cuotainscripcion_cuota2');
             $cuotainscripcion->cuotainscripcion_disponible = $cuotainscripcion_disponible;
             $cuotainscripcion->updated_at = $update_at;

@@ -73,7 +73,7 @@
                                 <div class="form-group">
                                     <label for="clasificacion_nombre" class="col-sm-2 control-label"><p class="text-left">Clasificación:(*)</p></label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="clasificacion_nombre" name="clasificacion_nombre" placeholder="Clasificación" value="{{$clasificacion->clasificacion_nombre}}">
+                                        <input type="text" class="form-control" id="clasificacion_nombre" name="clasificacion_nombre" placeholder="Clasificación" value="{{$clasificacion->clasificacion_nombre}}" style="text-transform:capitalize">
                                     </div>
                                 </div>
 
@@ -179,7 +179,7 @@
                                 allowOutsideClick: false,
                                 confirmButtonText: 'Continuar'
                             }).then(function(){
-                                window.location = "{{ route('clasificaciones') }}";
+                                window.location.replace("{{ route('clasificaciones') }}");
                             });
                         },
                         error: function(xhr,status, response ){

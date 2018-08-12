@@ -130,6 +130,13 @@ class PagoCuotaInscripcionController extends Controller
                     //Guardamos los cambios
                     $grupoAlumno->save();
 
+                    //Actualizamos el campo folio del tipo 1 de la tabla series_folios
+                    $serieFolio = SerieFolio::where('tipo', 1)->first();
+                    $serieFolio->folio = $request->get('folio_recibo') + 1; //Incrementamos el numero del folio
+
+                    //Guardamos los cambios en la tabla SERIES_FOLIOS
+                    $serieFolio->save();
+
                     return response()->json([
                         'pago_inscripcion_id' => $pago->id,
                         'success'             => true,

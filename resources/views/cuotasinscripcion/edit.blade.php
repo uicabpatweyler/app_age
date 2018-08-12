@@ -249,6 +249,9 @@
             });
 
             function ajaxSubmit(){
+
+                $('#boton_enviar').attr("disabled", true);
+
                 $.ajax({
                     type:"POST",
                     url:"{{route('updatecdi',$cuota->id)}}",
@@ -262,7 +265,7 @@
                             allowOutsideClick: false,
                             confirmButtonText: 'Continuar'
                         }).then(function(){
-                            window.location = "{{ route('cuotasdeinscripcion') }}";
+                            window.location.replace("{{ route('cuotasdeinscripcion') }}");
                         });
                     },
                     error: function(xhr,status, response ){
@@ -280,6 +283,9 @@
                                 confirmButtonColor: '#d33',
                                 confirmButtonText: "Corregir"
                             });
+
+                            $("#boton_enviar").removeAttr('disabled');
+
                         }
                         else {
                             //Crear la lista de errores
@@ -297,6 +303,8 @@
                                 confirmButtonColor: '#d33',
                                 confirmButtonText: "Corregir"
                             });
+
+                            $("#boton_enviar").removeAttr('disabled');
                         }
 
                     }

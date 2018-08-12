@@ -48,12 +48,12 @@
                                             <td style="display: none">{{$ciclo->id}}</td>
                                             <td>{{$ciclo->ciclo_anioinicial}}-{{$ciclo->ciclo_aniofinal}}</td>
                                             <td>
-                                                @if($ciclo->ciclo_actual===1)
+                                                @if($ciclo->ciclo_actual==1)
                                                     <span class="badge bg-green">Ciclo Actual de Trabajo</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                @if($ciclo->ciclo_actual===1)
+                                                @if($ciclo->ciclo_actual==1)
                                                     <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Eliminar
                                                     |
                                                     <a class="btn btn-xs btn-info" href="{{route('editarciclo',$ciclo->id)}}" title="Editar">

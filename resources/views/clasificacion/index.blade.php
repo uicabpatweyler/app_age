@@ -100,7 +100,8 @@
         });
 
 
-        $("#boton_enviar").click(function(){
+        $("#boton_enviar").click(function(event){
+            event.preventDefault();
             var escuela_id = $('.select2').val();
 
             if(escuela_id==="-1"){

@@ -339,6 +339,9 @@
             });
 
             function ajaxSubmit(){
+
+                $('#boton_enviar').attr("disabled", true);
+
                 $.ajax({
                     type: "POST",
                     url: "{{route('guardarmespagocolegiatura')}}",
@@ -371,6 +374,9 @@
                                 confirmButtonColor: '#d33',
                                 confirmButtonText: "Corregir"
                             });
+
+                            $("#boton_enviar").removeAttr('disabled');
+
                         }
                         else {
                             //Crear la lista de errores
@@ -388,6 +394,9 @@
                                 confirmButtonColor: '#d33',
                                 confirmButtonText: "Corregir"
                             });
+
+                            $("#boton_enviar").removeAttr('disabled');
+
                         }
 
                     }

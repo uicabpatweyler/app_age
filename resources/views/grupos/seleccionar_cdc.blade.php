@@ -145,6 +145,9 @@
             });
 
             function ajaxSubmit(){
+
+                $('#boton_enviar').attr("disabled", true);
+
                 $.ajax({
                     type:"POST",
                     url:"{{route('guardar_grupo_cdc')}}",
@@ -158,7 +161,7 @@
                             allowOutsideClick: false,
                             confirmButtonText: 'Continuar'
                         }).then(function(){
-                            window.location = "{{ route('listargrupos', $grupo->escuela_id) }}";
+                            window.location.replace("{{ route('listargrupos', $grupo->escuela_id) }}");
                         });
                     },
                     error: function(xhr,status, response ){
@@ -182,6 +185,7 @@
                             confirmButtonColor: '#d33',
                             confirmButtonText: "Corregir"
                         });
+                        $("#boton_enviar").removeAttr('disabled');
                     }
 
                 });

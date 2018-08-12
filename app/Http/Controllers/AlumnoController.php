@@ -41,7 +41,7 @@ class AlumnoController extends Controller
             $nombre = $alumno->alumno_apellidopaterno. ' '.$alumno->alumno_apellidomaterno.' '.$alumno->alumno_primernombre.' '.$alumno->alumno_segundonombre;
             return response()->json([
                 'success'   => false,
-                'message'   => 'La C.UR.P. '.$request->get('alumno_curp').' '.'se encuentra registrada para el alumno '.strtoupper($nombre)
+                'message'   => 'La C.UR.P. '.$request->get('alumno_curp').' '.'se encuentra registrada para el alumno '.mb_strtoupper($nombre,'UTF-8')
             ], 422);
         }
 

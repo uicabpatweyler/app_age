@@ -91,7 +91,7 @@
                             <!-- /.box-body -->
 
                             <div class="box-footer">
-                                <a class="btn btn-danger" href="#">
+                                <a class="btn btn-danger" href="javascript:history.back(1)">
                                     <i class="fa fa-ban fa-lg" aria-hidden="true"></i>&nbsp;  Cancelar</a>
 
                                 <button type="submit" class="btn btn-primary pull-right" name="boton_enviar" id="boton_enviar">
@@ -231,6 +231,9 @@
             });
 
             function ajaxSubmit(){
+
+                $('#boton_enviar').attr("disabled", true);
+
                 $.ajax({
                     type:"POST",
                     url:"{{route('guardarcuota_cdi')}}",
@@ -244,7 +247,7 @@
                             allowOutsideClick: false,
                             confirmButtonText: 'Continuar'
                         }).then(function(){
-                            window.location = "{{ route('cuotasdeinscripcion') }}";
+                            window.location.replace("{{ route('cuotasdeinscripcion') }}");
                         });
                     },
                     error: function(xhr,status, response ){
@@ -262,6 +265,7 @@
                                 confirmButtonColor: '#d33',
                                 confirmButtonText: "Corregir"
                             });
+                            $("#boton_enviar").removeAttr('disabled');
                         }
                         else {
                             //Crear la lista de errores
@@ -279,6 +283,9 @@
                                 confirmButtonColor: '#d33',
                                 confirmButtonText: "Corregir"
                             });
+
+                            $("#boton_enviar").removeAttr('disabled');
+
                         }
 
                     }

@@ -30,7 +30,7 @@
                             <thead>
                             <tr>
                                 <th style="width: 10%;"></th>
-                                <th>ID</th>
+                                <th style="display: none">ID</th>
                                 <th>Ciclo</th>
                                 <th>Nombre</th>
                                 <th>Cuota</th>
@@ -42,7 +42,7 @@
                             @foreach($cuotas as $cuota)
                                 <tr>
                                     <td><p class="text-center"><strong>{{$i++}}</strong></p></td>
-                                    <td>{{$cuota->id}}</td>
+                                    <td style="display: none">{{$cuota->id}}</td>
                                     <td>{{$ciclo->ciclo_anioinicial}}-{{$ciclo->ciclo_aniofinal}}</td>
                                     <td>{{$cuota->cuotacolegiatura_nombre}}</td>
                                     <td>$ {{number_format($cuota->cuotacolegiatura_cuota, 2, '.', ',')}}</td>

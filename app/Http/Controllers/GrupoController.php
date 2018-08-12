@@ -232,7 +232,7 @@ class GrupoController extends Controller
                 ->where('ciclo_id', $request->get('ciclo_id'))
                 ->where('escuela_id', $request->get('escuela_id'))
                 ->where('clasificacion_id', $request->get('clasificacion_id'))
-                ->where('grupo_nombre', strtoupper(trim($request->get('grupo_nombre'))))
+                ->where('grupo_nombre', mb_convert_case(trim($request->get('grupo_nombre')),MB_CASE_UPPER, "UTF-8"))
                 ->first();
 
             //Establecer el valor del campo 'grupo_disponible'
@@ -255,7 +255,7 @@ class GrupoController extends Controller
                 $grupo->ciclo_id                = $request->get('ciclo_id');
                 $grupo->escuela_id              = $request->get('escuela_id');
                 $grupo->clasificacion_id        = $request->get('clasificacion_id');
-                $grupo->grupo_nombre            = strtoupper(trim($request->get('grupo_nombre')));
+                $grupo->grupo_nombre            = mb_convert_case(trim($request->get('grupo_nombre')),MB_CASE_UPPER, "UTF-8");
                 $grupo->grupo_alumnospermitidos = $request->get('grupo_alumnospermitidos');
                 $grupo->grupo_disponible        = $grupo_disponible;
                 $grupo->grupo_status            = true;
@@ -377,7 +377,7 @@ class GrupoController extends Controller
             $grupo->ciclo_id                = $request->get('ciclo_id');
             $grupo->escuela_id              = $request->get('escuela_id');
             $grupo->clasificacion_id        = $request->get('clasificacion_id');
-            $grupo->grupo_nombre            = strtoupper(trim($request->get('grupo_nombre')));
+            $grupo->grupo_nombre            = mb_convert_case(trim($request->get('grupo_nombre')),MB_CASE_UPPER, "UTF-8");
             $grupo->grupo_alumnospermitidos = $request->get('grupo_alumnospermitidos');
             $grupo->grupo_disponible        = $grupo_disponible;
             $grupo->updated_at              = $updated_at;
@@ -386,7 +386,7 @@ class GrupoController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Los datos del grupo se han correctamente.'
+                'message' => 'Los datos del grupo se han actualizado correctamente.'
             ], 200);
 
         }

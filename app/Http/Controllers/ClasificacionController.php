@@ -136,12 +136,25 @@ class ClasificacionController extends Controller
 
         if($validation->passes()){
 
+            $test = Clasificacion::where('ciclo_id',$request->get('ciclo_id'))
+                    ->where('escuela_id',$request->get('escuela_id'))
+                    ->where('clasificacion_nombre',mb_convert_case($request->get('clasificacion_nombre'),MB_CASE_TITLE, "UTF-8"))
+                    ->get();
+
+            if($test->count()!=0 ){
+                return response()->json([
+                    'success'   => false,
+                    'integridad' => true,
+                    'message'   => "La clasificación que trata de crear ya existe."
+                ], 422);
+            }
+
             $now = Carbon::now('America/Mexico_City Time Zone');
 
             $clasificacion = new Clasificacion();
             $clasificacion->ciclo_id = $request->get('ciclo_id');
             $clasificacion->escuela_id = $request->get('escuela_id');
-            $clasificacion->clasificacion_nombre = $request->get('clasificacion_nombre');
+            $clasificacion->clasificacion_nombre = mb_convert_case($request->get('clasificacion_nombre'),MB_CASE_TITLE, "UTF-8");
             $clasificacion->clasificacion_status = true;
             $clasificacion->created_at = $now;
             $clasificacion->updated_at = $now;
@@ -228,7 +241,7 @@ class ClasificacionController extends Controller
             $clasificacion = Clasificacion::findOrFail($id);
 
             $clasificacion->escuela_id = $request->get('escuela_id');
-            $clasificacion->clasificacion_nombre = $request->get('clasificacion_nombre');
+            $clasificacion->clasificacion_nombre = mb_convert_case($request->get('clasificacion_nombre'),MB_CASE_TITLE, "UTF-8");
             $clasificacion->updated_at = $updated_at;
 
             $clasificacion->save();

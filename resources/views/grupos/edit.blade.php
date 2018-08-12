@@ -267,6 +267,10 @@
             });
 
             function ajaxSubmit(){
+
+                $('#boton_enviar').attr("disabled", true);
+
+
                 $.ajax({
                     type:"POST",
                     url:"{{route('updategrupo',$grupo->id)}}",
@@ -280,7 +284,7 @@
                             allowOutsideClick: false,
                             confirmButtonText: 'Continuar'
                         }).then(function(){
-                            window.location = "{{ route('grupos') }}";
+                            window.location.replace("{{ route('grupos') }}");
                         });
                     },
                     error: function(xhr,status, response ){
@@ -304,6 +308,8 @@
                                 confirmButtonColor: '#d33',
                                 confirmButtonText: "Corregir"
                             });
+
+                        $("#boton_enviar").removeAttr('disabled');
 
                     }
                 });

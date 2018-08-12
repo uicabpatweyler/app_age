@@ -231,6 +231,9 @@
             });
 
             function ajaxSubmit(){
+
+                $('#boton_enviar').attr("disabled", true);
+
                 $.ajax({
                     type:"POST",
                     url:"{{route('guardarcuota_cdc')}}",
@@ -244,7 +247,7 @@
                             allowOutsideClick: false,
                             confirmButtonText: 'Continuar'
                         }).then(function(){
-                            window.location = "{{ route('cuotasdecolegiatura') }}";
+                            window.location.replace("{{ route('cuotasdecolegiatura') }}");
                         });
                     },
                     error: function(xhr,status, response ){
@@ -262,6 +265,7 @@
                                 confirmButtonColor: '#d33',
                                 confirmButtonText: "Corregir"
                             });
+                            $("#boton_enviar").removeAttr('disabled');
                         }
                         else {
                             //Crear la lista de errores
@@ -279,6 +283,7 @@
                                 confirmButtonColor: '#d33',
                                 confirmButtonText: "Corregir"
                             });
+                            $("#boton_enviar").removeAttr('disabled');
                         }
 
                     }

@@ -88,11 +88,24 @@ class CicloEscolarController extends Controller
     public function store(Request $request)
     {
         $validation =Validator::make($request->all(),[
-            'ciclo_anioinicial' => 'required|unique:ciclos|max:4',
-            'ciclo_aniofinal'   => 'required|unique:ciclos|max:4',
+            'ciclo_anioinicial' => 'required|max:4',
+            'ciclo_aniofinal'   => 'required|max:4',
         ]);
 
         if($validation->passes()){
+
+            $test = Ciclo::where('ciclo_anioinicial',$request->get('ciclo_anioinicial'))
+                    ->where('ciclo_aniofinal',$request->get('ciclo_aniofinal'))
+                    ->first();
+
+            if($test!=null){
+                return response()->json([
+                    'success'   => false,
+                    'integridad' => true,
+                    'message'   => "El ciclo escolar que trata de crear ya existe."
+                ], 422);
+            }
+
 
             $now = Carbon::now('America/Mexico_City Time Zone');
             $ciclo_escolar = new Ciclo();
@@ -110,6 +123,7 @@ class CicloEscolarController extends Controller
                 'message' => 'El ciclo escolar se ha creado correctamente.'
             ], 200);
         }
+
         $errors = $validation->errors();
         $errors =  json_decode($errors);
 
