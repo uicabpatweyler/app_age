@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Alumno;
 use App\Models\Escuela;
 use App\Models\Ciclo;
+use App\Models\DatosInscripcionAlumno;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -55,7 +56,22 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        return view('alumnos.nuevo_alumno_inicio');
+        //Obtener el ciclo actual de trabajo
+        $ciclo = Ciclo::where('ciclo_activo', false)
+            ->where('ciclo_actual', true)
+            ->first();
+
+        $dias = DatosInscripcionAlumno::select('alumnos.alumno_primernombre','alumnos.alumno_apellidopaterno')
+            ->addSelect('alumnos.alumno_apellidopaterno','alumnos.alumno_apellidomaterno')
+            ->addSelect('grupos.grupo_nombre','grupos_alumnos.grupo_id','grupos_alumnos.clasifgrupo_id','grupos_alumnos.pago_inscripcion')
+            ->addSelect('datos_inscripcion_alumno.escuela_id','datos_inscripcion_alumno.ciclo_id','datos_inscripcion_alumno.alumno_id')
+            ->leftjoin('alumnos', 'datos_inscripcion_alumno.alumno_id', '=', 'alumnos.id')
+            ->leftjoin('grupos_alumnos', 'grupos_alumnos.alumno_id', '=', 'alumnos.id')
+            ->leftjoin('grupos', 'grupos_alumnos.grupo_id', '=', 'grupos.id')
+            ->where('datos_inscripcion_alumno.ciclo_id',$ciclo->id)
+            ->get();
+
+        return view('alumnos.nuevo_alumno_inicio', compact('dias', 'ciclo'));
     }
 
     /**

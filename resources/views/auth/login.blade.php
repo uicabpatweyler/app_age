@@ -123,7 +123,7 @@ desired effect
                                         </div>
                                     </div>
 
-                                    <a class="btn btn-social btn-default" href="{{ route('password.request') }}">
+                                    <a class="btn btn-social btn-default" href="">
                                         <i class="fa fa-question-circle fa-lg" aria-hidden="true"></i> Olvide mi contraseña
                                     </a>
 
