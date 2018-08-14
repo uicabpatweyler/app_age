@@ -16,11 +16,16 @@ class Alumno extends Model
 
     //Eloquent: Mutators
     protected $dates = [
-        'created_at'
+        'created_at',
+        'alumno_fechanacimiento'
     ];
 
     public function getCreatedAtAttribute($date)
     {
+        return new Date($date);
+    }
+
+    public function getAlumnoFechanacimientoAttribute($date){
         return new Date($date);
     }
 

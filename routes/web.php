@@ -68,6 +68,13 @@ Route::post('pago_inscripcion_store',                 'PagoCuotaInscripcionContr
 Route::get('pdf_ReciboInscripcion/{id_pago}', 'Pdf\ReciboInscripcionController@pdf_ReciboInscripcion')->name('pdf_ReciboInscripcion');
 
 /*
+ * Impresiones | Hoja de Inscripción
+ */
+Route::get('impr_hojainscrip_index','ImprHojaInscripcionController@index')->name('impr_hojainscrip_index');
+Route::get('pdf_HojaInscripcionAlumno/{id_ga}','Pdf\HojaInscripcionController@pdf_HojaInscrpcionPorAlumno')->name('pdf_HojaInscripcionAlumno');
+
+
+/*
  * Configuración | Empresa
  */
 Route::get('empresa', 'EmpresaController@index')->name('empresa');

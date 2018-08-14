@@ -49,6 +49,18 @@
                             </li>
 
                             <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-print" aria-hidden="true"></i> Impresiones <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{route('impr_hojainscrip_index')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Hoja de Inscripción</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href=""><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Recibo de Inscripción</a></li>
+                                    <li class="divider"></li>
+
+
+                                </ul>
+                            </li>
+
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-money" aria-hidden="true"></i> Pagos <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="#"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Pago de Inscripción</a></li>
