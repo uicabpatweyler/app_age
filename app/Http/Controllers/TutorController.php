@@ -50,12 +50,22 @@ class TutorController extends Controller
     public function verificaNombreApellidosTutor($nombre,$ap,$am, $flag){
 
         if($flag==="1"){
-            //Verificar solamente
-            $tutores = DB::table('tutores')
-                ->where('tutor_nombre', 'like', '%' . mb_strtolower($nombre,'UTF-8') . '%')
-                ->where('tutor_apellidopaterno', 'like', '%' . mb_strtolower($ap,'UTF-8') . '%')
-                ->where('tutor_apellidomaterno', 'like', '%' . mb_strtolower($am,'UTF-8') . '%')
-                ->get();
+            if ($am==="abcd"){
+                //Verificar solamente usando los campos del nombre y apellido paterno
+                $tutores = DB::table('tutores')
+                    ->where('tutor_nombre', 'like', '%' . mb_strtolower($nombre,'UTF-8') . '%')
+                    ->where('tutor_apellidopaterno', 'like', '%' . mb_strtolower($ap,'UTF-8') . '%')
+                    ->get();
+            }
+            else{
+                //Verificar solamente usando el nomnre con los apellidos
+                $tutores = DB::table('tutores')
+                    ->where('tutor_nombre', 'like', '%' . mb_strtolower($nombre,'UTF-8') . '%')
+                    ->where('tutor_apellidopaterno', 'like', '%' . mb_strtolower($ap,'UTF-8') . '%')
+                    ->where('tutor_apellidomaterno', 'like', '%' . mb_strtolower($am,'UTF-8') . '%')
+                    ->get();
+            }
+
 
             if($tutores->count()!=0){
                 return response()->json([
@@ -72,13 +82,18 @@ class TutorController extends Controller
 
         }
         if ($flag==="2"){
-            //Obtener los datos de los tutores que cumplen con los datos proporcionados
-            $tutores = DB::table('tutores')
-                ->where('tutor_nombre', 'like', '%' . mb_strtolower($nombre,'UTF-8') . '%')
-                ->where('tutor_apellidopaterno', 'like', '%' . mb_strtolower($ap,'UTF-8') . '%')
-                ->where('tutor_apellidomaterno', 'like', '%' . mb_strtolower($am,'UTF-8') . '%')
-                ->get()
-                ->toArray();
+            if($am==="abcd"){
+                //Obtener los datos de los tutores que cumplen con los datos proporcionados
+                $tutores = DB::table('tutores')
+                    ->where('tutor_nombre', 'like', '%' . mb_strtolower($nombre,'UTF-8') . '%')
+                    ->where('tutor_apellidopaterno', 'like', '%' . mb_strtolower($ap,'UTF-8') . '%')
+                    ->get()
+                    ->toArray();
+            }
+            else{
+
+            }
+
 
             return response()->json([
                 'data' => $tutores

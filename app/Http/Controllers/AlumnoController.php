@@ -276,9 +276,18 @@ class AlumnoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($escuela_id,$ciclo_id,$alumno_id)
     {
-        //
+        $escuelas = Escuela::where('escuela_status', true)
+                    ->get();
+
+        //Obtener el ciclo escolar
+        $ciclo = Ciclo::where('id', $ciclo_id)
+                 ->first();
+
+        $alumno = Alumno::where('id',$alumno_id)->first();
+
+        return view('alumnos.editar_alumno',compact('escuelas','ciclo','alumno'))->with(['escuela_id'=>$escuela_id,'ciclo_id'=>$ciclo_id,'alumno_id'=>$alumno_id]);
     }
 
     /**
@@ -290,7 +299,7 @@ class AlumnoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return dd($request->all());
     }
 
     /**

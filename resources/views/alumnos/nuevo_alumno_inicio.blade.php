@@ -97,7 +97,7 @@
                                     </td>
                                     <td style="width: 20%;" align="center">
 
-                                            <a class="btn btn-xs btn-social btn-dropbox" href="">
+                                            <a class="btn btn-xs btn-social btn-dropbox" href="{{route('editar_alumno',['escuela'=>$dia->escuela_id, 'ciclo'=>$dia->ciclo_id,'alumno'=>$dia->alumno_id])}}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar datos
                                             </a>
 

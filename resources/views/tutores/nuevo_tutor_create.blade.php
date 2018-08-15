@@ -208,7 +208,14 @@
                         //Enviamos los datos del tutor para verificar
                         $nombre = $("#tutor_nombre").val();
                         $ap     = $("#tutor_apellidopaterno").val();
-                        $am     = $("#tutor_apellidomaterno").val();
+                        if($("#tutor_apellidomaterno").val().length > 0){
+                            $am     = $("#tutor_apellidomaterno").val();
+                        }
+                        else{
+                            //Cuando el tutor no cuenta con apellido materno
+                            $am     = "abcd";
+                        }
+
                         $flag   = "1";
 
                         $.ajax({
@@ -219,6 +226,7 @@
                                 //No se encontraron coincidencias con el nuevo tutor, procedemos a guardar los datos
                                 //Llamamos a la funcion AJAX para enviar el formulario
                                 ajaxSubmit();
+                                //console.log('Continuar');
                             },
                             error  : function(xhr,status, response){
                                 //Se encontro al menos 1 coincidencia con los datos proporcionados del nuevo tutor

@@ -46,6 +46,10 @@ Route::post('nuevo_alumno_datospersonales_store',                              '
 Route::post('nuevo_alumno_datospersonales_store2',                              'AlumnoDatosPersonalesController@store2')->name('nuevo_alumno_datospersonales_store2');
 Route::get('utilizar_datos_personales_alumno/{id_datospersonales}/{id_alumno_a}/{id_alumno_b}/{id_ciclo}/{id_escuela}', 'AlumnoDatosPersonalesController@utilizarDatosPersonales')->name('utilizar_datos_personales_alumno');
 
+Route::get('editar_alumno/{escuela}/{ciclo}/{alumno}', 'AlumnoController@edit')->name('editar_alumno');
+Route::post('update_alumno/{id}', 'AlumnoController@update')->name('update_alumno');
+
+
 Route::get('nuevo_tutor_create',                             'TutorController@create')->name('nuevo_tutor_create');
 Route::post('nuevo_tutor_store',                             'TutorController@store')->name('nuevo_tutor_store');
 Route::get('nuevo_tutor_elegirdireccion/{tutor_id}',         'TutorController@datosInscripcionAlumno')->name('nuevo_tutor_elegirdireccion');
