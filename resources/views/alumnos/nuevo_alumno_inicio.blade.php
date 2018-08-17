@@ -72,7 +72,9 @@
                             <tr>
                                 <th style="width: 5%">#</th>
                                 <th style="width: 10%">Ciclo</th>
-                                <th colspan="3" style="width: 45%; text-align: center">Alumno</th>
+                                <th style="width: 15%; text-align: center"></th>
+                                <th style="width: 15%; text-align: center">Alumno</th>
+                                <th style="width: 15%; text-align: center"></th>
                                 <th style="width: 20%; text-align: center">Grupo/Pago I.</th>
                                 <th style="width: 20%;"></th>
                             </tr>
@@ -83,9 +85,9 @@
                                 <tr>
                                     <td style="width: 5%;"><strong>{{$i++}}</strong></td>
                                     <td style="width: 10%">{{$dia->CicloDatosInscripcionAlumno->ciclo_anioinicial}}-{{$dia->CicloDatosInscripcionAlumno->ciclo_aniofinal}}</td>
-                                    <td style="width: 25%;">{{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_primernombre)}} {{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_segundonombre)}}</td>
-                                    <td style="width: 10%;">{{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_apellidopaterno)}}</td>
-                                    <td style="width: 10%;">{{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_apellidomaterno)}}</td>
+                                    <td style="width: 15%;">{{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_primernombre)}} {{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_segundonombre)}}</td>
+                                    <td style="width: 15%;">{{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_apellidopaterno)}}</td>
+                                    <td style="width: 15%;">{{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_apellidomaterno)}}</td>
                                     <td style="width: 20%;" align="center">
                                         @if ($dia->grupo_nombre!=null)
                                             <small class="label label-success"><i class="fa fa-check"></i> {{$dia->grupo_nombre}}</small>
@@ -97,9 +99,9 @@
                                     </td>
                                     <td style="width: 20%;" align="center">
 
-                                            <a class="btn btn-xs btn-social btn-dropbox" href="{{route('editar_alumno',['escuela'=>$dia->escuela_id, 'ciclo'=>$dia->ciclo_id,'alumno'=>$dia->alumno_id])}}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar datos
-                                            </a>
+                                        <a class="btn btn-xs btn-social btn-dropbox" href="">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar datos
+                                        </a>
 
 
                                     </td>
