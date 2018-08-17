@@ -204,6 +204,11 @@ $(document).ready(function() {
             ajaxSubmit();
         }).catch(swal.noop);
 
+        $("#btn_hojainscripcion" ).click(function() {
+            window.open('{{route('pdf_HojaInscripcionAlumno',['id_ga'=>$inscripcion->id])}}');
+            return false;
+        });
+
         $("#btn_imprimir" ).click(function() {
             window.open('../../pdf_ReciboInscripcion/'+idPagoInscripcion);
             return false;

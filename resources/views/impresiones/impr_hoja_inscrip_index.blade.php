@@ -1,6 +1,6 @@
 @extends('templates.app_age')
 
-@section('title', 'Agregar Nuevo Alumno')
+@section('title', 'Imprimir Hoja de Inscripción')
 
 @section('content')
         <!-- Full Width Column -->
@@ -11,7 +11,7 @@
         <section class="content-header">
             <h1>
                 Imprimir Hoja de Inscripción
-                <small></small>
+                <small> Elija al alumno</small>
             </h1>
         </section>
 
@@ -52,7 +52,9 @@
                                                         <tr>
                                                             <th style="width: 5%">#</th>
                                                             <th style="width: 10%">Ciclo</th>
-                                                            <th colspan="3" style="width: 45%; text-align: center">Alumno</th>
+                                                            <th style="width: 15%; text-align: center"></th>
+                                                            <th style="width: 15%; text-align: center">Alumno</th>
+                                                            <th style="width: 15%; text-align: center"></th>
                                                             <th style="width: 20%; text-align: center">Grupo/Pago I.</th>
                                                             <th style="width: 20%;"></th>
                                                         </tr>
@@ -63,9 +65,9 @@
                                                             <tr>
                                                                 <td style="width: 5%;"><strong>{{$i++}}</strong></td>
                                                                 <td style="width: 10%">{{$dia->CicloDatosInscripcionAlumno->ciclo_anioinicial}}-{{$dia->CicloDatosInscripcionAlumno->ciclo_aniofinal}}</td>
-                                                                <td style="width: 25%;">{{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_primernombre)}} {{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_segundonombre)}}</td>
-                                                                <td style="width: 10%;">{{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_apellidopaterno)}}</td>
-                                                                <td style="width: 10%;">{{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_apellidomaterno)}}</td>
+                                                                <td style="width: 15%;">{{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_primernombre)}} {{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_segundonombre)}}</td>
+                                                                <td style="width: 15%;">{{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_apellidopaterno)}}</td>
+                                                                <td style="width: 15%;">{{ucwords($dia->AlumnoDatosInscripcionAlumno->alumno_apellidomaterno)}}</td>
                                                                 <td style="width: 20%;" align="center">
                                                                     @if ($dia->grupo_nombre!=null)
                                                                         <small class="label label-success"><i class="fa fa-check"></i> {{$dia->grupo_nombre}}</small>
