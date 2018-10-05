@@ -62,4 +62,9 @@ class Ciclo extends Model
     public function PagosDeInscripcion(){
         return $this->hasMany(PagoInscripcion::class);
     }
+
+    //Relacion 220818_1040. Lado 1
+    public function PagosDeColegiatura(){
+        return $this->hasMany(PagoInscripcion::class);
+    }
 }

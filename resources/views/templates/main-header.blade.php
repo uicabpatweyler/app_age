@@ -53,21 +53,29 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="{{route('impr_hojainscrip_index')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Hoja de Inscripción</a></li>
                                     <li class="divider"></li>
-                                    <li><a href=""><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Recibo de Inscripción</a></li>
+                                    <li><a href="{{route("impr_rec_inscrip_index")}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Recibo de Inscripción</a></li>
+                                    <li><a href="{{route("impr_rec_coleg_index")}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Recibo de Colegiatura</a></li>
                                     <li class="divider"></li>
-
+                                    <li><a href="{{route('reporte_pago_inscrip_index')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Reporte de Pagos de Inscripción</a></li>
+                                    <li><a href="{{route('reporte_pago_coleg_index')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Reporte de Pagos de Colegiatura</a></li>
+                                    <li class="divider"></li>
 
                                 </ul>
                             </li>
 
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-money" aria-hidden="true"></i> Pagos <span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Pago de Inscripción</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-caret-right text-green" aria-hidden="true"></i> Pago de colegiatura</a></li>
-                                    <li class="divider"></li>
-                                </ul>
+
+                            <li>
+                                <a href="{{route('pago_colegiatura_index')}}" class="bt btn-primary">
+                                    <i class="fa fa-money" aria-hidden="true"></i>&nbsp;
+                                    Pago de colegiatura
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{route('nueva_venta')}}" class="bt btn-primary">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;
+                                    Venta de Libros y Playeras
+                                </a>
                             </li>
 
                         </ul>

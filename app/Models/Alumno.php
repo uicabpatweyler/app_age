@@ -46,5 +46,10 @@ class Alumno extends Model
         return $this->hasMany(PagoInscripcion::class);
     }
 
+    //Relacion 220818_1105. Lado 1
+    public function PagosDeColegiatura(){
+        return $this->hasMany(PagoColegiatura::class);
+    }
+
 
 }

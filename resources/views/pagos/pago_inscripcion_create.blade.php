@@ -72,7 +72,16 @@
                                     </tr>
                                     <tr>
                                         <td style="width: 30%" class="bg-green color-palette">Fecha :</td>
-                                        <td style="width: 70%" class="text-center"> <strong>{{ucwords(Date::now()->format('D d, M Y'))}}</strong> </td>
+                                        <td style="width: 70%" class="text-center">
+                                            <!-- Date -->
+                                            <div class="input-group date">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="text" class="form-control pull-right" id="datepicker" name="datepicker">
+                                            </div>
+                                            <!-- /.input group -->
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td style="width: 30%" class="bg-green color-palette">Nivel :</td>
@@ -169,6 +178,7 @@
                             <input type="hidden" name="importe_cuota" id="importe_cuota" value="{{$cuota->cuotainscripcion_cuota}}">
                             <input type="hidden" name="porcentaje_descuento" id="porcentaje_descuento" value="0">
                             <input type="hidden" name="descuento_pesos" id="descuento_pesos" value="0">
+                            <input type="hidden" name="fecha_pago" id="fecha_pago" value="">
 
                         </form>
 
@@ -187,7 +197,24 @@
 <script>
 $(document).ready(function() {
 
+    moment.locale('es');
+
     var idPagoInscripcion = 0;
+
+    //Date picker
+    $('#datepicker').datepicker({
+        todayBtn: "linked",
+        language: "es",
+        daysOfWeekDisabled: "0,6",
+        calendarWeeks: true,
+        autoclose: true,
+        todayHighlight: true,
+        format: "dd-MM-yyyy"
+    });
+
+    $('#datepicker').datepicker('update', moment().format('DD-MM-YYYY'));
+
+    console.log(moment().format('HH:mm:ss'));
 
     $( "#btn_pagoinscripcion" ).click(function() {
         swal({
@@ -215,6 +242,7 @@ $(document).ready(function() {
         });
 
         function ajaxSubmit(){
+            $("#fecha_pago").val(moment($("#datepicker").val(), "DD-MMMM-YYYY").format('YYYY-MM-DD')+moment().format('HH:mm:ss'));
             $.ajax({
                 type:"POST",
                 url:"{{route('pago_inscripcion_store')}}",

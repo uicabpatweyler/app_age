@@ -69,15 +69,49 @@ Route::post('grupo_alumno_store','GrupoAlumnoController@store')->name('grupo_alu
 Route::get('pago_inscripcion_create/{id_inscripcion}','PagoCuotaInscripcionController@create')->name('pago_inscripcion_create');
 Route::post('pago_inscripcion_store',                 'PagoCuotaInscripcionController@store')->name('pago_inscripcion_store');
 
-Route::get('pago_colegiatura_create', 'PagoCuotaColegiaturaController@create')->name('pago_colegiatura_create');
+Route::get('pago_colegiatura_index','PagoCuotaColegiaturaController@index')->name('pago_colegiatura_index');
+Route::get('pago_colegiatura_create/{escuela}/{ciclo}/{grupo}/{alumno}', 'PagoCuotaColegiaturaController@create')->name('pago_colegiatura_create');
+Route::post('pago_colegiatura_store',  'PagoCuotaColegiaturaController@store')->name('pago_colegiatura_store');
 
 Route::get('pdf_ReciboInscripcion/{id_pago}', 'Pdf\ReciboInscripcionController@pdf_ReciboInscripcion')->name('pdf_ReciboInscripcion');
+Route::get('pdf_ReciboColegiatura/{id_pago}', 'Pdf\ReciboColegiaturaController@pdf_ReciboColegiatura')->name('pdf_ReciboColegiatura');
 
+
+Route::get('nuevo_producto_create', 'ProductoController@create')->name('nuevo_producto_create');
+Route::get('productos_index', 'ProductoController@index')->name('productos_index');
+Route::post('producto_asignar_precio', 'ProductoPrecioController@asignarPrecio')->name('producto_asignar_precio');
+Route::post('nuevo_producto_store', 'ProductoController@store')->name('nuevo_producto_store');
+Route::get('lista_categorias/{ciclo_id}/{escuela_id}', 'CategoriaProductoController@listaCategorias')->name('lista_categorias');
+Route::get('lista_subcategorias/{categoria_id}', 'ClasificacionProductoController@listaSubCategorias')->name('lista_subcategorias');
+Route::get('lista_clasificaciones/{subcategoria_id}', 'ClasificacionProductoController@listaClasificaciones')->name('lista_clasificaciones');
+
+Route::get('nuevo_inventario_create', 'EntradaProductoController@create')->name('nuevo_inventario_create');
+Route::post('nuevo_inventario_store', 'EntradaProductoController@store')->name('nuevo_inventario_store');
+Route::get('items_inventario_create', 'ItemInventarioController@index');
+Route::get('lista_productos_categorias/{categoria_id}','ItemInventarioController@listaProductosCategorias')->name('lista_productos_categorias');
 /*
  * Impresiones | Hoja de Inscripción
  */
 Route::get('impr_hojainscrip_index','ImprHojaInscripcionController@index')->name('impr_hojainscrip_index');
+Route::get('impr_rec_inscrip_index', 'ImprReciboInscripcionController@index')->name('impr_rec_inscrip_index');
+Route::get('impr_rec_coleg_index', 'ImprReciboColegiaturaController@index')->name('impr_rec_coleg_index');
+
+Route::get('reporte_pago_coleg_index','ReportePagoColegiaturaController@index')->name('reporte_pago_coleg_index');
+Route::get('pagos_colegitura_por_dia/{fecha}','ReportePagoColegiaturaController@pagosColegiaturaPorDia')->name('pagos_colegitura_por_dia');
+
+Route::get('reporte_pago_inscrip_index','ReportePagoInscripcionController@index')->name('reporte_pago_inscrip_index');
+Route::get('pagos_inscripcion_por_dia/{fecha}','ReportePagoInscripcionController@pagosInscripcionPorDia')->name('pagos_inscripcion_por_dia');
+
 Route::get('pdf_HojaInscripcionAlumno/{id_ga}','Pdf\HojaInscripcionController@pdf_HojaInscrpcionPorAlumno')->name('pdf_HojaInscripcionAlumno');
+Route::get('pdf_ReporteDiarioColegiatura/{fecha}', 'Pdf\ReporteDiarioColegiaturaController@pdf_ReporteDiarioColegiatura')->name('pdf_ReporteDiarioColegiatura');
+Route::get('pdf_ReporteDiarioInscripcion/{fecha}', 'Pdf\ReporteDiarioInscripcionController@pdf_ReporteDiarioInscripcion')->name('pdf_ReporteDiarioInscripcion');
+//Route::get('prueba', 'Pdf\ReporteDiarioInscripcionController@prueba')->name('prueba');
+
+Route::get('dataTableAlumnos', 'NuevaVentaController@dataTableAlumnos')->name('dataTableAlumnos');
+
+Route::get('nueva_venta', function(){
+    return view('ventas.nueva_venta');
+})->name('nueva_venta');
 
 
 /*

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alumno;
 use App\Models\CuotaInscripcion;
 use App\Models\GrupoAlumno;
 use App\Models\PagoInscripcion;
@@ -118,17 +119,26 @@ class PagoCuotaInscripcionController extends Controller
                     $pago->cancelado_por         = 0;
                     $pago->motivo_cancelacion    = null;
                     
-                    $pago->created_at            = $now;
-                    $pago->updated_at            = $now;
+                    $pago->created_at            = $request->get('fecha_pago');
+                    $pago->updated_at            = $request->get('fecha_pago');
 
                     $pago->save();
 
                     //Actualizar la fila correspondiente en la tabla GRUPOS_ALUMNOS
                     $grupoAlumno=GrupoAlumno::findOrFail($request->get('inscripcion_id'));
                     $grupoAlumno->pago_inscripcion = true;
+                    $grupoAlumno->created_at       = $request->get('fecha_pago');
+                    $grupoAlumno->updated_at       = $request->get('fecha_pago');
 
                     //Guardamos los cambios
                     $grupoAlumno->save();
+
+                    //Tabla ALUMNOS
+                    $alumno = Alumno::findOrFail($request->get('alumno_id'));
+                    $alumno->created_at       = $request->get('fecha_pago');
+                    $alumno->updated_at       = $request->get('fecha_pago');
+
+                    $alumno->save();
 
                     //Actualizamos el campo folio del tipo 1 de la tabla series_folios
                     $serieFolio = SerieFolio::where('tipo', 1)->first();

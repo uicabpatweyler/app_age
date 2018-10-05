@@ -60,4 +60,9 @@ class Grupo extends Model
     public function PagosDeInscripcion(){
         return $this->hasMany(PagoInscripcion::class);
     }
+
+    //Relacion 220818_1048. Lado 1
+    public function PagosDeColegiatura(){
+        return $this->hasMany(PagoColegiatura::class);
+    }
 }
