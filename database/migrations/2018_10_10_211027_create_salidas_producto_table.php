@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePagosColegiaturaTable extends Migration
+class CreateSalidasProductoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,21 @@ class CreatePagosColegiaturaTable extends Migration
      */
     public function up()
     {
-        Schema::create('pagos_colegiatura', function (Blueprint $table) {
+        Schema::create('salidas_producto', function (Blueprint $table) {
+
             $table->increments('id');
 
             $table->integer('escuela_id')->unsigned();
             $table->integer('ciclo_id')->unsigned();
             $table->integer('alumno_id')->unsigned();
             $table->integer('grupo_id')->unsigned();
-            $table->integer('clasifgrupo_id')->unsigned();
             $table->integer('user_id')->unsigned();
 
             $table->string('serie_recibo',10)->nullable();
             $table->integer('folio_recibo')->unsigned();
 
-            $table->date('fecha_pago');
-            $table->boolean('pago_cancelado')->default(false);
+            $table->date('fecha_venta');
+            $table->boolean('venta_cancelada')->default(false);
             $table->date('fecha_cancelacion')->nullable();
             $table->integer('cancelado_por')->unsigned();
             $table->string('motivo_cancelacion')->nullable();
@@ -41,14 +41,12 @@ class CreatePagosColegiaturaTable extends Migration
             $table->string('tipo_tarjeta',20)->nullable(); //Visa o MasterCard
 
             $table->timestamps();
-            
+
             $table->foreign('escuela_id')->references('id')->on('escuelas');
             $table->foreign('ciclo_id')->references('id')->on('ciclos');
             $table->foreign('alumno_id')->references('id')->on('alumnos');
             $table->foreign('grupo_id')->references('id')->on('grupos');
-            $table->foreign('clasifgrupo_id')->references('id')->on('clasificaciones');
             $table->foreign('user_id')->references('id')->on('users');
-
         });
     }
 
@@ -59,6 +57,6 @@ class CreatePagosColegiaturaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pagos_colegiatura');
+        Schema::dropIfExists('salidas_producto');
     }
 }

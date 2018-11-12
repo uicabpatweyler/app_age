@@ -193,31 +193,113 @@ class ReporteDiarioColegiaturaController extends Controller
                 ->orderBy('orden_mes','asc')
                 ->get();
 
-            if($fila->pago_cancelado===true){$cancelados++;}
+            if($fila->pago_cancelado==true){
 
-            $total = $total + $fila->cantidad_recibida_mxn;
+                $cancelados++;
+
+                if($fila->fecha_pago == $fila->fecha_cancelacion){ $total = $total + 0; }
+                if($fila->fecha_cancelacion > $fila->fecha_pago){ $total = $total + $fila->cantidad_recibida_mxn;}
+
+            }
+            else{$total = $total + $fila->cantidad_recibida_mxn;}
 
             foreach ($detalle as $filaDetalle){
-                $total_detalle = $total_detalle + (($filaDetalle->importe_colegiatura + ($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_recargo/100)) - ($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_descuento/100));
-                $array_detalle[] = [
-                    'col_numero'   => $i,
-                    'col_fecha'    => $fila->fecha_pago->format('l d, F Y'),
-                    'col_recibo'   => $fila->serie_recibo.'-'.$fila->folio_recibo,
-                    'col_cancel'   => $fila->pago_cancelado===true ? 'Si':'',
-                    'col_mes'      => substr($filaDetalle->nombre_mes,0,3),
-                    'col_alumno'   => ucwords($fila->AlumnoPagosDeColegiatura->alumno_primernombre.' '.$fila->AlumnoPagosDeColegiatura->alumno_segundonombre.' '.$fila->AlumnoPagosDeColegiatura->alumno_apellidopaterno.' '.$fila->AlumnoPagosDeColegiatura->alumno_apellidomaterno),
-                    'col_grupo'    => $fila->GrupoPagoColegiatura->grupo_nombre,
-                    'col_f-cancel' => $fila->pago_cancelado===true ? $fila->fecha_cancelacion->format('Y-m-d') : '',
-                    'col_coleg'    => $filaDetalle->importe_colegiatura,
-                    'col_desc'     => ($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_descuento/100),
-                    'col_rec'      => ($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_recargo/100),
-                    'col_total'    => ($filaDetalle->importe_colegiatura + ($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_recargo/100)) - ($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_descuento/100)
-                ];
+
+                //Es un recibo Cancelado?
+                if($fila->pago_cancelado==true){
+
+                    //El recibo se cancela el mismo dia en el que se genero
+                    if($fila->fecha_pago == $fila->fecha_cancelacion){
+
+                        $array_detalle[] = [
+                            'col_numero'   => $i,
+                            'col_fecha'    => $fila->fecha_pago->format('l d, F Y'),
+                            'col_recibo'   => $fila->serie_recibo.'-'.$fila->folio_recibo,
+                            'col_cancel'   => $fila->pago_cancelado==true ? 'Si':'',
+                            'col_mes'      => substr($filaDetalle->nombre_mes,0,3),
+                            'col_alumno'   => ucwords($fila->AlumnoPagosDeColegiatura->alumno_primernombre.' '.$fila->AlumnoPagosDeColegiatura->alumno_segundonombre.' '.$fila->AlumnoPagosDeColegiatura->alumno_apellidopaterno.' '.$fila->AlumnoPagosDeColegiatura->alumno_apellidomaterno),
+                            'col_grupo'    => $fila->GrupoPagoColegiatura->grupo_nombre,
+                            'col_f-cancel' => $fila->pago_cancelado==true ? $fila->fecha_cancelacion->format('Y-m-d') : '',
+                            'col_coleg'    => '',
+                            'col_desc'     => '',
+                            'col_rec'      => '',
+                            'col_total'    => ''
+                        ];
+                    }
+
+                    //EL recibo se cancela con una fecha posterior o diferente a la que se genero
+                    if($fila->fecha_cancelacion > $fila->fecha_pago){
+
+                        $array_detalle[] = [
+                            'col_numero'   => $i,
+                            'col_fecha'    => $fila->fecha_pago->format('l d, F Y'),
+                            'col_recibo'   => $fila->serie_recibo.'-'.$fila->folio_recibo,
+                            'col_cancel'   => $fila->pago_cancelado==true ? 'Si':'',
+                            'col_mes'      => substr($filaDetalle->nombre_mes,0,3),
+                            'col_alumno'   => ucwords($fila->AlumnoPagosDeColegiatura->alumno_primernombre.' '.$fila->AlumnoPagosDeColegiatura->alumno_segundonombre.' '.$fila->AlumnoPagosDeColegiatura->alumno_apellidopaterno.' '.$fila->AlumnoPagosDeColegiatura->alumno_apellidomaterno),
+                            'col_grupo'    => $fila->GrupoPagoColegiatura->grupo_nombre,
+                            'col_f-cancel' => $fila->pago_cancelado==true ? $fila->fecha_cancelacion->format('Y-m-d') : '',
+                            'col_coleg'    => '$ '.number_format($filaDetalle->importe_colegiatura,2,'.',','),
+                            'col_desc'     => '$ '.number_format(($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_descuento/100),2,'.',','),
+                            'col_rec'      => '$ '.number_format(($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_recargo/100),'2','.',','),
+                            'col_total'    => '$ '.number_format(($filaDetalle->importe_colegiatura + ($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_recargo/100)) - ($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_descuento/100),2,'.',',')
+                        ];
+
+                    }
+
+
+                }
+                //El recibo no esta cancelado
+                else{
+                    //$total_detalle = $total_detalle + (($filaDetalle->importe_colegiatura + ($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_recargo/100)) - ($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_descuento/100));
+
+                    $array_detalle[] = [
+                        'col_numero'   => $i,
+                        'col_fecha'    => $fila->fecha_pago->format('l d, F Y'),
+                        'col_recibo'   => $fila->serie_recibo.'-'.$fila->folio_recibo,
+                        'col_cancel'   => $fila->pago_cancelado==true ? 'Si':'',
+                        'col_mes'      => substr($filaDetalle->nombre_mes,0,3),
+                        'col_alumno'   => ucwords($fila->AlumnoPagosDeColegiatura->alumno_primernombre.' '.$fila->AlumnoPagosDeColegiatura->alumno_segundonombre.' '.$fila->AlumnoPagosDeColegiatura->alumno_apellidopaterno.' '.$fila->AlumnoPagosDeColegiatura->alumno_apellidomaterno),
+                        'col_grupo'    => $fila->GrupoPagoColegiatura->grupo_nombre,
+                        'col_f-cancel' => $fila->pago_cancelado==true ? $fila->fecha_cancelacion->format('Y-m-d') : '',
+                        'col_coleg'    => '$ '.number_format($filaDetalle->importe_colegiatura,2,'.',','),
+                        'col_desc'     => '$ '.number_format(($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_descuento/100),2,'.',','),
+                        'col_rec'      => '$ '.number_format(($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_recargo/100),'2','.',','),
+                        'col_total'    => '$ '.number_format(($filaDetalle->importe_colegiatura + ($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_recargo/100)) - ($filaDetalle->importe_colegiatura) * ($filaDetalle->porcentaje_descuento/100),2,'.',',')
+                    ];
+                }
+
             }
 
             $i++;
 
         }
+
+        $pagosDeColegiatura = PagoColegiatura::where('fecha_cancelacion',$fecha)
+            ->orderBy('folio_recibo','asc')
+            ->get();
+
+        foreach ($pagosDeColegiatura as $fila){
+
+            if($fila->fecha_pago < $fila->fecha_cancelacion){
+                $array_detalle[] = [
+                    'col_numero'   => '',
+                    'col_fecha'    => '',
+                    'col_recibo'   => $fila->serie_recibo.'-'.$fila->folio_recibo,
+                    'col_cancel'   => $fila->pago_cancelado==true ? 'Si':'',
+                    'col_mes'      => substr($filaDetalle->nombre_mes,0,3),
+                    'col_alumno'   => ucwords($fila->AlumnoPagosDeColegiatura->alumno_primernombre.' '.$fila->AlumnoPagosDeColegiatura->alumno_segundonombre.' '.$fila->AlumnoPagosDeColegiatura->alumno_apellidopaterno.' '.$fila->AlumnoPagosDeColegiatura->alumno_apellidomaterno),
+                    'col_grupo'    => $fila->GrupoPagoColegiatura->grupo_nombre,
+                    'col_f-cancel' => $fila->pago_cancelado==true ? $fila->fecha_cancelacion->format('Y-m-d') : '',
+                    'col_coleg'    => '',
+                    'col_desc'     => '',
+                    'col_rec'      => '',
+                    'col_total'    => ''
+                ];
+            }
+
+        }
+
 
         $filas        = count($array_detalle);
         $fila_inicial = 1;
@@ -278,10 +360,10 @@ class ReporteDiarioColegiaturaController extends Controller
                     Fpdf::Cell(50,5,utf8_decode($array_detalle[$y]['col_alumno']),'B',0,'L',true);
                     Fpdf::Cell(20,5,$array_detalle[$y]['col_grupo'],'B',0,'C',true);
                     Fpdf::Cell(20,5,$array_detalle[$y]['col_f-cancel'],'B',0,'C',true);
-                    Fpdf::Cell(16,5,'$ '.number_format($array_detalle[$y]['col_coleg'],2,'.',','),'B',0,'R',true);
-                    Fpdf::Cell(16,5,'-$ '.number_format($array_detalle[$y]['col_desc'],2,'.',','),'B',0,'R',true);
-                    Fpdf::Cell(16,5,'+$ '.number_format($array_detalle[$y]['col_rec'],2,'.',','),'B',0,'R',true);
-                    Fpdf::Cell(20,5,'$ '.number_format($array_detalle[$y]['col_total'],2,'.',','),'B',1,'R',true);
+                    Fpdf::Cell(16,5,$array_detalle[$y]['col_coleg'],'B',0,'R',true);
+                    Fpdf::Cell(16,5,$array_detalle[$y]['col_desc'],'B',0,'R',true);
+                    Fpdf::Cell(16,5,$array_detalle[$y]['col_rec'],'B',0,'R',true);
+                    Fpdf::Cell(20,5,$array_detalle[$y]['col_total'],'B',1,'R',true);
                 }
                 else{
                     Fpdf::SetFillColor(230,242,230);
@@ -294,10 +376,10 @@ class ReporteDiarioColegiaturaController extends Controller
                     Fpdf::Cell(50,5,utf8_decode($array_detalle[$y]['col_alumno']),'B',0,'L',true);
                     Fpdf::Cell(20,5,$array_detalle[$y]['col_grupo'],'B',0,'C',true);
                     Fpdf::Cell(20,5,$array_detalle[$y]['col_f-cancel'],'B',0,'C',true);
-                    Fpdf::Cell(16,5,'$ '.number_format($array_detalle[$y]['col_coleg'],2,'.',','),'B',0,'R',true);
-                    Fpdf::Cell(16,5,'-$ '.number_format($array_detalle[$y]['col_desc'],2,'.',','),'B',0,'R',true);
-                    Fpdf::Cell(16,5,'+$ '.number_format($array_detalle[$y]['col_rec'],2,'.',','),'B',0,'R',true);
-                    Fpdf::Cell(20,5,'$ '.number_format($array_detalle[$y]['col_total'],2,'.',','),'B',1,'R',true);
+                    Fpdf::Cell(16,5,$array_detalle[$y]['col_coleg'],'B',0,'R',true);
+                    Fpdf::Cell(16,5,$array_detalle[$y]['col_desc'],'B',0,'R',true);
+                    Fpdf::Cell(16,5,$array_detalle[$y]['col_rec'],'B',0,'R',true);
+                    Fpdf::Cell(20,5,$array_detalle[$y]['col_total'],'B',1,'R',true);
                 }
 
             }

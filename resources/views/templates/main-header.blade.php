@@ -44,6 +44,8 @@
                                     <li class="divider"></li>
                                     <li><a href="{{route('grupo_alumno_elegiralumno')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Asignar Grupo - Alumno</a></li>
                                     <li class="divider"></li>
+                                    <li><a href="{{route('grupo_alumno_cambiogrupo')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Cambio de Grupo</a></li>
+                                    <li class="divider"></li>
 
                                 </ul>
                             </li>
@@ -55,11 +57,17 @@
                                     <li class="divider"></li>
                                     <li><a href="{{route("impr_rec_inscrip_index")}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Recibo de Inscripción</a></li>
                                     <li><a href="{{route("impr_rec_coleg_index")}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Recibo de Colegiatura</a></li>
+                                    <li><a href="{{route("impr_rec_venta_index")}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Recibo de Venta</a></li>
                                     <li class="divider"></li>
                                     <li><a href="{{route('reporte_pago_inscrip_index')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Reporte de Pagos de Inscripción</a></li>
                                     <li><a href="{{route('reporte_pago_coleg_index')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Reporte de Pagos de Colegiatura</a></li>
+                                    <li><a href="{{route('reporte_venta_diario')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Reporte Venta Libros y Playeras</a></li>
                                     <li class="divider"></li>
-
+                                    <li><a href="{{route('kardex_productos_index')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Kardex de Productos</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="{{route('impr_lista_asist_index')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Listas de Asistencia</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="{{route('alumnos_deudores_index')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Alumnos Deudores</a></li>
                                 </ul>
                             </li>
 

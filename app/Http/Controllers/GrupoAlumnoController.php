@@ -28,6 +28,8 @@ class GrupoAlumnoController extends Controller
         $this->middleware('auth');
     }
 
+
+
     public function cicloEscolarPredeterminado()
     {
         //Obtener el ID del ciclo actual de trabajo
@@ -64,6 +66,37 @@ class GrupoAlumnoController extends Controller
 
         //return dd($dias);
         return view('alumnos.grupo_alumno_elegiralumno', compact('ciclo','dias'));
+    }
+
+    public function listaSelectGrupos(){
+
+    }
+
+    public function cambioDeGrupo(){
+
+        $ciclo = $this->cicloEscolarPredeterminado();
+
+        $alumnos = DB::table('grupos_alumnos')
+            ->select('grupos_alumnos.id','grupos_alumnos.escuela_id','grupos_alumnos.ciclo_id','grupos_alumnos.alumno_id','grupos_alumnos.clasifgrupo_id')
+            ->addSelect('grupos_alumnos.grupo_id','grupos.grupo_nombre','grupos_alumnos.alumno_status','grupos_alumnos.alumno_baja')
+            ->addSelect(DB::raw('CONCAT(alumnos.alumno_apellidopaterno," ", alumnos.alumno_apellidomaterno," ",alumnos.alumno_primernombre," ",alumnos.alumno_segundonombre) AS nombreAlumno'))
+            ->join('grupos','grupos_alumnos.grupo_id','=','grupos.id')
+            ->join('alumnos','grupos_alumnos.alumno_id','=','alumnos.id')
+            ->where('grupos_alumnos.escuela_id',1)
+            ->where('grupos_alumnos.ciclo_id',$ciclo->id)
+            ->where('grupos_alumnos.alumno_status',true)
+            ->where('grupos_alumnos.alumno_baja',false)
+            ->orderBy('nombreAlumno','asc')
+            ->get();
+
+        $grupos = DB::table('grupos')
+            ->select('grupos.id','grupos.grupo_nombre','grupos.grupo_alumnospermitidos')
+            ->addSelect(DB::raw('(SELECT COUNT(grupos_alumnos.id) FROM grupos_alumnos WHERE grupos_alumnos.grupo_id = grupos.id) AS numAlumnos'))
+            ->orderBy('grupos.clasificacion_id','asc')
+            ->orderBy('grupos.grupo_nombre','asc')
+            ->get();
+
+        return view('alumnos.cambio_grupo_index', compact('ciclo', 'alumnos','grupos'));
     }
 
     public function verificaGrupoAlumno($escuela,$ciclo,$alumno, $grupo){
@@ -277,9 +310,20 @@ class GrupoAlumnoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+        $grupoAlumno = GrupoAlumno::findOrFail($request->get('id_grupo_alumno'));
+        $nuevoGrupo  = Grupo::findOrFail($request->get('nuevo_grupo'));
+
+        $grupoAlumno->grupo_id       = $request->get('nuevo_grupo');
+        $grupoAlumno->clasifgrupo_id = $nuevoGrupo->clasificacion_id;
+        $grupoAlumno->save();
+
+        return response()->json([
+            'success'         => true,
+            'message'         => 'Los datos se han guardado correctamente.'
+        ], 200);
     }
 
     /**

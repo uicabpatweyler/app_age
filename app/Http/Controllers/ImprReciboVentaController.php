@@ -2,34 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CategoriaProducto;
 use App\Models\Ciclo;
-use App\Models\Escuela;
-use App\Models\Producto;
-use App\Models\SerieFolio;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class ItemInventarioController extends Controller
+class ImprReciboVentaController extends Controller
 {
-
-    public function listaProductosCategorias($categoria_id){
-
-
-        $productos_categoria = Producto::select('productos.id','productos.categoria_id','productos.nombre','productos.info_adicional')
-                               ->addSelect('productos.descripcion_venta','productos_precios.precio_venta')
-                               ->join('productos_precios','productos_precios.producto_id','=','productos.id')
-                               ->where('productos.escuela_id',1)
-                               ->where('productos.ciclo_id',1)
-                               ->where('productos.categoria_id',$categoria_id)
-                               ->orderBy('productos.id','asc')->get()->toArray();
-
-        //$productos = Producto::where('categoria_id',$categoria_id)->orderBy('id','asc')->get()->toArray();
-
-        //return dd($productos_categoria);
-
-        return response()->json([
-            'data' => $productos_categoria
-        ]);
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 
     /**
@@ -39,22 +25,21 @@ class ItemInventarioController extends Controller
      */
     public function index()
     {
-        $escuelas = Escuela::where('escuela_status', true)
-                    ->get();
-
+        //Obtener el ID del ciclo actual de trabajo
         $ciclo = Ciclo::where('ciclo_activo', false)
                  ->where('ciclo_actual', true)
                  ->first();
 
-        $seriefolio = SerieFolio::where('tipo',3)
-                      ->first();
+        $recibos = DB::table('salidas_producto')
+                   ->select('salidas_producto.id','salidas_producto.folio_recibo')
+                   ->addSelect('salidas_producto.fecha_venta','salidas_producto.venta_cancelada','salidas_producto.alumno_id','salidas_producto.cantidad_recibida_mxn')
+                   ->addSelect(DB::raw('CONCAT(alumnos.alumno_apellidopaterno," ", alumnos.alumno_apellidomaterno," ",alumnos.alumno_primernombre," ",alumnos.alumno_segundonombre) AS nombreAlumno'))
+                   ->join('alumnos','salidas_producto.alumno_id','=','alumnos.id')
+                   ->where('salidas_producto.ciclo_id',$ciclo->id)
+                   ->orderBy('salidas_producto.folio_recibo', 'asc')
+                   ->get();
 
-        $categorias = CategoriaProducto::where('ciclo_id', $ciclo->id)
-                      ->where('escuela_id',1)
-                      ->orderBy('id','asc')
-                      ->get();
-
-        return view ('inventarios.nueva_compra',compact('ciclo','categorias','escuelas','seriefolio'));
+        return view('impresiones.impr_rec_venta_index', compact('ciclo', 'recibos'));
     }
 
     /**

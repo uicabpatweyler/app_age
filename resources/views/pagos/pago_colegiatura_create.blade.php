@@ -398,7 +398,7 @@ $(document).ready(function() {
         alias: 'numeric',
         groupSeparator : '',
         autoGroup : false,
-        digits : 0,
+        digits : 2,
         digitsOptional: false,
         placeholder: '',
         prefix: ''

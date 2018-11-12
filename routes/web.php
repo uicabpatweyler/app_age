@@ -65,6 +65,8 @@ Route::post('asignar_tutor_alumno_store', 'TutorAlumnoController@store')->name('
 Route::get('grupo_alumno_elegiralumno', 'GrupoAlumnoController@index')->name('grupo_alumno_elegiralumno');
 Route::get('grupo_alumno_elegirgrupo/{escuela}/{ciclo}/{alumno}', 'GrupoAlumnoController@create')->name('grupo_alumno_elegirgrupo');
 Route::post('grupo_alumno_store','GrupoAlumnoController@store')->name('grupo_alumno_store');
+Route::get('grupo_alumno_cambiogrupo', 'GrupoAlumnoController@cambioDeGrupo')->name('grupo_alumno_cambiogrupo');
+Route::post('grupo_alumno_update', 'GrupoAlumnoController@update')->name('grupo_alumno_update');
 
 Route::get('pago_inscripcion_create/{id_inscripcion}','PagoCuotaInscripcionController@create')->name('pago_inscripcion_create');
 Route::post('pago_inscripcion_store',                 'PagoCuotaInscripcionController@store')->name('pago_inscripcion_store');
@@ -95,23 +97,35 @@ Route::get('lista_productos_categorias/{categoria_id}','ItemInventarioController
 Route::get('impr_hojainscrip_index','ImprHojaInscripcionController@index')->name('impr_hojainscrip_index');
 Route::get('impr_rec_inscrip_index', 'ImprReciboInscripcionController@index')->name('impr_rec_inscrip_index');
 Route::get('impr_rec_coleg_index', 'ImprReciboColegiaturaController@index')->name('impr_rec_coleg_index');
+Route::get('impr_rec_venta_index', 'ImprReciboVentaController@index')->name('impr_rec_venta_index');
+Route::get('impr_lista_asist_index', 'ListaAsistenciaController@index')->name('impr_lista_asist_index');
 
 Route::get('reporte_pago_coleg_index','ReportePagoColegiaturaController@index')->name('reporte_pago_coleg_index');
 Route::get('pagos_colegitura_por_dia/{fecha}','ReportePagoColegiaturaController@pagosColegiaturaPorDia')->name('pagos_colegitura_por_dia');
+Route::get('reporte_venta_diario', 'ReporteVentaController@reporteVentaPorDia')->name('reporte_venta_diario');
 
 Route::get('reporte_pago_inscrip_index','ReportePagoInscripcionController@index')->name('reporte_pago_inscrip_index');
 Route::get('pagos_inscripcion_por_dia/{fecha}','ReportePagoInscripcionController@pagosInscripcionPorDia')->name('pagos_inscripcion_por_dia');
+Route::get('kardex_productos_index','Pdf\KardexProducto@index')->name('kardex_productos_index');
 
 Route::get('pdf_HojaInscripcionAlumno/{id_ga}','Pdf\HojaInscripcionController@pdf_HojaInscrpcionPorAlumno')->name('pdf_HojaInscripcionAlumno');
 Route::get('pdf_ReporteDiarioColegiatura/{fecha}', 'Pdf\ReporteDiarioColegiaturaController@pdf_ReporteDiarioColegiatura')->name('pdf_ReporteDiarioColegiatura');
 Route::get('pdf_ReporteDiarioInscripcion/{fecha}', 'Pdf\ReporteDiarioInscripcionController@pdf_ReporteDiarioInscripcion')->name('pdf_ReporteDiarioInscripcion');
-//Route::get('prueba', 'Pdf\ReporteDiarioInscripcionController@prueba')->name('prueba');
+Route::get('pdf_KardexProducto/{categoria_id}','Pdf\KardexProducto@pdf_KardexProducto')->name('pdf_KardexProducto');
+Route::get('pdf_ReciboSalidaVenta/{id_salida}', 'Pdf\ReciboSalidaVenta@pdf_ReciboSalidaVenta')->name('pdf_ReciboSalidaVenta');
+Route::get('pdf_ListaDeAsistencia/{grupo}/{mes_anio}/{maestro}/{fecha}','Pdf\ListaDeAsistencia@pdf_ListaDeAsistencia')->name('pdf_ListaDeAsistencia');
+Route::get('pdf_ReporteDiarioVentas/{fecha}','Pdf\ReporteDiarioVentasController@pdf_ReporteDiarioVentas')->name('pdf_ReporteDiarioVentas');
+Route::get('pdf_ReporteDeudoresPorGrupo/{id_ciclo}/{id_grupo}', 'Pdf\ReporteDeudoresPorGrupoController@pdf_ReporteDeudoresPorGrupo')->name('pdf_ReporteDeudoresPorGrupo');
+
+Route::get('alumnos_deudores_index', 'ReporteAlumnoDeudorController@index')->name('alumnos_deudores_index');
 
 Route::get('dataTableAlumnos', 'NuevaVentaController@dataTableAlumnos')->name('dataTableAlumnos');
 
-Route::get('nueva_venta', function(){
-    return view('ventas.nueva_venta');
-})->name('nueva_venta');
+//Esta pendiente por terminar la cancelacion de la venta
+Route::get('nueva_venta', 'NuevaVentaController@index')->name('nueva_venta');
+Route::get('cancelar_venta_index', 'NuevaVentaController@cancelarVentaIndex')->name('cancelar_venta_index');
+Route::get('cancelar_venta_edit/{id}', 'NuevaVentaController@edit')->name('cancelar_venta_edit');
+Route::post('salida_producto_store', 'NuevaVentaController@store')->name('salida_producto_store');
 
 
 /*
