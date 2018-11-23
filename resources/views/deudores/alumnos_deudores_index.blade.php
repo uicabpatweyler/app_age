@@ -20,6 +20,58 @@
             <div class="col-md-12">
 
                 <div class="box box-success">
+
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Generar Reporte <small>Los campos marcados con (*) son obligatorios</small></h3>
+                    </div>
+                    <!-- /.box-header -->
+
+                    <div class="box-body">
+                        <div class="row">
+
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="mes_reporte">Del Mes de: (*)</label>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <select class="form-control" name="mes_reporte" id="mes_reporte" style="width: 100%;" required>
+                                                <option value="" selected="selected">[Elija un mes]</option>
+                                                <option value="8">Agosto</option>
+                                                <option value="9">Septiembre</option>
+                                                <option value="10">Octubre</option>
+                                                <option value="11">Noviembre</option>
+                                                <option value="12">Diciembre</option>
+                                                <option value="1">Enero</option>
+                                                <option value="2">Febrero</option>
+                                                <option value="3">Marzo</option>
+                                                <option value="4">Abril</option>
+                                                <option value="5">Mayo</option>
+                                                <option value="6">Junio</option>
+                                                <option value="7">Julio</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4">
+                                <button class="btn  btn-social btn-facebook pull-right" id="btn_generar" name="btn_generar">
+                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Imprimir Reporte</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.box -->
+
+                <div class="box box-success">
                     <div class="box-header with-border bg-green color-palette">
                         <h3 class="box-title">Vista Previa</h3>
                     </div>
@@ -105,6 +157,13 @@
 $(document).ready(function(){
 
     var groupColumn = 0; // Nivel - Nombre Grupo
+    var mes_seleccionado ='';
+    var urlRoot = "{{Request::root()}}";
+
+    $('#mes_reporte').select2({
+        allowClear: true,
+        placeholder: '[Elija un mes]'
+    });
 
     $('#dt_listado_grupos').DataTable({
         "paging"       : true,
@@ -136,6 +195,37 @@ $(document).ready(function(){
         language: {
             url: "{{asset('adminlte/plugins/datatables/Spanish.json')}}"
         }
+    });
+
+    $('#mes_reporte').change(function () {
+        mes_seleccionado = $(this).val();
+
+        //El usuario no selecciono algun elemento
+        if(mes_seleccionado===null) { mes_seleccionado='';}
+
+        //El usuario elimina la seleccion del select
+        else if(mes_seleccionado===""){ mes_seleccionado='';}
+
+    });
+
+    $("#btn_generar").click(function(){
+
+        if(mes_seleccionado.length===0){
+            swal({
+                title: 'Atención',
+                html: 'Elija un mes de la lista.',
+                type: "error",
+                allowOutsideClick: false,
+                showConfirmButton: true,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Corregir'
+            }).catch(swal.noop);
+        }
+        else{
+                window.open(urlRoot+'/pdf_DeudoresGrupoMes/'+mes_seleccionado+'/', '_blank');
+                return false;
+            }
+
     });
 });
 </script>

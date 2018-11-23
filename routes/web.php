@@ -116,12 +116,13 @@ Route::get('pdf_ReciboSalidaVenta/{id_salida}', 'Pdf\ReciboSalidaVenta@pdf_Recib
 Route::get('pdf_ListaDeAsistencia/{grupo}/{mes_anio}/{maestro}/{fecha}','Pdf\ListaDeAsistencia@pdf_ListaDeAsistencia')->name('pdf_ListaDeAsistencia');
 Route::get('pdf_ReporteDiarioVentas/{fecha}','Pdf\ReporteDiarioVentasController@pdf_ReporteDiarioVentas')->name('pdf_ReporteDiarioVentas');
 Route::get('pdf_ReporteDeudoresPorGrupo/{id_ciclo}/{id_grupo}', 'Pdf\ReporteDeudoresPorGrupoController@pdf_ReporteDeudoresPorGrupo')->name('pdf_ReporteDeudoresPorGrupo');
+Route::get('pdf_DeudoresGrupoMes/{mes_reporte}', 'Pdf\ReporteDeudorGrupoMesController@pdf_DeudoresGrupoMes')->name('pdf_DeudoresGrupoMes');
 
 Route::get('alumnos_deudores_index', 'ReporteAlumnoDeudorController@index')->name('alumnos_deudores_index');
 
 Route::get('dataTableAlumnos', 'NuevaVentaController@dataTableAlumnos')->name('dataTableAlumnos');
 
-//Esta pendiente por terminar la cancelacion de la venta
+//Esta pendiente por terminar la cancelacion de la venta 13Noviembre2018
 Route::get('nueva_venta', 'NuevaVentaController@index')->name('nueva_venta');
 Route::get('cancelar_venta_index', 'NuevaVentaController@cancelarVentaIndex')->name('cancelar_venta_index');
 Route::get('cancelar_venta_edit/{id}', 'NuevaVentaController@edit')->name('cancelar_venta_edit');

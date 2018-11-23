@@ -254,7 +254,7 @@ class ListaDeAsistencia extends Controller
     }
 
     public function nameMonth($number){
-        $nameMonths = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre',' Diciembre'];
+        $nameMonths = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
         return $nameMonths[$number-1];
     }
 
