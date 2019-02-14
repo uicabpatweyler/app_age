@@ -54,6 +54,21 @@ class PagoCuotaColegiaturaController extends Controller
         return view('pagos.pago_colegiatura_elegir_alumno', compact('dias', 'ciclo'));
     }
 
+    public function cancelarRecColegIndex(){
+
+        //Obtener el ID del ciclo actual de trabajo
+        $ciclo = Ciclo::where('ciclo_activo', false)
+            ->where('ciclo_actual', true)
+            ->first();
+
+        $pagosDeColegiatura = PagoColegiatura::where('escuela_id',1)
+            ->where('ciclo_id',$ciclo->id)
+            ->orderBy('folio_recibo','asc')
+            ->get();
+
+        return view ('pagos.cancelar_pago_coleg_index', compact('ciclo','pagosDeColegiatura'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -291,7 +306,77 @@ class PagoCuotaColegiaturaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pagoColegiatura = PagoColegiatura::findOrFail($id);
+        return view ('pagos.cancelar_pago_coleg_edit', compact('pagoColegiatura'));
+    }
+
+    public function recuperarPagoColegiaturaDetalles($id){
+
+        $pagoColegiatura = PagoColegiatura::findOrFail($id);
+        return view('pagos.recuperar_pago_coleg_details',compact('pagoColegiatura'));
+    }
+
+    public function recuperarPagoColegiatura(Request $request)
+    {
+        try{
+            $resultado = DB::transaction(function() use ($request){
+
+                $colegiatura = PagoColegiatura::findOrFail($request->get('id_pago_colegiatura'));
+                $colegiatura->pago_cancelado = false;
+                $colegiatura->fecha_cancelacion = null;
+                $colegiatura->cancelado_por = 0;
+                $colegiatura->save();
+
+                DetallePagoColegiatura::where('pagocolegiatura_id', $request->get('id_pago_colegiatura'))
+                    ->update(['pago_cancelado' => false]);
+
+                return response()->json([
+                    'success'   => true,
+                    'message'  => 'La recuperacion del recibo de colegiatura, se ha realizado correctamente.'
+                ], 200);
+
+            });
+            return $resultado->getContent();
+        }
+        catch (Exception $e){
+
+            /*
+             * //https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html
+             *
+             * For error checking, use error codes, not error messages. Error messages do not change often,
+             * but it is possible. Also if the database administrator changes the language setting,
+             * that affects the language of error messages.
+             *
+             * $e->getCode() or  $e->errorInfo[0]
+             */
+
+            if($e->getCode()!=0)
+            {
+                return response()->json([
+                    'exception'          => true,
+                    'success'            => false,
+                    'error_numeric_code' => $e->errorInfo[0],
+                    'sqlstate_value'     => $e->errorInfo[1],
+                    'message_error'      => $e->errorInfo[2],
+                    'message_details'    => $e->getMessage(),
+                    'message_user'       => '(1) Error al recuperar el recibo de colegiatura.'
+
+                ],422);
+            }
+            else{
+                return response()->json([
+                    'exception'          => true,
+                    'success'            => false,
+                    'error_numeric_code' => 0,
+                    'sqlstate_value'     => 0,
+                    'message_error'      => '',
+                    'message_details'    => $e->getMessage(),
+                    'message_user'       => '(2) Error al recuperar el recibo de colegiatura.'
+
+                ],422);
+            }
+
+        }
     }
 
     /**
@@ -301,9 +386,67 @@ class PagoCuotaColegiaturaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        try{
+            $resultado = DB::transaction(function() use ($request){
+
+                $colegiatura = PagoColegiatura::findOrFail($request->get('id_pago_colegiatura'));
+                $colegiatura->pago_cancelado = true;
+                $colegiatura->fecha_cancelacion = $request->get('fecha_cancelacion');
+                $colegiatura->cancelado_por = Auth::user()->id;
+                $colegiatura->save();
+
+                DetallePagoColegiatura::where('pagocolegiatura_id', $request->get('id_pago_colegiatura'))
+                                        ->update(['pago_cancelado' => true]);
+
+                return response()->json([
+                    'success'   => true,
+                    'message'  => 'La cancelacion del recibo de colegiatura, se ha realizado correctamente.'
+                ], 200);
+
+            });
+            return $resultado->getContent();
+        }
+        catch (Exception $e){
+
+            /*
+             * //https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html
+             *
+             * For error checking, use error codes, not error messages. Error messages do not change often,
+             * but it is possible. Also if the database administrator changes the language setting,
+             * that affects the language of error messages.
+             *
+             * $e->getCode() or  $e->errorInfo[0]
+             */
+
+            if($e->getCode()!=0)
+            {
+                return response()->json([
+                    'exception'          => true,
+                    'success'            => false,
+                    'error_numeric_code' => $e->errorInfo[0],
+                    'sqlstate_value'     => $e->errorInfo[1],
+                    'message_error'      => $e->errorInfo[2],
+                    'message_details'    => $e->getMessage(),
+                    'message_user'       => '(1) Error al cancelar el recibo de colegiatura.'
+
+                ],422);
+            }
+            else{
+                return response()->json([
+                    'exception'          => true,
+                    'success'            => false,
+                    'error_numeric_code' => 0,
+                    'sqlstate_value'     => 0,
+                    'message_error'      => '',
+                    'message_details'    => $e->getMessage(),
+                    'message_user'       => '(2) Error al cancelar el recibo de colegiatura.'
+
+                ],422);
+            }
+
+        }
     }
 
     /**

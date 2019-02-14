@@ -74,7 +74,11 @@ Route::post('pago_inscripcion_store',                 'PagoCuotaInscripcionContr
 Route::get('pago_colegiatura_index','PagoCuotaColegiaturaController@index')->name('pago_colegiatura_index');
 Route::get('pago_colegiatura_create/{escuela}/{ciclo}/{grupo}/{alumno}', 'PagoCuotaColegiaturaController@create')->name('pago_colegiatura_create');
 Route::post('pago_colegiatura_store',  'PagoCuotaColegiaturaController@store')->name('pago_colegiatura_store');
-
+Route::get('cancel_rec_coleg_index','PagoCuotaColegiaturaController@cancelarRecColegIndex')->name('cancel_rec_coleg_index');
+Route::get('cancel_rec_coleg_edit/{id}','PagoCuotaColegiaturaController@edit')->name('cancel_rec_coleg_edit');
+Route::post('cancelar_pago_colegiatura','PagoCuotaColegiaturaController@update')->name('cancelar_pago_colegiatura');
+Route::get('recuperar_pago_colegiatura_detalles/{id}','PagoCuotaColegiaturaController@recuperarPagoColegiaturaDetalles')->name('recuperar_pago_colegiatura_detalles');
+Route::post('recuperar_pago_colegiatura', 'PagoCuotaColegiaturaController@recuperarPagoColegiatura')->name('recuperar_pago_colegiatura');
 Route::get('pdf_ReciboInscripcion/{id_pago}', 'Pdf\ReciboInscripcionController@pdf_ReciboInscripcion')->name('pdf_ReciboInscripcion');
 Route::get('pdf_ReciboColegiatura/{id_pago}', 'Pdf\ReciboColegiaturaController@pdf_ReciboColegiatura')->name('pdf_ReciboColegiatura');
 

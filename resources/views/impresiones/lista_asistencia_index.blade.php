@@ -51,9 +51,8 @@
                                             <select class="form-control" name="teacher" id="teacher" style="width: 100%;" required>
                                                 <option value="" selected="selected">[Elija un nombre]</option>
                                                 <option value="Ana Laura Manzanero Alamilla">Ana Laura Manzanero Alamilla</option>
-                                                <option value="Celia Ilse Sarina Zapata Mendez">Celia Ilse Sarina Zapata Mendez</option>
                                                 <option value="Fatima Concepción Manzanero Juarez">Fatima Concepción Manzanero Juarez</option>
-                                                <option value="Kaori Geovana Mejia Rodriguez ">Kaori Geovana Mejia Rodriguez </option>
+                                                <option value="Estefanía Martínez Suárez">Estefanía Martínez Suárez</option>
                                                 <option value="Laura Margarita Gutierrez">Laura Margarita Gutierrez</option>
                                                 <option value="Monica Vanessa Martinez Cabrera">Monica Vanessa Martinez Cabrera</option>
                                                 <option value="Noel Christopher Gough Whitworth">Noel Christopher Gough Whitworth</option>

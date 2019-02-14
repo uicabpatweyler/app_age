@@ -71,12 +71,14 @@
                                 </ul>
                             </li>
 
-
-                            <li>
-                                <a href="{{route('pago_colegiatura_index')}}" class="bt btn-primary">
-                                    <i class="fa fa-money" aria-hidden="true"></i>&nbsp;
-                                    Pago de colegiatura
-                                </a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; Pagos <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{route('pago_colegiatura_index')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Colegiatura Mensual</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="{{route('cancel_rec_coleg_index')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Cancelar Recibo de Colegiatura</a></li>
+                                    <li class="divider"></li>
+                                </ul>
                             </li>
 
                             <li class="dropdown">
