@@ -79,11 +79,14 @@
                                 </a>
                             </li>
 
-                            <li>
-                                <a href="{{route('nueva_venta')}}" class="bt btn-primary">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;
-                                    Venta de Libros y Playeras
-                                </a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; Ventas <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{route('nueva_venta')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Libros y Playeras</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="{{route('cancelar_venta_index')}}"><i class="fa fa-caret-right text-orange" aria-hidden="true"></i> Cancelar Recibo de Venta</a></li>
+                                    <li class="divider"></li>
+                                </ul>
                             </li>
 
                         </ul>

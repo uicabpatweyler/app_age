@@ -122,10 +122,13 @@ Route::get('alumnos_deudores_index', 'ReporteAlumnoDeudorController@index')->nam
 
 Route::get('dataTableAlumnos', 'NuevaVentaController@dataTableAlumnos')->name('dataTableAlumnos');
 
-//Esta pendiente por terminar la cancelacion de la venta 13Noviembre2018
+
 Route::get('nueva_venta', 'NuevaVentaController@index')->name('nueva_venta');
 Route::get('cancelar_venta_index', 'NuevaVentaController@cancelarVentaIndex')->name('cancelar_venta_index');
 Route::get('cancelar_venta_edit/{id}', 'NuevaVentaController@edit')->name('cancelar_venta_edit');
+Route::get('recuperar_venta_detalles/{id}','NuevaVentaController@recuperarVentaDetalles')->name('recuperar_venta_detalles');
+Route::post('cancelar_venta', 'NuevaVentaController@update')->name('cancelar_venta');
+Route::post('recuperar_venta', 'NuevaVentaController@recuperarVenta')->name('recuperar_venta');
 Route::post('salida_producto_store', 'NuevaVentaController@store')->name('salida_producto_store');
 
 

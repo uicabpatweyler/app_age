@@ -51,9 +51,16 @@
                                     <td>{{ucwords($recibo->nombreAlumno)}}</td>
                                     <td>$ {{number_format($recibo->cantidad_recibida_mxn,2,'.',',')}}</td>
                                     <td>
-                                        <a class="btn btn-xs btn-social btn-dropbox" href="{{route('cancelar_venta_edit',['id_salida'=>$recibo->id])}}">
-                                            <i class="fa fa-arrow-right" aria-hidden="true"></i> Seleccionar
-                                        </a>
+                                        @if ($recibo->venta_cancelada==false)
+                                            <a class="btn btn-xs btn-social btn-dropbox" href="{{route('cancelar_venta_edit',['id_salida'=>$recibo->id])}}">
+                                                <i class="fa fa-arrow-right" aria-hidden="true"></i> Seleccionar
+                                            </a>
+                                        @else
+                                            <a class="btn btn-xs btn-social btn-google" href="{{route('recuperar_venta_detalles',['id_salida'=>$recibo->id])}}">
+                                                <i class="fa fa-arrow-right" aria-hidden="true"></i> Recuperar
+                                            </a>
+                                        @endif
+
                                     </td>
                                 </tr>
                             @endforeach

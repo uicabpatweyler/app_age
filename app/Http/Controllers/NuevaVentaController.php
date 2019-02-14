@@ -28,7 +28,10 @@ class NuevaVentaController extends Controller
     }
 
     public function dataTableAlumnos(){
-        $alumnos = GrupoAlumno::where('escuela_id',1)->where('ciclo_id',1)->where('pago_inscripcion',true)->get();
+        $alumnos = GrupoAlumno::where('escuela_id',1)
+                   ->where('ciclo_id',1)
+                   ->where('pago_inscripcion',true)
+                   ->get();
 
         $array_detalle=[];
 
@@ -242,9 +245,89 @@ class NuevaVentaController extends Controller
      */
     public function edit($id)
     {
+
         $salida = SalidaProducto::findOrFail($id);
 
         return view('ventas.cancelar_venta_edit', compact('salida'));
+    }
+
+    public function recuperarVentaDetalles($id){
+
+        $salida = SalidaProducto::findOrFail($id);
+        return view('ventas.recuperar_venta_details',compact('salida'));
+    }
+
+    public function recuperarVenta(Request $request){
+        try{
+            $resultado = DB::transaction(function() use ($request){
+
+                $salida = SalidaProducto::findOrFail($request->get('id_salida_producto'));
+                $salida->venta_cancelada = false;
+                $salida->fecha_cancelacion = null;
+                $salida->cancelado_por = 0;
+                $salida->save();
+
+                ItemSalidaProducto::where('salidaprod_id', $request->get('id_salida_producto'))
+                    ->update(['venta_cancelada' => false]);
+
+                //Obtenemos los productos contenidos en el recibo de venta que se esta recuperando
+                $productosDelRecibo = ItemSalidaProducto::where('salidaprod_id', $request->get('id_salida_producto'))
+                    ->where('venta_cancelada', false)
+                    ->orderBy('numero_linea', 'asc')
+                    ->get();
+
+                foreach ($productosDelRecibo as $producto){
+                    KardexProducto::find($producto->producto_id)->increment('salidas',$producto->cantidad);
+                    KardexProducto::find($producto->producto_id)->decrement('existencia',$producto->cantidad);
+                }
+
+                return response()->json([
+                    'success'   => true,
+                    'message'  => 'La recuperación del recibo de venta, se ha realizado correctamente.'
+                ], 200);
+
+            });
+            return $resultado->getContent();
+        }
+        catch (Exception $e){
+
+            /*
+             * //https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html
+             *
+             * For error checking, use error codes, not error messages. Error messages do not change often,
+             * but it is possible. Also if the database administrator changes the language setting,
+             * that affects the language of error messages.
+             *
+             * $e->getCode() or  $e->errorInfo[0]
+             */
+
+            if($e->getCode()!=0)
+            {
+                return response()->json([
+                    'exception'          => true,
+                    'success'            => false,
+                    'error_numeric_code' => $e->errorInfo[0],
+                    'sqlstate_value'     => $e->errorInfo[1],
+                    'message_error'      => $e->errorInfo[2],
+                    'message_details'    => $e->getMessage(),
+                    'message_user'       => '(1) Error al recuperar el recibo de venta.'
+
+                ],422);
+            }
+            else{
+                return response()->json([
+                    'exception'          => true,
+                    'success'            => false,
+                    'error_numeric_code' => 0,
+                    'sqlstate_value'     => 0,
+                    'message_error'      => '',
+                    'message_details'    => $e->getMessage(),
+                    'message_user'       => '(2) Error al recuperar el recibo de venta.'
+
+                ],422);
+            }
+
+        }
     }
 
     /**
@@ -254,9 +337,79 @@ class NuevaVentaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        try{
+            $resultado = DB::transaction(function() use ($request){
+
+                $salida = SalidaProducto::findOrFail($request->get('id_salida_producto'));
+                $salida->venta_cancelada = true;
+                $salida->fecha_cancelacion = $request->get('fecha_cancelacion');
+                $salida->cancelado_por = Auth::user()->id;
+                $salida->save();
+
+                ItemSalidaProducto::where('salidaprod_id', $request->get('id_salida_producto'))
+                               ->update(['venta_cancelada' => true]);
+
+                //Obtenemos los productos contenidos en el recibo de venta que se esta cancelando
+                $productosDelRecibo = ItemSalidaProducto::where('salidaprod_id', $request->get('id_salida_producto'))
+                                      ->where('venta_cancelada', true)
+                                      ->orderBy('numero_linea', 'asc')
+                                      ->get();
+
+                foreach ($productosDelRecibo as $producto){
+                    KardexProducto::find($producto->producto_id)->increment('existencia',$producto->cantidad);
+                    KardexProducto::find($producto->producto_id)->decrement('salidas',$producto->cantidad);
+                }
+
+                return response()->json([
+                    'success'   => true,
+                    'message'  => 'La cancelacion del recibo de venta, se ha realizado correctamente.'
+                ], 200);
+
+            });
+            return $resultado->getContent();
+        }
+        catch (Exception $e){
+
+            /*
+             * //https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html
+             *
+             * For error checking, use error codes, not error messages. Error messages do not change often,
+             * but it is possible. Also if the database administrator changes the language setting,
+             * that affects the language of error messages.
+             *
+             * $e->getCode() or  $e->errorInfo[0]
+             */
+
+            if($e->getCode()!=0)
+            {
+                return response()->json([
+                    'exception'          => true,
+                    'success'            => false,
+                    'error_numeric_code' => $e->errorInfo[0],
+                    'sqlstate_value'     => $e->errorInfo[1],
+                    'message_error'      => $e->errorInfo[2],
+                    'message_details'    => $e->getMessage(),
+                    'message_user'       => '(1) Error al cancelar el recibo de venta.'
+
+                ],422);
+            }
+            else{
+                return response()->json([
+                    'exception'          => true,
+                    'success'            => false,
+                    'error_numeric_code' => 0,
+                    'sqlstate_value'     => 0,
+                    'message_error'      => '',
+                    'message_details'    => $e->getMessage(),
+                    'message_user'       => '(2) Error al cancelar el recibo de venta.'
+
+                ],422);
+            }
+
+        }
+
     }
 
     /**
